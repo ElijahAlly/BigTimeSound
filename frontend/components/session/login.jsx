@@ -9,7 +9,12 @@ class Login extends Component {
 			email: '',
 			password: '',
 		};
+
 		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	componentWillUnmount() {
+		this.props.clearErrors();
 	}
 
 	handleInput(type) {

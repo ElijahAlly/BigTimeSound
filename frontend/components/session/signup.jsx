@@ -11,6 +11,10 @@ class SignUp extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
+	componentWillUnmount() {
+		this.props.clearErrors();
+	}
+
 	handleInput(type) {
 		return (e) => this.setState({ [type]: e.target.value });
 	}
@@ -23,6 +27,7 @@ class SignUp extends Component {
 	}
 
 	render() {
+		const { errors } = this.props;
 		return (
 			<div className='signup-cont'>
 				<h2>Sign Up</h2>
@@ -52,6 +57,11 @@ class SignUp extends Component {
 							onChange={this.handleInput('password')}
 						/>
 					</label>
+					{errors.length > 0 ? (
+						<h3 className='form-errors'>{errors[0]}</h3>
+					) : (
+						<h3> </h3>
+					)}
 					<button>Sign Up</button>
 				</form>
 			</div>
