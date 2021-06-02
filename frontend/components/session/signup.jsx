@@ -18,13 +18,13 @@ class SignUp extends Component {
 	handleSubmit(e) {
 		e.preventDefault();
 		this.props
-			.createNewUser(this.state)
-			.then(() => this.props.history.push('/chirps'));
+			.createUser(this.state)
+			.then(() => this.props.history.push(`/users/${this.props.currentUser}`));
 	}
 
 	render() {
 		return (
-			<div className='session-form'>
+			<div className='signup-cont'>
 				<h2>Sign Up</h2>
 
 				<form onSubmit={this.handleSubmit}>

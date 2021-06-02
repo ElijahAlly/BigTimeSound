@@ -2,10 +2,10 @@ class Api::SessionsController < ApplicationController
     before_action :require_login, only: [:destroy]
     
     def create
-        if !params[:user][:username].nil?
-            search_by = params[:user][:username]
-        else
+        if params[:user][:username] === ''
             search_by = params[:user][:email]
+        else
+            search_by = params[:user][:username]
         end
 
         @user = User.find_by_credentials(search_by, params[:user][:password])

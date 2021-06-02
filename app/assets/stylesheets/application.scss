@@ -12,3 +12,18 @@
  *
  *= require_self
  */
+
+@import './base/reset.scss';
+
+@import './base/fonts.scss';
+@import './base/colors.scss';
+
+body {
+    background-color: $big-blue
+}
+
+@import './base/header.scss';
+@import './base/buttons.scss';
+@import './base/forms.scss';
+
+@import './components/signup-login.scss';

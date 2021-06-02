@@ -2,10 +2,12 @@ import { connect } from 'react-redux';
 import { createUser } from '../../actions/user_actions';
 import SignUp from './signup';
 
-const mDTP = (dispatch) => {
-	return {
-		createUser: (formUser) => dispatch(createUser(formUser)),
-	};
-};
+const mSTP = (state) => ({
+	currentUser: state.session.currentUser,
+});
 
-export default connect(null, mDTP)(SignUp);
+const mDTP = (dispatch) => ({
+	createUser: (formUser) => dispatch(createUser(formUser)),
+});
+
+export default connect(mSTP, mDTP)(SignUp);

@@ -1,0 +1,35 @@
+.signup-cont,
+.login-cont {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 300px;
+	height: 300px;
+	position: fixed;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: $big-red;
+	border-radius: 5px;
+
+	h2 {
+		text-align: center;
+		font-weight: 500;
+	}
+        
+
+    p {
+        width: fit-content;
+        display: inline;
+        text-decoration: underline;
+        text-underline-offset: 1px;
+        color: whitesmoke;
+
+        &:hover {
+            cursor: pointer;
+            color: $big-blue;
+        }
+    }
+}
+

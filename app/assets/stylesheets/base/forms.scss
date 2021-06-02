@@ -1,0 +1,28 @@
+form {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 250px;
+    justify-content: space-around;
+    
+    label {
+        display: flex;
+        flex-direction: column;
+        
+        input {
+            border-radius: 5px;
+            border: 1px solid $big-black;
+        }
+    }
+
+    button {
+        width: 70px;
+        align-self: center;
+        border: 0.5px solid $big-black;
+
+        &:hover {
+            cursor: pointer;
+            background-color: $big-blue;
+        }
+    }
+}

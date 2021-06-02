@@ -1,13 +1,20 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Route, Redirect, Switch, Link, HashRouter } from 'react-router-dom';
-import { AuthRoute, ProtectedRoute } from '../utils/route_util';
+import { AuthRoute, ProtectedRoute } from '../util/route_util';
+
+import SignupContainer from './session/signup_container';
+import UserHomeContainer from './user/user_home_container';
+import LoginContainer from './session/login_container';
+import Home from './home';
 
 const App = () => (
 	<div>
-		<header>Welcome to BigTimeSound!</header>
+		<AuthRoute exact path='/' component={Home} />
+		<ProtectedRoute path='/users/:id' component={UserHomeContainer} />
+
+		<AuthRoute path='/login' component={LoginContainer} />
 		<AuthRoute path='/signup' component={SignupContainer} />
-        <AuthRoute path='/login' component={LoginContainer} />
 	</div>
 );
 
