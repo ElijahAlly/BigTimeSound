@@ -3,7 +3,6 @@ import {
 	LOGOUT_CURRENT_USER,
 } from '../actions/session_actions';
 
-
 const sessionReducer = (state = {}, action) => {
 	Object.freeze(state);
 	const newState = Object.assign({}, state);

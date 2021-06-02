@@ -13,8 +13,9 @@ const logoutCurrentUser = () => ({
 });
 
 export const createSession = (user) => (dispatch) =>
-	SessionApiUtil.createSession(user).then((user) => dispatch(receiveUser(user)));
+	SessionApiUtil.createSession(user).then((user) =>
+		dispatch(receiveUser(user))
+	);
 
 export const deleteSession = () => (dispatch) =>
 	SessionApiUtil.deleteSession().then(() => dispatch(logoutCurrentUser()));
-

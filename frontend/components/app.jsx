@@ -1,34 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import {
-  Route,
-  Redirect,
-  Switch,
-  Link,
-  HashRouter
-} from 'react-router-dom';
-
+import { Route, Redirect, Switch, Link, HashRouter } from 'react-router-dom';
+import { AuthRoute, ProtectedRoute } from '../utils/route_util';
 
 const App = () => (
-    <div>
-        <div>
-            Welcome to BigTimeSound!
-        </div>
-        {/* <div>
-            <header>
-                <Link to="/" className="header-link">
-                </Link>
-                <GreetingContainer />
-            </header>
-            <Switch>
-                <AuthRoute exact path="/login" component={LogInFormContainer} />
-                <AuthRoute exact path="/signup" component={SignUpFormContainer} />
-                <ProtectedRoute exact path="/benches/new" component={BenchFormContainer} />
-                <Route path="/benches/:benchId" component={BenchShowContainer} />
-                <Route exact path="/" component={SearchContainer} />
-            </Switch>
-        </div> */}
-    </div>
-  );
-  
-  export default App;
+	<div>
+		<header>Welcome to BigTimeSound!</header>
+		<AuthRoute path='/signup' component={SignupContainer} />
+        <AuthRoute path='/login' component={LoginContainer} />
+	</div>
+);
+
+export default App;
