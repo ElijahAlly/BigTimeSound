@@ -4,7 +4,7 @@ import Login from './login';
 
 const mSTP = (state) => ({
 	currentUser: state.session.currentUser,
-	errors: state.errors.session
+	errors: state.errors.session,
 });
 
 const mDTP = (dispatch) => ({

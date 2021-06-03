@@ -18,12 +18,13 @@
 @import './base/fonts.scss';
 @import './base/colors.scss';
 
-body {
-    background-color: $big-blue
-}
 
+
+@import './base/body.scss';
 @import './base/header.scss';
 @import './base/buttons.scss';
 @import './base/forms.scss';
 
+@import './components/home-page.scss';
+@import './components/background.scss';
 @import './components/signup-login.scss';

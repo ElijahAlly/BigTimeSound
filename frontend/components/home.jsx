@@ -15,7 +15,9 @@ class Home extends React.Component {
 			email: '',
 			password: 'secretPasswordabcdefg0000',
 		};
-		this.props.login(demo).then((user) => <Redirect to={`/users/${user.id}`}/>);
+		this.props
+			.login(demo)
+			.then((user) => <Redirect to={`/users/${user.id}`} />);
 	}
 
 	render() {
@@ -32,7 +34,9 @@ class Home extends React.Component {
 						BigTimeSound!
 					</h1>
 					<div className='header-buttons'>
-						<button className="demo-user" onClick={this.handleDemo}>Demo User</button>
+						<button className='demo-user' onClick={this.handleDemo}>
+							Demo User
+						</button>
 						<Link to='/signup'>
 							<button>Sign Up</button>
 						</Link>

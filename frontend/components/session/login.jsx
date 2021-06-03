@@ -8,6 +8,7 @@ class Login extends Component {
 			username: '',
 			email: '',
 			password: '',
+			Selected: 'username',
 		};
 
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,19 +36,39 @@ class Login extends Component {
 	}
 
 	render() {
+		const { Selected } = this.state;
+		let uSelected = '';
+		let eSelected = '';
+		if (Selected === 'username') {
+			uSelected = Selected;
+		} else {
+			eSelected = Selected;
+		}
+
+		const { errors } = this.props;
 		const loginType = this.state.loginWith.toLowerCase();
 		return (
 			<div className='login-cont'>
-				<h2>Log In</h2>
+				<h2>Log In Using Your:</h2>
 
 				<form>
 					<h4>
-						Log in with{' '}
-						<p onClick={() => this.setState({ loginWith: 'Username' })}>
-							username
-						</p>{' '}
-						or{' '}
-						<p onClick={() => this.setState({ loginWith: 'Email' })}>email</p>
+						<div>
+							<p
+								className={`selected ${uSelected}`}
+								onClick={() =>
+									this.setState({ loginWith: 'Username', Selected: 'username' })
+								}>
+								username
+							</p>{' '}
+							<p
+								className={`selected ${eSelected}`}
+								onClick={() =>
+									this.setState({ loginWith: 'Email', Selected: 'email' })
+								}>
+								email
+							</p>
+						</div>
 					</h4>
 					<label>
 						{this.state.loginWith}:
@@ -65,6 +86,11 @@ class Login extends Component {
 							onChange={this.handleInput('password')}
 						/>
 					</label>
+					{errors.length > 0 ? (
+						<h3 className='form-errors'>{errors[0]}</h3>
+					) : (
+						<h3> </h3>
+					)}
 					<button onClick={this.handleSubmit}>Log In</button>
 				</form>
 			</div>

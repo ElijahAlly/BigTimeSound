@@ -1,0 +1,16 @@
+.background {
+    z-index: 1;
+    position: fixed;
+    top: 80px;
+	display: grid;
+	grid-template-rows: 81px 168px 63px 93px 384px;
+	color: $big-darkblue;
+    justify-items: center;
+    align-items: center;
+
+	a {
+		grid-row-start: 4;
+		color: $big-darkblue;
+		text-decoration: none;
+	}
+}
