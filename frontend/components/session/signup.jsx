@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 
 class SignUp extends Component {
 	constructor(props) {
@@ -31,49 +32,61 @@ class SignUp extends Component {
 		e.preventDefault();
 		const demo = {
 			username: 'Demo User',
-			password: 'demopassword123',
+			email: '',
+			password: 'secretPasswordabcdefg0000',
 		};
-		this.props.login(demo).then(() => this.props.history.push('/'));
+		this.props
+			.login(demo)
+			.then((user) => <Redirect to={`/users/${user.id}`} />);
 	}
 
 	render() {
 		const { errors } = this.props;
 		return (
-			<div className='signup-cont'>
-				<h2>Sign Up</h2>
-
-				<form onSubmit={this.handleSubmit}>
-					<label>
-						Username:
-						<input
-							type='text'
-							value={this.state.username}
-							onChange={this.handleInput('username')}
-						/>
-					</label>
-					<label>
-						Email:
-						<input
-							type='text'
-							value={this.state.email}
-							onChange={this.handleInput('email')}
-						/>
-					</label>
-					<label>
-						Password:
-						<input
-							type='password'
-							value={this.state.password}
-							onChange={this.handleInput('password')}
-						/>
-					</label>
-					{errors.length > 0 ? (
-						<h3 className='form-errors'>{errors[0]}</h3>
-					) : (
-						<h3> </h3>
-					)}
-					<button>Sign Up</button>
-				</form>
+			<div className='signup-page'>
+				<div className='register-methods'>
+					<button className='demo-user' onClick={this.handleDemo}>
+						Continue As A Demo User
+					</button>
+					<Link to='/login'>
+						<button>Go to Login</button>
+					</Link>
+				</div>
+				<div className='signup-or'>OR SIGNUP BELOW</div>
+				<div className='signup-cont'>
+					<form onSubmit={this.handleSubmit}>
+						<label>
+							Username:
+							<input
+								type='text'
+								value={this.state.username}
+								onChange={this.handleInput('username')}
+							/>
+						</label>
+						<label>
+							Email:
+							<input
+								type='text'
+								value={this.state.email}
+								onChange={this.handleInput('email')}
+							/>
+						</label>
+						<label>
+							Password:
+							<input
+								type='password'
+								value={this.state.password}
+								onChange={this.handleInput('password')}
+							/>
+						</label>
+						{errors.length > 0 ? (
+							<h3 className='form-errors'>{errors[0]}</h3>
+						) : (
+							<h3> </h3>
+						)}
+						<button>Sign Up</button>
+					</form>
+				</div>
 			</div>
 		);
 	}

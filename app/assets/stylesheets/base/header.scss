@@ -31,13 +31,12 @@ header {
 	.header-buttons {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
+		justify-content: space-evenly;
 		margin-right: 60px;
 		width: 280px;
 
 		a {
 			display: flex;
-			justify-content: space-between;
 			text-decoration: none;
 		}
 

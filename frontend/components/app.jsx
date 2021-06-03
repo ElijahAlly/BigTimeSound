@@ -18,7 +18,7 @@ const App = () => (
 			<p>BIGTIMESOUND PREMIUM</p>
 			<h1>Get 3 months of Premium for free</h1>
 			<h4>Enjoy ad-free music, offline listening, and more. Cancel anytime.</h4>
-			<Link to='/signup'>GET 3 MONTHS FREE</Link>
+			<Link to='/login'>GET 3 MONTHS FREE</Link>
 		</div>
 	</div>
 );

@@ -34,9 +34,9 @@ class Home extends React.Component {
 						BigTimeSound!
 					</h1>
 					<div className='header-buttons'>
-						<button className='demo-user' onClick={this.handleDemo}>
+						{/* <button className='demo-user' onClick={this.handleDemo}>
 							Demo User
-						</button>
+						</button> */}
 						<Link to='/signup'>
 							<button>Sign Up</button>
 						</Link>

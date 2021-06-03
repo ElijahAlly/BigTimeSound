@@ -1,23 +1,78 @@
-.signup-cont,
-.login-cont {
+.signup-page,
+.login-page {
 	z-index: 2;
 	position: fixed;
-    top: 80px;
-
-	display: flex;
-	flex-direction: column;
+	top: 80px;
+	display: grid;
+	grid-template-rows: 103px 135px 58px 356px;
 	align-items: center;
+	justify-items: center;
 	width: 100%;
 	height: 100%;
 	background: $big-red;
-	background: linear-gradient(178deg, $big-red 0%, $big-darkred 70%, $big-black 120%);
-	h2 {
-		text-align: center;
-		margin-top: 150px;
-		font-weight: 500;
+	background: linear-gradient(
+		178deg,
+		$big-red 0%,
+		$big-darkred 70%,
+		$big-black 120%
+	);
+
+	.register-methods {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		grid-row-start: 2;
+		height: 100px;
+		width: 400px;
+
+		button,
+		a {
+			height: 40px;
+			width: 100%;
+			border-radius: 30px;
+			color: whitesmoke;
+			background-color: $big-blue;
+			transition: background-color 0.3s ease;
+
+			&:hover {
+				background-color: $big-darkblue;
+				color: whitesmoke;
+				border-color: whitesmoke;
+			}
+		}
+
+		.demo-user {
+			background-color: $big-black;
+			transition: background-color 0.3s ease;
+			&:hover {
+				background-color: $big-darkblue;
+				color: whitesmoke;
+				border-color: whitesmoke;
+			}
+		}
 	}
 
-	
+	.signup-or {
+		grid-row-start: 3;
+		display: flex;
+		justify-content: center;
+		padding: 7px;
+		width: 400px;
+		border-bottom: 1px solid $big-darkgray;
+	}
+
+	.login-cont,
+	.signup-cont {
+		height: 300px;
+		grid-row-start: 4;
+		border-bottom: 1px solid $big-darkgray;
+
+		h2 {
+			text-align: center;
+			font-weight: 500;
+			padding-bottom: 10px;
+		}
+	}
 
 	h4 {
 		display: flex;
@@ -35,7 +90,6 @@
 				padding: 7px;
 				margin: 7px;
 			}
-			
 		}
 	}
 
@@ -53,24 +107,24 @@
 	width: fit-content;
 	display: inline;
 	color: whitesmoke;
-	border: 1px solid whitesmoke;
 	border-radius: 3px;
 	padding: 1px 3px;
 
 	&:hover {
 		cursor: pointer;
-		color: $big-blue;
-		border: 1px solid $big-blue;
+		color: $big-darkblue-hover;
+		border: 1px solid $big-darkblue-hover;
 	}
 }
 
-.username, .email {
-	background-color: $big-blue;
-	color: $big-black;
-	border-color: $big-black;
+.username,
+.email {
+	color: $big-blue;
+	border: 1px solid $big-blue;
 
 	&:hover {
+		background-color: $big-blue;
 		color: whitesmoke;
-		border: 1px solid whitesmoke;
+		border-color: whitesmoke;
 	}
 }

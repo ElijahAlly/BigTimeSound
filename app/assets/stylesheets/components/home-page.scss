@@ -1,16 +1,45 @@
 .background {
-    z-index: 1;
-    position: fixed;
-    top: 80px;
+	z-index: 1;
+	position: fixed;
+	top: 80px;
 	display: grid;
 	grid-template-rows: 81px 168px 63px 93px 384px;
 	color: $big-darkblue;
-    justify-items: center;
-    align-items: center;
+	justify-items: center;
+	align-items: center;
 
 	a {
+		display: flex;
+		align-items: center;
 		grid-row-start: 4;
-		color: $big-darkblue;
+		color: whitesmoke;
 		text-decoration: none;
+		font-size: large;
+		background-color: $big-darkblue;
+		height: 45px;
+		width: 40%;
+		justify-content: center;
+		border-radius: 30px;
+
+		&:hover {
+			background-color: $big-darkblue-hover;
+			height: 50px;
+			width: 42%;
+			font-size: larger;
+		}
+	}
+
+	p {
+		font-size: small;
+		align-self: flex-end;
+	}
+
+	h1 {
+		font-size: 45px;
+		font-weight: 600;
+	}
+
+	h4 {
+		font-size: large;
 	}
 }
