@@ -9,6 +9,7 @@ class SignUp extends Component {
 			password: '',
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleDemo = this.handleDemo.bind(this);
 	}
 
 	componentWillUnmount() {
@@ -24,6 +25,15 @@ class SignUp extends Component {
 		this.props
 			.createUser(this.state)
 			.then(() => this.props.history.push(`/users/${this.props.currentUser}`));
+	}
+
+	handleDemo(e) {
+		e.preventDefault();
+		const demo = {
+			username: 'Demo User',
+			password: 'demopassword123',
+		};
+		this.props.login(demo).then(() => this.props.history.push('/'));
 	}
 
 	render() {

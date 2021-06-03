@@ -2,6 +2,22 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 class Home extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.handleDemo = this.handleDemo.bind(this);
+	}
+
+	handleDemo(e) {
+		e.preventDefault();
+		const demo = {
+			username: 'Demo User',
+			email: '',
+			password: 'secretPasswordabcdefg0000',
+		};
+		this.props.login(demo).then(() => this.props.history.push(`/users/${this.props.currentUser}`));
+	}
+
 	render() {
 		return (
 			<>
@@ -16,6 +32,7 @@ class Home extends React.Component {
 						BigTimeSound!
 					</h1>
 					<div className='header-buttons'>
+						<button className="demo-user" onClick={this.handleDemo}>Demo User</button>
 						<Link to='/signup'>
 							<button>Sign Up</button>
 						</Link>

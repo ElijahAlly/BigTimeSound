@@ -30,8 +30,19 @@ header {
 
 	.header-buttons {
 		display: flex;
+		align-items: center;
 		justify-content: space-between;
-		margin-right: 80px;
-		width: 180px;
+		margin-right: 60px;
+		width: 280px;
+
+		a {
+			display: flex;
+			justify-content: space-between;
+			text-decoration: none;
+		}
+
+		.demo-user {
+			width: 90px;
+		}
 	}
 }

@@ -6,11 +6,11 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import SignupContainer from './session/signup_container';
 import UserHomeContainer from './user/user_home_container';
 import LoginContainer from './session/login_container';
-import Home from './home';
+import HomeContainer from './home_container';
 
 const App = () => (
 	<div>
-		<AuthRoute exact path='/' component={Home} />
+		<AuthRoute exact path='/' component={HomeContainer} />
 		<ProtectedRoute path='/users/:id' component={UserHomeContainer} />
 
 		<AuthRoute path='/login' component={LoginContainer} />
