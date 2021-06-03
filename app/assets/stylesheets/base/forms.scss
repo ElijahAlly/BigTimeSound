@@ -2,7 +2,7 @@ form {
 	display: flex;
 	flex-direction: column;
 	width: 400px;
-	height: 250px;
+	height: 260px;
 	justify-content: space-around;
 
 	label {
@@ -23,7 +23,7 @@ form {
 		align-self: flex-end;
         transition: background-color 0.3s ease;
         background-color: $big-black;
-		height: 45px;
+		height: 50px;
 		width: 50%;
         border-radius: 30px;
         font-size: large;

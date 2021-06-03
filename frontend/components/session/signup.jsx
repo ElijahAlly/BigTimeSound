@@ -82,7 +82,7 @@ class SignUp extends Component {
 						{errors.length > 0 ? (
 							<h3 className='form-errors'>{errors[0]}</h3>
 						) : (
-							<h3> </h3>
+							<h3 className='form-errors none'> </h3>
 						)}
 						<button>Sign Up</button>
 					</form>
