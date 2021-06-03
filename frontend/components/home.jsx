@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 class Home extends React.Component {
 	constructor(props) {
@@ -15,7 +15,7 @@ class Home extends React.Component {
 			email: '',
 			password: 'secretPasswordabcdefg0000',
 		};
-		this.props.login(demo).then(() => this.props.history.push(`/users/${this.props.currentUser}`));
+		this.props.login(demo).then((user) => <Redirect to={`/users/${user.id}`}/>);
 	}
 
 	render() {
