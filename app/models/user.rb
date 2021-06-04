@@ -2,15 +2,25 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
+#  id              :bigint           not null, primary key
 #  username        :string           not null
 #  email           :string           not null
 #  password_digest :string           not null
 #  session_token   :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#
+
 class User < ApplicationRecord
+
+    has_many :likes,
+        foreign_key: :user_id,
+        class_name: :Like,
+        dependent: :destroy
+
+    has_many :playlists,
+        foreign_key: :user_id,
+        class_name: :Playlist
+
     attr_reader :password
 
     validates :password_digest, presence: true

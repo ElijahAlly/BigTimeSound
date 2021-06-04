@@ -10,7 +10,62 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_01_011902) do
+ActiveRecord::Schema.define(version: 2021_06_04_225841) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "albums", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "artist_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["artist_id"], name: "index_albums_on_artist_id", unique: true
+  end
+
+  create_table "artists", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_artists_on_name", unique: true
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "song_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["song_id"], name: "index_likes_on_song_id", unique: true
+    t.index ["user_id"], name: "index_likes_on_user_id", unique: true
+  end
+
+  create_table "playlist_inclusions", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "song_id", null: false
+    t.integer "playlist_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["playlist_id"], name: "index_playlist_inclusions_on_playlist_id", unique: true
+    t.index ["song_id"], name: "index_playlist_inclusions_on_song_id", unique: true
+  end
+
+  create_table "playlists", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_playlists_on_user_id", unique: true
+  end
+
+  create_table "songs", force: :cascade do |t|
+    t.integer "artist_id", null: false
+    t.integer "album_id", null: false
+    t.string "title", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["album_id"], name: "index_songs_on_album_id", unique: true
+    t.index ["artist_id"], name: "index_songs_on_artist_id", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "username", null: false

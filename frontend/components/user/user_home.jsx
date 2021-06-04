@@ -11,7 +11,7 @@ class UserHome extends Component {
 		this.state = {
 			currentUser: cUser,
 		};
-		// console.log('user_home_component:', this.props);
+		console.log('user_home_component:', this.props);
 	}
 
 	render() {
