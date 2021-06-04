@@ -1,5 +1,5 @@
 header {
-	position: fixed;
+	position: relative;
 	top: 0;
 	width: 100%;
 	height: 80px;
@@ -19,8 +19,21 @@ header {
 		width: 299px;
 		margin-left: 10px;
 
+		a {
+			text-decoration: none;
+			color: $big-blue;
+		}
+
+		#picture-logo {
+			display: flex;
+			justify-content: center;
+			width: 61px;
+			shape-outside: circle();
+			clip-path: circle();
+		}
+
 		img {
-			width: 60px;
+			width: 61px;
 
 			&:hover {
 				cursor: pointer;
@@ -34,14 +47,24 @@ header {
 		justify-content: space-evenly;
 		margin-right: 60px;
 		width: 280px;
+		border-radius: 20px;
 
 		a {
-			display: flex;
 			text-decoration: none;
-		}
+			button {
+				font-weight: 500;
+				font-size: medium;
+				display: flex;
+				justify-content: center;
+				align-items: center;
 
-		.demo-user {
-			width: 90px;
+				background-color: whitesmoke;
+				transition: background-color 0.3s ease;
+				padding: 10px;
+				&:hover {
+					background-color: $big-blue;
+				}
+			}
 		}
 	}
 }

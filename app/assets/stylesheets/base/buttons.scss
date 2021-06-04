@@ -2,10 +2,9 @@ button {
     cursor: pointer;
     background-color: whitesmoke;
     color: $big-black;
-    border-radius: 5px;
+    border-radius: 30px;
     border: none;
     height: 25px;
-    width: 70px;
     &:hover {
     background-color: $big-blue;
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import Header from '../home/header';
 
 class Login extends Component {
 	constructor(props) {
@@ -34,7 +35,7 @@ class Login extends Component {
 				email: this.state.email,
 				password: this.state.password,
 			})
-			.then(() => this.props.history.push(`/users/${this.props.currentUser}`));
+			.then((user) => <Redirect to={`/users/${user.id}`} />);
 	}
 
 	handleDemo(e) {
@@ -62,66 +63,69 @@ class Login extends Component {
 		const { errors } = this.props;
 		const loginType = this.state.loginWith.toLowerCase();
 		return (
-			<div className='login-page'>
-				<div className='register-methods'>
-					<button className='demo-user' onClick={this.handleDemo}>
-						Continue As A Demo User
-					</button>
-					<Link to='/signup'>
-						<button>Go to Sign Up</button>
-					</Link>
-				</div>
-				<div className='signup-or'>OR LOG IN BELOW</div>
-				<div className='login-cont'>
-					<h2>Log in using your</h2>
+			<>
+				<Header />
+				<div id='bck-color'>
+					<div className='login-page'>
+						<div className='register-methods'>
+							<button className='demo-user' onClick={this.handleDemo}>
+								Continue As A Demo User
+							</button>
+							<Link to='/signup'>
+								<button>Go to Sign Up</button>
+							</Link>
+						</div>
+						<div className='signup-or'>OR LOG IN BELOW</div>
+						<div className='login-cont'>
+							<h2>Log in using your</h2>
 
-					<form>
-						<h4>
-							<div>
-								<p
-									className={`selected ${uSelected}`}
-									onClick={() =>
-										this.setState({
-											loginWith: 'Username',
-											Selected: 'username',
-										})
-									}>
-									username
-								</p>{' '}
-								<p
-									className={`selected ${eSelected}`}
-									onClick={() =>
-										this.setState({ loginWith: 'Email', Selected: 'email' })
-									}>
-									email
-								</p>
-							</div>
-						</h4>
-						<label>
-							{this.state.loginWith}
-							<input
-								type='text'
-								value={this.state[loginType]}
-								onChange={this.handleInput(loginType)}
-							/>
-						</label>
-						<label>
-							Password
-							<input
-								type='password'
-								value={this.state.password}
-								onChange={this.handleInput('password')}
-							/>
-						</label>
-						{errors.length > 0 ? (
-							<h3 className='form-errors'>{errors[0]}</h3>
-						) : (
-							<h3 className='form-errors none'></h3>
-						)}
-						<button onClick={this.handleSubmit}>Log In</button>
-					</form>
+							<form>
+								<h4>
+									<p
+										className={`selected ${uSelected}`}
+										onClick={() =>
+											this.setState({
+												loginWith: 'Username',
+												Selected: 'username',
+											})
+										}>
+										username
+									</p>
+									<p
+										className={`selected ${eSelected}`}
+										onClick={() =>
+											this.setState({ loginWith: 'Email', Selected: 'email' })
+										}>
+										email
+									</p>
+								</h4>
+								<label>
+									{this.state.loginWith}
+									<input
+										type='text'
+										value={this.state[loginType]}
+										onChange={this.handleInput(loginType)}
+									/>
+								</label>
+								<label>
+									Password
+									<input
+										type='password'
+										value={this.state.password}
+										onChange={this.handleInput('password')}
+									/>
+								</label>
+								{errors.length > 0 ? (
+									<h3 className='form-errors'>{errors[0]}</h3>
+								) : (
+									<h3 className='form-errors none'></h3>
+								)}
+								<button onClick={this.handleSubmit}>Log In</button>
+							</form>
+						</div>
+					</div>
 				</div>
-			</div>
+			</>
 		);
 	}
 }

@@ -1,4 +1,5 @@
 .main-body {
-    display: grid;
-	grid-template-rows: 0px 80px 950px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }

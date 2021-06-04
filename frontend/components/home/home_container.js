@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { createSession } from '../actions/session_actions';
+import { createSession } from '../../actions/session_actions';
 import Home from './home';
 
 const mDTP = (dispatch) => ({
