@@ -11,21 +11,21 @@
 #  updated_at      :datetime         not null
 
 class User < ApplicationRecord
-
     has_many :likes,
-        foreign_key: :user_id,
-        class_name: :Like,
-        dependent: :destroy
-
+    foreign_key: :user_id,
+    class_name: :Like,
+    dependent: :destroy
+    
     has_many :playlists,
-        foreign_key: :user_id,
-        class_name: :Playlist
-
+    foreign_key: :user_id,
+    class_name: :Playlist
+    
     attr_reader :password
-
+    
     validates :password_digest, presence: true
     validates :username, :email, presence: true, uniqueness: true
     validates :password, length: {minimum: 6}, allow_nil: true
+    validates_format_of :email, with: URI::MailTo::EMAIL_REGEXP
     
     after_initialize :ensure_session_token
 
