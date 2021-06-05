@@ -13,7 +13,6 @@ const Header = () => {
 				</Link>
 				<Link to='/'>BigTimeSound!</Link>
 			</h1>
-			
 		</header>
 	);
 };

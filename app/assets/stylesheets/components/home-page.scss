@@ -9,6 +9,7 @@
 	color: $big-darkblue;
 	justify-items: center;
 	align-items: center;
+	overflow-y: hidden;
 
 	a {
 		display: flex;
@@ -22,6 +23,7 @@
 		width: 40%;
 		justify-content: center;
 		border-radius: 30px;
+		margin-top: 53px;
 
 		&:hover {
 			background-color: $big-darkblue-hover;
@@ -33,12 +35,13 @@
 
 	p {
 		font-size: small;
-		align-self: flex-end;
+		margin-top: 83px;
 	}
 
 	h1 {
 		font-size: 45px;
 		font-weight: 600;
+		margin-top: 9px;
 	}
 
 	h4 {
