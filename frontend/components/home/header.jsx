@@ -13,14 +13,7 @@ const Header = () => {
 				</Link>
 				<Link to='/'>BigTimeSound!</Link>
 			</h1>
-			<div className='header-buttons'>
-				<Link to='/signup'>
-					<button>Sign Up</button>
-				</Link>
-				<Link to='/login'>
-					<button>Log In</button>
-				</Link>
-			</div>
+			
 		</header>
 	);
 };
