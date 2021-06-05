@@ -21,17 +21,18 @@ form {
 
 	button {
 		align-self: flex-end;
-        background-color: $big-black;
+        background-color: $big-blue;
         transition: background-color 0.3s ease;
 		height: 50px;
 		width: 50%;
         border-radius: 30px;
         font-size: large;
-        color: whitesmoke;
-
+		color: $big-darkblue;
+		
 		&:hover {
 			cursor: pointer;
-			background-color: $big-blue;
+			background-color: $big-darkblue;
+			color: whitesmoke;
 		}
 	}
 }

@@ -24,10 +24,11 @@
 			height: 40px;
 			width: 100%;
 			border-radius: 30px;
-			color: whitesmoke;
 			background-color: $big-blue;
 			transition: background-color 0.3s ease;
-
+			color: $big-darkblack;
+			font-size: large;
+			
 			&:hover {
 				background-color: $big-darkblue;
 				color: whitesmoke;
@@ -38,11 +39,8 @@
 		.demo-user {
 			background-color: $big-black;
 			transition: background-color 0.3s ease;
-			&:hover {
-				background-color: $big-darkblue;
-				color: whitesmoke;
-				border-color: whitesmoke;
-			}
+			color: whitesmoke;
+			
 		}
 	}
 
@@ -128,10 +126,5 @@
 
 #bck-color {
 	height: 100%;
-	background: linear-gradient(
-		178deg,
-		$big-red 0%,
-		$big-darkred 70%,
-		$big-black 120%
-	);
+	background: linear-gradient(178deg, #b8b8b8 -6%, #8b6e6e 39%, $big-darkblack 100%);
 }
