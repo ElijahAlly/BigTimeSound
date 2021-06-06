@@ -9,17 +9,20 @@
     position: sticky;
 
     .blue {
-        background-color: blue;
+        background-color: $big-lightblack;
+        border-top: .5px solid gray;
         z-index: 2;
     }
 
     .red {
-        background-color: red;
+        background-color: $big-lightblack;
+        border-top: .5px solid gray;
         z-index: 2;
     }
 
     .green {
-        background-color: green;
+        background-color: $big-lightblack;
+        border-top: .5px solid gray;
         z-index: 2;
     }
 }
