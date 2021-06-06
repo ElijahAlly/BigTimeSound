@@ -1,0 +1,70 @@
+.user-header {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	height: 60px;
+	background: linear-gradient(358deg, #1a1515 -229%, $big-darkpurple);
+	top: 0;
+	right: 0;
+	left: 175px;
+	position: fixed;
+
+	
+
+	svg {
+		margin-right: 43px;
+		padding: 5px;
+		border-radius: 3px;
+
+		&:hover {
+			cursor: pointer;
+			color: $big-black;
+			background-color: $big-lightgray;
+		}
+	}
+
+	.closed {
+		display: none;
+	}
+
+	.open {
+		display: block;
+	}
+
+	.header-dropdown {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		position: fixed;
+		top: 50px;
+		right: 43px;
+		width: 200px;
+		border-radius: 30px;
+		height: 70px;
+
+		&:first-child {
+			border-top-left-radius: 2px;
+			border-top-right-radius: 2px;
+		}
+
+		&:last-child {
+			border-bottom-left-radius: 2px;
+			border-bottom-right-radius: 2px;
+		}
+
+		button {
+			width: 100%;
+			background-color: $big-darkgray;
+			color: whitesmoke;
+			padding: 7px;
+			height: 35px;
+			border-radius: 0;
+
+			&:hover {
+				color: whitesmoke;
+				cursor: pointer;
+				background-color: $big-lightgray;
+			}
+		}
+	}
+}

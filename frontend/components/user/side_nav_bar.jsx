@@ -4,14 +4,29 @@ import { Link } from 'react-router-dom';
 class SideNavBar extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { user: this.props.currentUser };
+		this.state = {
+			user: this.props.currentUser,
+			selected: this.props.selected,
+		};
+	}
+
+	componentDidMount() {
+		if (this.state.selected === 'search') {
+			this.handleClass('search');
+		} else if (this.state.selected === 'library') {
+			this.handleClass('library');
+		} else if (this.state.selected === 'home') {
+			this.handleClass('home');
+		} else if (this.state.selected === 'liked-songs') {
+			this.handleClass('liked-songs');
+		} else if (this.state.selected === 'create-playlist') {
+			this.handleClass('create-playlist');
+		}
 	}
 
 	handleClass(type) {
 		const element = document.getElementsByClassName(type)[0];
 		const oldChecked = document.getElementsByClassName('checked')[0];
-		console.log('element:', element);
-		console.log('oldChecked:', oldChecked);
 		if (oldChecked) {
 			oldChecked.classList.remove('checked');
 		}
@@ -19,7 +34,7 @@ class SideNavBar extends React.Component {
 	}
 
 	render() {
-		const { user } = this.state;
+		const { user, selected } = this.state;
 		const { username, email, id } = user;
 
 		return (
@@ -37,7 +52,7 @@ class SideNavBar extends React.Component {
 
 					<section className='side-navigation-buttons'>
 						<Link
-							className='side home checked'
+							className='side home'
 							to={`/users/${id}`}
 							onClick={() => this.handleClass('home')}>
 							<svg className='svg-home' viewBox='0 0 576 512'>
@@ -69,10 +84,34 @@ class SideNavBar extends React.Component {
 							</svg>
 							<div>Your Library</div>
 						</Link>
+						<Link
+							className='side create-playlist'
+							to={`/users/${id}/create-playlist`}
+							onClick={() => this.handleClass('create-playlist')}>
+							<svg
+								viewBox='0 0 16 16'
+								className='svg-create-playlist'>
+								<path fill='currentColor' d='M14 7H9V2H7v5H2v2h5v5h2V9h5z'></path>
+								<path fill='none' d='M0 0h16v16H0z'></path>
+							</svg>
+							<div>Create Playlist</div>
+						</Link>
+						<Link
+							className='side liked-songs'
+							to={`/users/${id}/liked-songs`}
+							onClick={() => this.handleClass('liked-songs')}>
+							<svg viewBox='0 0 16 16' className='svg-liked-songs'>
+								<path fill='none' d='M0 0h16v16H0z'></path>
+								<path
+									fill='currentColor'
+									d='M13.797 2.727a4.057 4.057 0 00-5.488-.253.558.558 0 01-.31.112.531.531 0 01-.311-.112 4.054 4.054 0 00-5.487.253c-.77.77-1.194 1.794-1.194 2.883s.424 2.113 1.168 2.855l4.462 5.223a1.791 1.791 0 002.726 0l4.435-5.195a4.052 4.052 0 001.195-2.883 4.057 4.057 0 00-1.196-2.883z'></path>
+							</svg>
+							<div>Liked Songs</div>
+						</Link>
 					</section>
 				</div>
 				<section className='album-cover'>
-					<img src='https://blog.dozmia.com/content/images/2019/01/Portrait-The-Weeknd.jpg' />
+					<img src='https://images.roughtrade.com/product/images/files/000/000/135/original/R-567336-1249586205.jpeg.jpg?1617720633' />
 				</section>
 			</section>
 		);

@@ -3,7 +3,7 @@ import SideNavBar from './side_nav_bar';
 import MainShowPageContainer from './main_show_page_container';
 import SongPlaybackBar from './song_playback_bar';
 
-class UserLibrary extends Component {
+class LikedSongs extends Component {
 	constructor(props) {
 		super(props);
 		const cUser = this.props.currentUser;
@@ -15,13 +15,13 @@ class UserLibrary extends Component {
 	render() {
 		return (
 			<>
-				<div className='user-library-page'>
+				<div className='liked-songs-page'>
 					<SideNavBar
 						currentUser={this.state.currentUser}
 						logout={() => this.props.logout()}
-						selected={'library'}
+						selected={'liked-songs'}
 					/>
-					<MainShowPageContainer path={this.props.match.path}/>
+					<MainShowPageContainer path={this.props.match.path} />
 				</div>
 				<SongPlaybackBar />
 			</>
@@ -29,4 +29,4 @@ class UserLibrary extends Component {
 	}
 }
 
-export default UserLibrary;
+export default LikedSongs;

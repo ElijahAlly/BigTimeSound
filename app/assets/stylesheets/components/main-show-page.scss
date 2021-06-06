@@ -1,12 +1,26 @@
 .main-show-page {
-	background: linear-gradient(358deg, #1a1515 60%, $big-darkpurple);
-	height: 100%;
+	background: linear-gradient(358deg, #1a1515 30%, $big-darkpurple 110%);
+	height: 3000px;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: flex-start;
 	padding-bottom: 100px;
-	padding-top: 50px;
 	color: whitesmoke;
+	margin-left: 175px;
+	padding-top: 150px;
+	position: relative;
+
+	// home screen
+	.home-screen {
+		h1 {
+			position: fixed;
+			top: 19px;
+			padding-left: 19px;
+			font-weight: 500;
+			font-size: 25px;
+		}
+
+	}
 
 }
