@@ -53,8 +53,8 @@ export const deletePlaylist = (userId, playlistId) => (dispatch) =>
 	);
 
 export const fetchPlaylist = (userId, playlistId) => (dispatch) =>
-	PlaylistApiUtil.fetchPlaylist(userId, playlistId).then((playlist) =>
-		dispatch(receivePlaylist(playlist)),
+	PlaylistApiUtil.fetchPlaylist(userId, playlistId).then(
+		(playlist) => dispatch(receivePlaylist(playlist)),
 		(err) => dispatch(receivePlaylistErrors(err.responseJSON))
 	);
 

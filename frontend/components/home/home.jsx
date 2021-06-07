@@ -31,7 +31,7 @@ class Home extends React.Component {
 					<h4>
 						Enjoy ad-free music, offline listening, and more. Cancel anytime.
 					</h4>
-					<Link to='/login'>SIGN UP NOW</Link>
+					<Link to='/signup'>SIGN UP NOW</Link>
 				</div>
 			</>
 		);
