@@ -26,7 +26,7 @@ class SignUp extends Component {
 		e.preventDefault();
 		this.props
 			.createUser(this.state)
-			.then((user) => <Redirect to={`/users/${user.id}`} />);
+			.then((user) => <Redirect to={`/users/${user.id}`} />)
 	}
 
 	handleDemo(e) {

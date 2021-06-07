@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import SideNavBarContainer from './side_nav_bar_container';
-import MainShowPageContainer from './main_show_page_container';
-import SongPlaybackBar from './song_playback_bar';
+import SideNavBarContainer from '../user/side_nav_bar_container';
+import SongPlaybackBar from '../user/song_playback_bar';
+import UserHeaderContainer from '../user/user_header_container';
 
-class UserHome extends Component {
+class PlaylistShow extends Component {
 	constructor(props) {
 		super(props);
-		const cUser = this.props.currentUser;
 		this.state = {
-			currentUser: cUser,
 			clicked: 0,
 		};
 		this.closeDropdown = this.closeDropdown.bind(this);
@@ -34,11 +32,14 @@ class UserHome extends Component {
 					logout={() => this.props.logout()}
 					selected={'home'}
 				/>
-				<MainShowPageContainer path={this.props.match.path} />
+				<section className='main-show-page'>
+					<UserHeaderContainer />
+					<div>{this.props.playlist.name}</div>
+				</section>
 				<SongPlaybackBar />
 			</div>
-		);
+		)
 	}
 }
 
-export default UserHome;
+export default PlaylistShow;

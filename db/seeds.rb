@@ -37,9 +37,9 @@ cant_Feel_My_Face_Like = Like.create!(user_id: demo_user.id, song_id: cant_Feel_
 in_The_Night_Like = Like.create!(user_id: demo_user.id, song_id: in_The_Night.id)
 
 # Playlists
-sLATT = Playlist.create!(name: 'SLATT', user_id: demo_user.id)
+exPlaylist = Playlist.create!(name: 'exPlaylist', user_id: demo_user.id)
 
 # Playlist Inclusions
-pi_1 = PlaylistInclusion.create!(playlist_id: sLATT.id, song_id: party_Monster.id)
-pi_2 = PlaylistInclusion.create!(playlist_id: sLATT.id, song_id: starboy.id)
-pi_3 = PlaylistInclusion.create!(playlist_id: sLATT.id, song_id: the_Hills.id)
+pi_1 = PlaylistInclusion.create!(playlist_id: exPlaylist.id, song_id: party_Monster.id)
+pi_2 = PlaylistInclusion.create!(playlist_id: exPlaylist.id, song_id: starboy.id)
+pi_3 = PlaylistInclusion.create!(playlist_id: exPlaylist.id, song_id: the_Hills.id)

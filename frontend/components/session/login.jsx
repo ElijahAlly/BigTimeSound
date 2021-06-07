@@ -35,7 +35,7 @@ class Login extends Component {
 				email: this.state.email,
 				password: this.state.password,
 			})
-			.then((user) => <Redirect to={`/users/${user.id}`} />);
+			.then((user) => <Redirect to={`/users/${user.id}`} />)
 	}
 
 	handleDemo(e) {

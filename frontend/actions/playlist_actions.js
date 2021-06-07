@@ -8,7 +8,6 @@ export const RECEIVE_PLAYLIST_ERRORS = 'RECEIVE_PLAYLIST_ERRORS';
 export const CLEAR_PLAYLIST_ERRORS = 'CLEAR_PLAYLIST_ERRORS';
 
 const receivePlaylistErrors = (errors) => {
-	console.log(errors);
 	return {
 		type: RECEIVE_PLAYLIST_ERRORS,
 		errors,
@@ -36,8 +35,8 @@ const removePlaylist = (playlistId) => ({
 
 // sLATT = Playlist.create!(name: 'SLATT', user_id: 1)
 
-export const createPlaylist = (userId, playlist) => (dispatch) =>
-	PlaylistApiUtil.createPlaylist(userId, playlist).then(
+export const createPlaylist = (playlist) => (dispatch) =>
+	PlaylistApiUtil.createPlaylist(playlist).then(
 		(playlist) => dispatch(receivePlaylist(playlist)),
 		(err) => dispatch(receivePlaylistErrors(err.responseJSON))
 	);

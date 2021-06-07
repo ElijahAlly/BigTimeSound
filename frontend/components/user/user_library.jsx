@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SideNavBar from './side_nav_bar';
+import SideNavBarContainer from './side_nav_bar_container';
 import MainShowPageContainer from './main_show_page_container';
 import SongPlaybackBar from './song_playback_bar';
 
@@ -31,7 +31,7 @@ class UserLibrary extends Component {
 		return (
 			<>
 				<div className='user-library-page' onClick={this.closeDropdown}>
-					<SideNavBar
+					<SideNavBarContainer
 						currentUser={this.state.currentUser}
 						logout={() => this.props.logout()}
 						selected={'library'}

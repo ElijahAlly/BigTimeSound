@@ -96,4 +96,32 @@
 	.create-playlist {
 		margin-top: 40px;
 	}
+
+	.side-playlists {
+		height: 100%;
+		margin-top: 24px;
+		display: flex;
+		flex-direction: column;
+		overflow-y: auto;
+
+		&::-webkit-scrollbar {
+			width: 5px;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: rgb(153, 153, 153);
+			border-radius: 5px;
+		}
+
+		a {
+			margin: 7px;
+			padding: 10px 0 10px 10px;
+			border-radius: 7px;
+			color: rgb(153, 153, 153);
+
+			&:hover {
+				color: whitesmoke;
+			}
+		}
+	}
 }

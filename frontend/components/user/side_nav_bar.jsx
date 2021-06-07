@@ -11,6 +11,8 @@ class SideNavBar extends React.Component {
 	}
 
 	componentDidMount() {
+		this.props.fetchAllPlaylists(this.state.user.id);
+
 		if (this.state.selected === 'search') {
 			this.handleClass('search');
 		} else if (this.state.selected === 'library') {
@@ -36,6 +38,10 @@ class SideNavBar extends React.Component {
 	render() {
 		const { user, selected } = this.state;
 		const { username, email, id } = user;
+		let playlists = null;
+		if (this.props.playlists) {
+			playlists = this.props.playlists;
+		}
 
 		return (
 			<section className='side-nav-bar'>
@@ -88,10 +94,10 @@ class SideNavBar extends React.Component {
 							className='side create-playlist'
 							to={`/users/${id}/create-playlist`}
 							onClick={() => this.handleClass('create-playlist')}>
-							<svg
-								viewBox='0 0 16 16'
-								className='svg-create-playlist'>
-								<path fill='currentColor' d='M14 7H9V2H7v5H2v2h5v5h2V9h5z'></path>
+							<svg viewBox='0 0 16 16' className='svg-create-playlist'>
+								<path
+									fill='currentColor'
+									d='M14 7H9V2H7v5H2v2h5v5h2V9h5z'></path>
 								<path fill='none' d='M0 0h16v16H0z'></path>
 							</svg>
 							<div>Create Playlist</div>
@@ -110,6 +116,22 @@ class SideNavBar extends React.Component {
 						</Link>
 					</section>
 				</div>
+				<section className='side-playlists'>
+					{playlists !== null ? (
+						playlists.map((playlist) => {
+							return (
+								<Link
+									key={playlist.id}
+									to={`/users/${id}/playlist/${playlist.id}`}
+									onClick={() => this.props.fetchPlaylist(id, playlist.id)}>
+									{playlist.name}
+								</Link>
+							);
+						})
+					) : (
+						<div>No Playlists</div>
+					)}
+				</section>
 				<section className='album-cover'>
 					<img src='https://images.roughtrade.com/product/images/files/000/000/135/original/R-567336-1249586205.jpeg.jpg?1617720633' />
 				</section>
