@@ -13,7 +13,11 @@ class Playlist < ApplicationRecord
         foreign_key: :user_id,
         class_name: :User
 
-    has_many :playlist_inclusions,
+    has_many :songs,
         foreign_key: :playlist_id,
         class_name: :PlaylistInclusion
+
+    # def addSong(song)
+    #     self.
+    # end
 end

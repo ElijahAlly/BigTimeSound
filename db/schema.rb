@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_04_225841) do
+ActiveRecord::Schema.define(version: 2021_06_07_033013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 2021_06_04_225841) do
     t.integer "artist_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["artist_id"], name: "index_albums_on_artist_id", unique: true
   end
 
   create_table "artists", force: :cascade do |t|
@@ -36,17 +35,13 @@ ActiveRecord::Schema.define(version: 2021_06_04_225841) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["song_id"], name: "index_likes_on_song_id", unique: true
-    t.index ["user_id"], name: "index_likes_on_user_id", unique: true
   end
 
   create_table "playlist_inclusions", force: :cascade do |t|
-    t.string "name", null: false
     t.integer "song_id", null: false
     t.integer "playlist_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["playlist_id"], name: "index_playlist_inclusions_on_playlist_id", unique: true
-    t.index ["song_id"], name: "index_playlist_inclusions_on_song_id", unique: true
   end
 
   create_table "playlists", force: :cascade do |t|
@@ -63,8 +58,6 @@ ActiveRecord::Schema.define(version: 2021_06_04_225841) do
     t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["album_id"], name: "index_songs_on_album_id", unique: true
-    t.index ["artist_id"], name: "index_songs_on_artist_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
