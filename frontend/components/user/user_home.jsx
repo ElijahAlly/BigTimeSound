@@ -9,21 +9,21 @@ class UserHome extends Component {
 		const cUser = this.props.currentUser;
 		this.state = {
 			currentUser: cUser,
-			clicked: 0
+			clicked: 0,
 		};
-		this.closeDropdown = this.closeDropdown.bind(this)
+		this.closeDropdown = this.closeDropdown.bind(this);
 	}
 
 	closeDropdown() {
-		this.setState({clicked: ++this.state.clicked})
+		this.setState({ clicked: ++this.state.clicked });
 		const dropdownEles = Array.from(document.getElementsByClassName('open'));
 		if (this.state.clicked === 2 && dropdownEles) {
 			dropdownEles.forEach((ele) => {
 				ele.classList.remove('open');
 				ele.classList.add('closed');
 			});
-			this.setState({clicked: 0})
-		} 
+			this.setState({ clicked: 0 });
+		}
 	}
 
 	render() {
@@ -34,7 +34,7 @@ class UserHome extends Component {
 					logout={() => this.props.logout()}
 					selected={'home'}
 				/>
-				<MainShowPageContainer path={this.props.match.path}/>
+				<MainShowPageContainer path={this.props.match.path} />
 				<SongPlaybackBar />
 			</div>
 		);

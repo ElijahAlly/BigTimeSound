@@ -9,13 +9,28 @@ class CreatePlaylist extends Component {
 		const cUser = this.props.currentUser;
 		this.state = {
 			currentUser: cUser,
+			clicked: 0,
 		};
+		this.closeDropdown = this.closeDropdown.bind(this);
+	}
+
+
+	closeDropdown() {
+		this.setState({ clicked: ++this.state.clicked });
+		const dropdownEles = Array.from(document.getElementsByClassName('open'));
+		if (this.state.clicked === 2 && dropdownEles) {
+			dropdownEles.forEach((ele) => {
+				ele.classList.remove('open');
+				ele.classList.add('closed');
+			});
+			this.setState({ clicked: 0 });
+		}
 	}
 
 	render() {
 		return (
 			<>
-				<div className='create-playlist-page'>
+				<div className='create-playlist-page' onClick={this.closeDropdown}>
 					<SideNavBar
 						currentUser={this.state.currentUser}
 						logout={() => this.props.logout()}
