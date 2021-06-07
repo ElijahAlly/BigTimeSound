@@ -1,0 +1,1 @@
+json.array! @playlists.to_a
