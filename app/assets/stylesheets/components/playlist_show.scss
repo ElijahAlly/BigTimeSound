@@ -1,0 +1,56 @@
+.playlist-show {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 65px;
+    top: 100px; 
+
+    .header{
+        display: flex;
+        padding-bottom: 80px;
+        justify-content: start;
+        align-items: flex-end;
+        border-bottom: .5px solid $big-lightgray;
+
+        .title {
+            display: flex;
+            flex-direction: column;
+            height: fit-content;
+            margin-left: 40px;
+
+            h3 {
+                font-size: 12px;
+                font-weight: bold;
+            }
+            
+            h1 {
+                margin-top: 10px;
+                margin-bottom: 10px;
+                font-size: 50px;
+                font-weight: bold;
+            }
+
+            .users-name {
+                margin-bottom: 5px;
+            }
+        }
+        
+        svg {
+            background-color: #282828;
+            padding: 75px;
+			transition: background-color 0.3s ease;
+
+            &:hover {
+                cursor: pointer;
+                background-color: $big-blue;
+            }
+
+        }
+    }
+
+    .search {
+        margin-top: 25px;
+        font-size: large;
+        font-weight: bold;
+    }
+}

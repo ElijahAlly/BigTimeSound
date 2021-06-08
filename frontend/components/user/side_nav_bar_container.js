@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
 import SideNavBar from './side_nav_bar';
-import { fetchAllPlaylists, fetchPlaylist } from '../../actions/playlist_actions';
+import {
+	fetchAllPlaylists,
+	fetchPlaylist,
+} from '../../actions/playlist_actions';
 
 const mSTP = (state, ownProps) => ({
 	currentUser: state.entities.user[state.session.currentUser],
@@ -9,7 +12,8 @@ const mSTP = (state, ownProps) => ({
 
 const mDTP = (dispatch) => ({
 	fetchAllPlaylists: (userId) => dispatch(fetchAllPlaylists(userId)),
-    fetchPlaylist: (userId, playlistId) => dispatch(fetchPlaylist(userId, playlistId)),
+	fetchPlaylist: (userId, playlistId) =>
+		dispatch(fetchPlaylist(userId, playlistId)),
 });
 
 export default connect(mSTP, mDTP)(SideNavBar);

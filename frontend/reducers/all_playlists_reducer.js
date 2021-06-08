@@ -5,7 +5,11 @@ const allPlaylistReducer = (state = null, action) => {
 
 	switch (action.type) {
 		case RECEIVE_ALL_PLAYLIST:
-			return action.playlists;
+			const newState = {};
+			action.playlists.forEach(playlist => {
+				newState[playlist.id] = playlist
+			});
+			return newState;
 		case LOGOUT_CURRENT_USER:
 			return {};
 		default:

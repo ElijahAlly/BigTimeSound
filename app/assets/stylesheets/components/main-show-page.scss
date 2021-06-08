@@ -11,6 +11,14 @@
 	padding-top: 150px;
 	position: relative;
 
+	.closed {
+        display: none;
+    }
+
+    .open {
+        display: block;
+    }
+	
 	// home screen
 	.home-screen {
 		h1 {

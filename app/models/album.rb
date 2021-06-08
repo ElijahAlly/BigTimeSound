@@ -8,7 +8,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+
 class Album < ApplicationRecord
+    has_one_attached :cover
+
     has_many :songs,
         foreign_key: :album_id,
         class_name: :Song

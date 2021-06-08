@@ -38,9 +38,9 @@ class SideNavBar extends React.Component {
 	render() {
 		const { user, selected } = this.state;
 		const { username, email, id } = user;
-		let playlists = null;
+		let playlists;
 		if (this.props.playlists) {
-			playlists = this.props.playlists;
+			playlists = Object.values(this.props.playlists)
 		}
 
 		return (
@@ -117,7 +117,7 @@ class SideNavBar extends React.Component {
 					</section>
 				</div>
 				<section className='side-playlists'>
-					{playlists !== null ? (
+					{playlists ? (
 						playlists.map((playlist) => {
 							return (
 								<Link

@@ -33,7 +33,6 @@ const removePlaylist = (playlistId) => ({
 	playlistId,
 });
 
-// sLATT = Playlist.create!(name: 'SLATT', user_id: 1)
 
 export const createPlaylist = (playlist) => (dispatch) =>
 	PlaylistApiUtil.createPlaylist(playlist).then(

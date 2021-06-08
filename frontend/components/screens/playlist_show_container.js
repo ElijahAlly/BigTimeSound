@@ -6,7 +6,6 @@ const mSTP = ({ entities: { user, playlists, playlist }, session }, ownProps) =>
 	return ({
 		currentUser: user[session.currentUser],
 		playlists,
-		playlist 
 	})
 };
 
