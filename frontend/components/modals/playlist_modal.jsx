@@ -4,8 +4,7 @@ class PlaylistModal extends Component {
 	constructor(props) {
 		super(props);
 		console.log(props);
-		// const curUser = this.props.currentUser
-		const playlist = this.props.playlist;
+		const playlist = this.props.playlist || { user_id: null, name: '', id: null };
 		this.state = {
 			user_id: playlist.user_id,
 			name: `${playlist.name}`,
@@ -13,39 +12,23 @@ class PlaylistModal extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	handleInput() {
-		return (e) => {
-			this.setState({ name: e.target.value });
-		};
-	}
-
-	closeModal() {
-		const modal = document.getElementById('outer-modal-div');
-
-        if (modal && modal.className === 'open') {
-			modal.classList.remove('open');
-			modal.classList.add('closed');
-		}
-	}
-
 	handleSubmit(e) {
 		e.preventDefault();
-		this.props
-			.updatePlaylist(this.state)
-			.then(() => (
-				<Redirect
-					to={`/users/${this.props.playlist.user_id}/playlist/${this.props.playlist.id}`}
-				/>
-			));
+
+		this.props.updatePlaylist(this.state.user_id, this.state).then(this.props.closeModal());
+	}
+
+	handleInput() {
+		return (e) => this.setState({ name: e.target.value });
 	}
 
 	render() {
 		return (
-			<section id='modal'>
+			<section id='modal' className='modal-closed'>
 				<div className='modal-header'>
 					<h2>Edit details</h2>
 					<svg
-						onClick={this.closeModal}
+						onClick={() => this.handleModalClick('modal-closed')}
 						fill='currentColor'
 						height='16'
 						width='16'

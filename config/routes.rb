@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     end
 
     resources :albums, only: :show
+    resources :songs, only: :show
     resource :session, only: [:create], as: 'new_session'
     resource :session, only: [:destroy]
     # resources :likes, only: [:create, :destroy]

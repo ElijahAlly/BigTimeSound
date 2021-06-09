@@ -8,6 +8,7 @@ class SideNavBar extends React.Component {
 			user: this.props.currentUser,
 			selected: this.props.selected,
 		};
+
 	}
 
 	componentDidMount() {
@@ -39,8 +40,10 @@ class SideNavBar extends React.Component {
 		const { user, selected } = this.state;
 		const { username, email, id } = user;
 		let playlists;
+		let playlistsLength;
 		if (this.props.playlists) {
-			playlists = Object.values(this.props.playlists)
+			playlists = Object.values(this.props.playlists);
+			playlistsLength = playlists.length + 1;
 		}
 
 		return (
@@ -92,7 +95,7 @@ class SideNavBar extends React.Component {
 						</Link>
 						<Link
 							className='side create-playlist'
-							to={`/users/${id}/create-playlist`}
+							to={`/users/${id}/playlist/${playlistsLength}`}
 							onClick={() => this.handleClass('create-playlist')}>
 							<svg viewBox='0 0 16 16' className='svg-create-playlist'>
 								<path
@@ -115,6 +118,7 @@ class SideNavBar extends React.Component {
 							<div>Liked Songs</div>
 						</Link>
 					</section>
+					<div id='side-line-break'></div>
 				</div>
 				<section className='side-playlists'>
 					{playlists ? (

@@ -1,6 +1,7 @@
 #modal {
-	height: 375px;
-	width: 500px;
+	display: block;
+	height: 250px;
+	width: 400px;
 	border-radius: 10px;
 	background-color: $big-darkgray;
 	z-index: 2;
@@ -32,6 +33,31 @@
 
 	.info {
 		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+
+		input {
+			width: 75%;
+			height: 30px;
+			border-radius: 10px;
+			border: none;
+		}
+
+		button {
+			border-radius: 10px;
+			margin-top: 50px;
+			width: 50%;
+			height: 30px;
+			background-color: $big-lightgray;
+			color: whitesmoke;
+			font-size: large;
+			
+			&:hover {
+				color: black;
+				background-color: $big-blue;
+			}
+		}
 	}
 
 }

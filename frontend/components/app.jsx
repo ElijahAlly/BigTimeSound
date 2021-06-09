@@ -12,9 +12,11 @@ import LikedSongsContainer from './user/liked_songs_container';
 import CreatePlaylistContainer from './user/create_playlist_container';
 import ProfileContainer from './user/profile_container';
 import PlaylistShowContainer from './screens/playlist_show_container';
+import Modal from './modals/modal';
 
 const App = () => (
 	<>
+		<Modal />
 		<Switch>
 			<ProtectedRoute path='/users/:id/playlist/:id' component={PlaylistShowContainer} />
 			<ProtectedRoute path='/users/:id/create-playlist' component={CreatePlaylistContainer} />

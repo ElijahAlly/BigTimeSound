@@ -10,6 +10,8 @@
 #  updated_at :datetime         not null
 #
 class Song < ApplicationRecord
+    has_one_attached :mp3
+
     has_many :likes,
         foreign_key: :song_id,
         class_name: :Like

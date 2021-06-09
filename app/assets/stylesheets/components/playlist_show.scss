@@ -2,15 +2,14 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    left: 65px;
+    left: 35px;
     top: 100px; 
 
     .header{
         display: flex;
-        padding-bottom: 80px;
+        padding-bottom: 40px;
         justify-content: start;
         align-items: flex-end;
-        border-bottom: .5px solid $big-lightgray;
 
         .title {
             display: flex;
@@ -53,4 +52,26 @@
         font-size: large;
         font-weight: bold;
     }
+
+    .more-info {
+        color: $big-lightgray;
+        border-bottom: .5px solid $big-lightgray;
+        padding-bottom: 20px;
+
+        svg {
+            &:hover {
+                cursor: pointer;
+                color: whitesmoke;
+            }
+        }
+    }
+
+}
+
+.modal-closed {
+    display: none;
+}
+
+.msp-playlist-show {
+	background: linear-gradient(360deg, #1a1818 89%, rgba(0,0,0,.5) 89%)
 }

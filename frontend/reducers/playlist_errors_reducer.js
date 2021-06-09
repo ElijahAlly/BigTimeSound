@@ -5,14 +5,14 @@ import {
 
 
 
-const PlaylistErrorsReducer = (state = {}, action) => {
+const PlaylistErrorsReducer = (state = null, action) => {
 	Object.freeze(state);
 
 	switch (action.type) {
 		case RECEIVE_PLAYLIST_ERRORS:
-			return action.errors;
+			return null;
 		case CLEAR_PLAYLIST_ERRORS:
-			return {};
+			return null;
 		default:
 			return state;
 	}

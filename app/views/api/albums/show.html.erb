@@ -1,0 +1,11 @@
+<!-- <%# json.extract! @album, :id, :cover, :songs, :artist_id, :name %> -->
+<h1><%= @album.name %></h1>
+<img id='currently-playing-album-cover' src='<%= url_for(@album.cover) %>'/>
+<ul>
+    <% @songs.each do |song| %>
+        <li>
+            <div><%= song.title %></div>
+            <audio controls src="<%= url_for(song.mp3) %>"></audio>
+        </li>
+    <% end %>
+</ul>
