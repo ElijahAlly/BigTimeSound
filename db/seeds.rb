@@ -54,7 +54,7 @@ time_Flies = Song.create!(title: 'Time Flies', artist_id: drake.id, album_id: da
 
 # Flower Boy
 november = Song.create!(title: 'November', artist_id: tyler_The_Creator.id, album_id: flower_Boy.id)
-where_This_Flower_Blooms = Song.create!(title: 'Where Thie Flower Blooms', artist_id: tyler_The_Creator.id, album_id: flower_Boy.id)
+where_This_Flower_Blooms = Song.create!(title: 'Where This Flower Blooms', artist_id: tyler_The_Creator.id, album_id: flower_Boy.id)
 see_You_Again = Song.create!(title: 'See You Again', artist_id: tyler_The_Creator.id, album_id: flower_Boy.id)
 
 # Timbre

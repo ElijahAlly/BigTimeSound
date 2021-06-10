@@ -1,6 +1,6 @@
-export const fetchAlbum = (albumId) => {
+export const fetchAlbums = () => {
 	return $.ajax({
-		url: `/api/albums/${albumId}`,
+		url: `/api/albums`,
 		method: 'GET',
 	});
 };

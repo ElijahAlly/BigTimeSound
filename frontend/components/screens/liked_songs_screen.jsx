@@ -33,7 +33,6 @@ class LikedSongsScreen extends Component {
 				</section>
 				<section>
 					<ul className='song-list'>
-
 						{this.props.songs ? (
 							this.props.songs.map((song, i) => <SongItem number={i+1} key={song.id} song={song}/>)
 						) : (

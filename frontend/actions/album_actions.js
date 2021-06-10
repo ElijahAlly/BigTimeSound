@@ -1,14 +1,12 @@
-import * as SongApiUtil from '../util/album_api_util';
+import * as AlbumApiUtil from '../util/album_api_util';
 
-export const RECEIVE_ALBUM = 'RECEIVE_ALBUM';
+export const RECEIVE_ALBUMS = 'RECEIVE_ALBUMS';
 
-const receiveAlbum = ({album}) => ({
-	type: RECEIVE_ALBUM,
-	album,
+const receiveAlbums = (albums) => ({
+	type: RECEIVE_ALBUMS,
+	albums,
 });
 
-
-export const fetchAlbum = (albumId) => (dispatch) =>
-	SongApiUtil.fetchAlbum(albumId).then(
-		(album) => dispatch(receiveAlbum(album)),
-	);
+export const fetchAlbums = () => (dispatch) =>
+	AlbumApiUtil.fetchAlbums()
+	.then((albums) => dispatch(receiveAlbums(albums)));

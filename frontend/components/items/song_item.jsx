@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { pauseSong, playSong } from '../../actions/currently_playing';
 import { fetchAllSongs } from '../../actions/song_actions';
-import { fetchAlbum } from '../../actions/album_actions';
+import { fetchAlbums } from '../../actions/album_actions';
 
 class SongItem extends Component {
 	constructor(props) {
@@ -21,7 +21,7 @@ class SongItem extends Component {
 
 	
 	componentDidMount() {
-		this.props.fetchAlbum(this.props.song.album_id);
+		this.props.fetchAlbums().then(albums => console.log(albums));
 
 		// this.props.fetchAllSongs();
 		// 	this.props.fetchArtist(this.state.artist_id)
@@ -46,10 +46,10 @@ class SongItem extends Component {
 	render() {
 		let highlighted = '';
 		if (this.props.currentlyPlayingSong && this.props.currentlyPlayingSong.id === this.state.song.id) {highlighted = 'now-playing'};
-		let duration = 'no time';
-		this.state.audio.onloadedmetadata = () => duration = this.state.audio.duration
 		let albumCover = 'no album cover'
 		if (this.props.album) {albumCover = this.props.album.url}
+		console.log(this.props.album)
+
 		return (
 			<li onClick={this.togglePlay} className={`${highlighted}`}>
 				<h4 className='song-number' >
@@ -65,7 +65,6 @@ class SongItem extends Component {
 				<h4><img className='album-cover' src={albumCover} alt="album" /></h4>
 				<h4>{this.state.song.title}</h4>
 				<h4 className='duration'>
-					{duration}
 				</h4>
 			</li>
 		);
@@ -78,12 +77,12 @@ const mSTP = (state, ownProps) => {
 		number: ownProps.number,
 		isPlaying: state.ui.currentlyPlaying.isPlaying,
 		currentlyPlayingSong: state.ui.currentlyPlaying.song,
-		album: state.ui.currentlyPlayingAlbum
+		album: state.entities.albums[ownProps.song.album_id]
 	};
 };
 
 const mDTP = (dispatch) => ({
-	fetchAlbum: (albumId) => dispatch(fetchAlbum(albumId)),
+	fetchAlbums: () => dispatch(fetchAlbums()),
 	fetchAllSongs: () => dispatch(fetchAllSongs()),
 	playSong: (song) => dispatch(playSong(song)),
 	pauseSong: () => dispatch(pauseSong()),
