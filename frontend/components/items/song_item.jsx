@@ -47,8 +47,11 @@ class SongItem extends Component {
 		let highlighted = '';
 		if (this.props.currentlyPlayingSong && this.props.currentlyPlayingSong.id === this.state.song.id) {highlighted = 'now-playing'};
 		let albumCover = 'no album cover'
-		if (this.props.album) {albumCover = this.props.album.url}
-		console.log(this.props.album)
+		let albumName = 'no album name'
+		if (this.props.album) {
+			albumCover = this.props.album.url
+			albumName = this.props.album.name
+		}
 
 		return (
 			<li onClick={this.togglePlay} className={`${highlighted}`}>
@@ -64,6 +67,7 @@ class SongItem extends Component {
 				</h4>
 				<h4><img className='album-cover' src={albumCover} alt="album" /></h4>
 				<h4>{this.state.song.title}</h4>
+				<h4 className='album-name'>{albumName}</h4>
 				<h4 className='duration'>
 				</h4>
 			</li>

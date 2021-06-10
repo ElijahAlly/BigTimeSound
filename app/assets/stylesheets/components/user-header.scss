@@ -3,12 +3,12 @@
 	justify-content: flex-end;
 	align-items: center;
 	height: 60px;
-	background: transparent;
+	background: rgba(21, 21, 21, 0.821);
 	top: 0;
 	right: 0;
 	left: 175px;
 	position: fixed;
-	z-index: 101;
+	
 
 	svg {
 		margin-right: 43px;
@@ -33,7 +33,7 @@
 		display: block;
 	}
 
-	#more-info {
+	.header-dropdown, #more-info {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;

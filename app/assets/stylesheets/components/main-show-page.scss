@@ -113,9 +113,10 @@
 	.liked-songs-screen {
 		padding-top: 150px;
 		background: linear-gradient(360deg, #1a1818 76%, #5038a0 80%);
-		height: 1500px;
+		height: fit-content;
 		padding-left: 40px;
 		padding-right: 40px;
+		padding-bottom: 200px;
 
 		h1 {
 			position: fixed;

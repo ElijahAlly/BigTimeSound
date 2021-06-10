@@ -900,12 +900,13 @@ var SongItem = /*#__PURE__*/function (_Component) {
 
       ;
       var albumCover = 'no album cover';
+      var albumName = 'no album name';
 
       if (this.props.album) {
         albumCover = this.props.album.url;
+        albumName = this.props.album.name;
       }
 
-      console.log(this.props.album);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
         onClick: this.togglePlay,
         className: "".concat(highlighted)
@@ -920,6 +921,8 @@ var SongItem = /*#__PURE__*/function (_Component) {
         src: albumCover,
         alt: "album"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h4", null, this.state.song.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h4", {
+        className: "album-name"
+      }, albumName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h4", {
         className: "duration"
       }));
     }
