@@ -1,6 +1,6 @@
 import { LOGOUT_CURRENT_USER, RECEIVE_ALL_PLAYLIST } from '../actions/playlist_actions';
 
-const allPlaylistReducer = (state = null, action) => {
+const allPlaylistReducer = (state = {}, action) => {
 	Object.freeze(state);
 
 	switch (action.type) {

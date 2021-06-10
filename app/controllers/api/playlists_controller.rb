@@ -32,7 +32,7 @@ class Api::PlaylistsController < ApplicationController
         if @playlist.update(playlist_params) 
             render :show
         else
-            render json: @playlist.errors.full_messages, status: 401
+            render json: ['playlist not found']
         end
     end
 
@@ -45,6 +45,6 @@ class Api::PlaylistsController < ApplicationController
     private
 
     def playlist_params
-        params.require(:playlist).permit(:user_id)
+        params.require(:playlist).permit(:user_id, :name)
     end
 end

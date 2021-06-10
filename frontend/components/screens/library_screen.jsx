@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class LibraryScreen extends Component {
 	render() { 
 		return (  
-			<div>library</div>
+			<div className='library-screen'>library</div>
 		);
 	}
 }

@@ -20,20 +20,19 @@ class SideNavBar extends React.Component {
 			this.handleClass('library');
 		} else if (this.state.selected === 'home') {
 			this.handleClass('home');
-		} else if (this.state.selected === 'liked-songs') {
-			this.handleClass('liked-songs');
-		} else if (this.state.selected === 'create-playlist') {
-			this.handleClass('create-playlist');
+		} else if (this.state.selected === 'none') {
+			this.handleClass('none');
 		}
 	}
 
-	handleClass(type) {
+	handleClass(type = 'none') {  
+		if (type === 'none') { type = 'no-element-has-this'}
 		const element = document.getElementsByClassName(type)[0];
 		const oldChecked = document.getElementsByClassName('checked')[0];
 		if (oldChecked) {
 			oldChecked.classList.remove('checked');
 		}
-		element.classList.add('checked');
+		if (element) element.classList.add('checked');
 	}
 
 	render() {
@@ -96,7 +95,7 @@ class SideNavBar extends React.Component {
 						<Link
 							className='side create-playlist'
 							to={`/users/${id}/playlist/${playlistsLength}`}
-							onClick={() => this.handleClass('create-playlist')}>
+							onClick={() => this.handleClass()}>
 							<svg viewBox='0 0 16 16' className='svg-create-playlist'>
 								<path
 									fill='currentColor'
@@ -108,7 +107,7 @@ class SideNavBar extends React.Component {
 						<Link
 							className='side liked-songs'
 							to={`/users/${id}/liked-songs`}
-							onClick={() => this.handleClass('liked-songs')}>
+							onClick={() => this.handleClass()}>
 							<svg viewBox='0 0 16 16' className='svg-liked-songs'>
 								<path fill='none' d='M0 0h16v16H0z'></path>
 								<path
@@ -127,7 +126,8 @@ class SideNavBar extends React.Component {
 								<Link
 									key={playlist.id}
 									to={`/users/${id}/playlist/${playlist.id}`}
-									onClick={() => this.props.fetchPlaylist(id, playlist.id)}>
+									onClick={() => this.props.history.push(`/users/${id}/playlist/${playlist.id}`, this.state)}
+									onClick={() => this.handleClass('none')}>
 									{playlist.name}
 								</Link>
 							);

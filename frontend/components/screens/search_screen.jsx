@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 class SearchScreen extends Component {
 	render() { 
 		return (  
-			<div>search</div>
+			<div className='search-screen'>search</div>
 		);
 	}
 }
 
 export default SearchScreen;
+
+

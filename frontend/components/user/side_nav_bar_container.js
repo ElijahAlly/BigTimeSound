@@ -4,11 +4,15 @@ import {
 	fetchAllPlaylists,
 	fetchPlaylist,
 } from '../../actions/playlist_actions';
+import { withRouter } from 'react-router';
 
-const mSTP = (state, ownProps) => ({
-	currentUser: state.entities.user[state.session.currentUser],
-	playlists: state.entities.playlists,
-});
+const mSTP = (state, ownProps) => {
+	return ({
+		currentUser: state.entities.user[state.session.currentUser],
+		playlists: state.entities.playlists,
+		history: ownProps.history
+	})
+};
 
 const mDTP = (dispatch) => ({
 	fetchAllPlaylists: (userId) => dispatch(fetchAllPlaylists(userId)),
@@ -16,4 +20,4 @@ const mDTP = (dispatch) => ({
 		dispatch(fetchPlaylist(userId, playlistId)),
 });
 
-export default connect(mSTP, mDTP)(SideNavBar);
+export default withRouter(connect(mSTP, mDTP)(SideNavBar));

@@ -8,10 +8,11 @@ export const RECEIVE_PLAYLIST_ERRORS = 'RECEIVE_PLAYLIST_ERRORS';
 export const CLEAR_PLAYLIST_ERRORS = 'CLEAR_PLAYLIST_ERRORS';
 
 const receivePlaylistErrors = (errors) => {
-	return {
+	errors = errors || null;
+	return ({
 		type: RECEIVE_PLAYLIST_ERRORS,
 		errors,
-	};
+	})
 };
 
 export const clearPlaylistErrors = () => ({

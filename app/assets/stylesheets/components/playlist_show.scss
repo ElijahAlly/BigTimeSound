@@ -1,77 +1,70 @@
-.playlist-show {
+.playlist-show-screen {
+	padding-top: 150px;
+	padding-left: 40px;
+    height: 1000px;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    position: absolute;
-    left: 35px;
-    top: 100px; 
+	flex-direction: column;
+	position: absolute;
+	background: linear-gradient(360deg, #1a1818 62%, rgba(140, 79, 75, 1) 64%);
 
-    .header{
-        display: flex;
-        padding-bottom: 40px;
-        justify-content: start;
-        align-items: flex-end;
+	.header {
+		display: flex;
+		padding-bottom: 40px;
+		justify-content: start;
+		align-items: flex-end;
 
-        .title {
-            display: flex;
-            flex-direction: column;
-            height: fit-content;
-            margin-left: 40px;
+		.title {
+			display: flex;
+			flex-direction: column;
+			margin-left: 40px;
 
-            h3 {
-                font-size: 12px;
-                font-weight: bold;
-            }
-            
-            h1 {
-                margin-top: 10px;
-                margin-bottom: 10px;
-                font-size: 50px;
-                font-weight: bold;
-            }
+			h3 {
+				font-size: 12px;
+				font-weight: bold;
+			}
 
-            .users-name {
-                margin-bottom: 5px;
-            }
-        }
-        
-        svg {
-            background-color: #282828;
-            padding: 75px;
+			h1 {
+				margin-top: 10px;
+				margin-bottom: 10px;
+				font-size: 50px;
+				font-weight: bold;
+			}
+
+			.users-name {
+				margin-bottom: 5px;
+			}
+		}
+
+		svg {
+			background-color: #282828;
+			padding: 75px;
 			transition: background-color 0.3s ease;
 
-            &:hover {
-                cursor: pointer;
-                background-color: $big-blue;
-            }
+			&:hover {
+				cursor: pointer;
+				background-color: $big-lightgray;
+			}
+		}
+	}
 
-        }
-    }
+	.search {
+		margin-top: 25px;
+		font-size: large;
+		font-weight: bold;
+	}
 
-    .search {
-        margin-top: 25px;
-        font-size: large;
-        font-weight: bold;
-    }
+	.more-info {
+		color: $big-lightgray;
+		border-bottom: 0.5px solid $big-lightgray;
+		padding-bottom: 20px;
 
-    .more-info {
-        color: $big-lightgray;
-        border-bottom: .5px solid $big-lightgray;
-        padding-bottom: 20px;
-
-        svg {
-            &:hover {
-                cursor: pointer;
-                color: whitesmoke;
-            }
-        }
-    }
-
+		svg {
+			&:hover {
+				cursor: pointer;
+				color: whitesmoke;
+			}
+		}
+	}
 }
 
-.modal-closed {
-    display: none;
-}
-
-.msp-playlist-show {
-	background: linear-gradient(360deg, #1a1818 89%, rgba(0,0,0,.5) 89%)
-}

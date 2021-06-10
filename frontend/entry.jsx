@@ -5,8 +5,9 @@ import configureStore from './store/store';
 
 import * as playlistActions from './actions/playlist_actions';
 import { deleteSession } from './actions/session_actions';
-import {fetchSong} from './util/song_api_util'
+import {fetchAllSongs, fetchSong} from './util/song_api_util'
 import {fetchAlbum} from './util/album_api_util'
+import { clearSongErrors } from './actions/song_actions';
 
 document.addEventListener('DOMContentLoaded', () => {
 	let preloadedState = undefined;
@@ -33,7 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	window.updatePlaylist = playlistActions.updatePlaylist;
 	window.fetchPlaylist = playlistActions.fetchPlaylist;
 	window.fetchSong = fetchSong;
+	window.fetchAllSongs = fetchAllSongs;
 	window.fetchAlbum = fetchAlbum;
+	window.clearSongErrors = clearSongErrors;
 
 	const root = document.getElementById('root');
 	ReactDOM.render(<Root store={store} />, root);

@@ -3,28 +3,21 @@ import { Switch } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
 import SignupContainer from './session/signup_container';
-import UserHomeContainer from './user/user_home_container';
 import LoginContainer from './session/login_container';
 import HomeContainer from './home/home_container';
-import UserSearchContainer from './user/user_search_container';
-import UserLibraryContainer from './user/user_library_container';
-import LikedSongsContainer from './user/liked_songs_container';
-import CreatePlaylistContainer from './user/create_playlist_container';
-import ProfileContainer from './user/profile_container';
-import PlaylistShowContainer from './screens/playlist_show_container';
+import SwitchScreen from './user/switch_screen_container'
 import Modal from './modals/modal';
 
 const App = () => (
 	<>
 		<Modal />
 		<Switch>
-			<ProtectedRoute path='/users/:id/playlist/:id' component={PlaylistShowContainer} />
-			<ProtectedRoute path='/users/:id/create-playlist' component={CreatePlaylistContainer} />
-			<ProtectedRoute path='/users/:id/liked-songs' component={LikedSongsContainer} />
-			<ProtectedRoute path='/users/:id/search' component={UserSearchContainer} />
-			<ProtectedRoute path='/users/:id/library' component={UserLibraryContainer} />
-			<ProtectedRoute path='/users/:id/profile' component={ProfileContainer} />
-			<ProtectedRoute path='/users/:id' component={UserHomeContainer} />
+			<ProtectedRoute path='/users/:id/playlist/:id' component={SwitchScreen} />
+			<ProtectedRoute path='/users/:id/profile' component={SwitchScreen} />
+			<ProtectedRoute path='/users/:id/liked-songs' component={SwitchScreen} />
+			<ProtectedRoute path='/users/:id/library' component={SwitchScreen} />
+			<ProtectedRoute path='/users/:id/search' component={SwitchScreen} />
+			<ProtectedRoute path='/users/:id' component={SwitchScreen} />
 			<AuthRoute path='/login' component={LoginContainer} />
 			<AuthRoute path='/signup' component={SignupContainer} />
 			<AuthRoute path='/' component={HomeContainer} />
