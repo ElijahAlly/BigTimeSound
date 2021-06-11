@@ -29,11 +29,11 @@
 
 # Screenshots
 
-[<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/splash+page.png'>]
-[<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/signup.png'>]
-[<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/login.png'>]
-[<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/user-home.png'>]
-[<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/Liked-songs.png'>]
-[<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/playlist-show-page.png'>]
+<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/splash+page.png' height='auto' width='450'>
+<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/signup.png' height='auto' width='450'>
+<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/login.png' height='auto' width='450'>
+<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/user-home.png' height='auto' width='450'>
+<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/Liked-songs.png' height='auto' width='450'>
+<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/playlist-show-page.png' height='auto' width='450'>
 
 * [Live App On Heroku](https://big-time-sound.herokuapp.com/#/)
