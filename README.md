@@ -1,6 +1,6 @@
 # BigTimeSound!
 
-[<img src="https://user-images.githubusercontent.com/75961076/119849262-7b8e3f80-beda-11eb-9f78-f1b5312d08fd.png" width="150" height="150">](https://big-time-sound.herokuapp.com/#/signup)
+[<img src="https://active-storage-big-time-sound-seeds.s3.amazonaws.com/Screenshot_2021-06-11_122233-removebg-preview.png">](https://big-time-sound.herokuapp.com/#/)
 
 
 
