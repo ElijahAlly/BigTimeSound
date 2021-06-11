@@ -6,9 +6,24 @@
 
 #### The audio streaming service, Spotify, has paved the way for streaming in the music industry. Both my clone and Spotify, allow its users to create, edit, and delete playlists, along with searching for artists, albums, and songs. Most importantly, BigTimeSound allows for seamless audio playback, with a clean intuitive design. 
 
-* [Live App On Heroku](https://big-time-sound.herokuapp.com/#/)
+
 
 # Technologies Used
 
-* Ruby version: 2.5.1
-* Rails version: 5.2.6
+* Ruby on Rails
+* React/Redux
+* PostgreSQL
+* AWS S3
+* Heroku
+
+# Features 
+##### Live Demos Below
+
+* A user can signup, login, or continue as a demo user for temporary visitors
+* 
+## * Once logged in a user can...
+* 
+
+
+
+* [Live App On Heroku](https://big-time-sound.herokuapp.com/#/)
