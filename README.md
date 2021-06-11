@@ -29,11 +29,22 @@
 
 # Screenshots
 
+### Splash Page
 <img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/splash+page.png' height='auto' width='650'>
+
+### Signup
 <img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/signup.png' height='auto' width='650'>
+
+### Login
 <img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/login.png' height='auto' width='650'>
+
+### User Home
 <img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/user-home.png' height='auto' width='650'>
+
+### Liked Songs
 <img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/Liked-songs.png' height='auto' width='650'>
+
+### Playlist Show Page
 <img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/playlist-show-page.png' height='auto' width='650'>
 
 * [Live App On Heroku](https://big-time-sound.herokuapp.com/#/)
