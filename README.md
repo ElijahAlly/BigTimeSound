@@ -19,10 +19,15 @@
 # Features
 
 * A user can signup, login, or continue as a demo user for temporary visitors
-* 
-### * Once logged in a user can...
-* 
 
+#### Once logged in a user can...
+* Create, Edit, and delete playlists
+* Play songs by clicking on the song
+* Use the playback bar to fully control the audio playing
+* Like song to add to their liked songs playlist
+* Search for artists, albums, songs, or playlists
+
+# Below Are Live Demos
 
 
 * [Live App On Heroku](https://big-time-sound.herokuapp.com/#/)
