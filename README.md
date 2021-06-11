@@ -47,4 +47,4 @@
 ### Playlist Show Page
 <img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/playlist-show-page.png' height='auto' width='650'>
 
-* [Live App On Heroku](https://big-time-sound.herokuapp.com/#/)
+[Live App On Heroku](https://big-time-sound.herokuapp.com/#/)
