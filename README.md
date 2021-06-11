@@ -4,7 +4,7 @@
 
 ### [BigTimeSound](https://big-time-sound.herokuapp.com/#/) is a [Spotify](https://www.spotify.com/us/) clone. 
 
-###### The audio streaming service, Spotify, has paved the way for streaming in the music industry. Both my clone and Spotify, allow its users to create, edit, and delete playlists, along with searching for artists, albums, and songs. Most importantly, BigTimeSound allows for seamless audio playback, with a clean intuitive design. 
+#### The audio streaming service, Spotify, has paved the way for streaming in the music industry. Both my clone and Spotify, allow its users to create, edit, and delete playlists, along with searching for artists, albums, and songs. Most importantly, BigTimeSound allows for seamless audio playback, with a clean intuitive design. 
 
 * [Live App On Heroku](https://big-time-sound.herokuapp.com/#/)
 
