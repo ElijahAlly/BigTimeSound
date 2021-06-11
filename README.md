@@ -8,22 +8,7 @@
 
 * [Live App On Heroku](https://big-time-sound.herokuapp.com/#/)
 
+# Technologies Used
+
 * Ruby version: 2.5.1
-
 * Rails version: 5.2.6
-
-<!-- * System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ... -->
