@@ -1,4 +1,4 @@
-[<img src="https://active-storage-big-time-sound-seeds.s3.amazonaws.com/Screenshot_2021-06-11_122233-removebg-preview.png" height='200' width='650'>](https://big-time-sound.herokuapp.com/#/)
+[<img src="https://active-storage-big-time-sound-seeds.s3.amazonaws.com/Screenshot_2021-06-11_122233-removebg-preview.png" height='175' width='650'>](https://big-time-sound.herokuapp.com/#/)
 
 
 
