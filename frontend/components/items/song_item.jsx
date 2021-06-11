@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { pauseSong, playSong } from '../../actions/currently_playing';
 import { fetchAllSongs } from '../../actions/song_actions';
 import { fetchAlbums } from '../../actions/album_actions';
+import { fetchArtists } from '../../actions/artist_actions';
 
 class SongItem extends Component {
 	constructor(props) {
@@ -21,25 +22,17 @@ class SongItem extends Component {
 
 	
 	componentDidMount() {
-		this.props.fetchAlbums().then(albums => console.log(albums));
-
+		this.props.fetchAlbums();
+		this.props.fetchArtists()
 		// this.props.fetchAllSongs();
 		// 	this.props.fetchArtist(this.state.artist_id)
 	}
 
 	togglePlay() {
-		if (this.props.isPlaying) {
-			this.props.pauseSong();
+		if (this.state.audio.paused && !this.props.isPlaying) {
+			this.props.playSong(this.state.song, this.state.audio);
 		} else {
-			this.props.playSong(this.state.song);
-		}
-
-		if (this.state.audio.paused) {
-			this.state.audio.play();
-			this.setState({ playing: true });
-		} else {
-			this.state.audio.pause();
-			this.setState({ playing: false });
+			this.props.pauseSong(this.state.audio);
 		}
 	}
 
@@ -56,7 +49,7 @@ class SongItem extends Component {
 		return (
 			<li onClick={this.togglePlay} className={`${highlighted}`}>
 				<h4 className='song-number' >
-					{!this.state.playing ? (
+					{(!this.props.isPlaying || this.props.currentlyPlayingSong.id !== this.state.song.id) ? (
 						this.props.number
 					) : (
 						<img
@@ -87,9 +80,10 @@ const mSTP = (state, ownProps) => {
 
 const mDTP = (dispatch) => ({
 	fetchAlbums: () => dispatch(fetchAlbums()),
+	fetchArtists: () => dispatch(fetchArtists()),
 	fetchAllSongs: () => dispatch(fetchAllSongs()),
-	playSong: (song) => dispatch(playSong(song)),
-	pauseSong: () => dispatch(pauseSong()),
+	playSong: (song, audio) => dispatch(playSong(song, audio)),
+	pauseSong: (audio) => dispatch(pauseSong(audio)),
 });
 
 export default withRouter(connect(mSTP, mDTP)(SongItem));

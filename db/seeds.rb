@@ -29,10 +29,10 @@ flower_Boy = Album.create!(name: 'Flower Boy', artist_id: tyler_The_Creator.id)
 timbre = Album.create!(name: 'Timbre', artist_id: musa_Byte.id)
 
 # Album Covers
-beauty_Behind_The_Madness_COVER = open("https://active-storage-big-time-sound-dev.s3.amazonaws.com/The_Weeknd_Beauty_Behind_the_Madness.png")
-dark_Lane_Demo_Tapes_COVER = open("https://active-storage-big-time-sound-dev.s3.amazonaws.com/Drake_Dark_Lane_Demo_Tapes.png")
-flower_Boy_COVER = open("https://active-storage-big-time-sound-dev.s3.amazonaws.com/Tyler%2C_the_Creator_Flower_Boy.png")
-timbre_COVER = open("https://active-storage-big-time-sound-dev.s3.amazonaws.com/musa_Byte_timbre.jpg")
+beauty_Behind_The_Madness_COVER = open("https://active-storage-big-time-sound-seeds.s3.amazonaws.com/The_Weeknd_Beauty_Behind_the_Madness.png")
+dark_Lane_Demo_Tapes_COVER = open("https://active-storage-big-time-sound-seeds.s3.amazonaws.com/Drake_Dark_Lane_Demo_Tapes.png")
+flower_Boy_COVER = open("https://active-storage-big-time-sound-seeds.s3.amazonaws.com/Tyler%2C_the_Creator_Flower_Boy.png")
+timbre_COVER = open("https://active-storage-big-time-sound-seeds.s3.amazonaws.com/musa_Byte_timbre.jpg")
 
 # Attaching albums and album covers
 beauty_Behind_The_Madness.cover.attach(io: beauty_Behind_The_Madness_COVER, filename: "The_Weeknd_Beauty_Behind_the_Madness.png")
@@ -63,23 +63,23 @@ timbre_song = Song.create!(title: 'Timbre', artist_id: musa_Byte.id, album_id: t
 
 # Mp3s...
 # Beauty_Behind_The_Madness
-the_Hills_MP3 = open("https://active-storage-big-time-sound-dev.s3.amazonaws.com/The+Weeknd+-+The+Hills+(Official+Video).mp3")
-cant_Feel_My_Face_MP3 = open("https://active-storage-big-time-sound-dev.s3.amazonaws.com/The+Weeknd+-+Can't+Feel+My+Face+(Official+Video).mp3")
-in_The_Night_MP3 = open("https://active-storage-big-time-sound-dev.s3.amazonaws.com/The+Weeknd+-+In+The+Night+(Official+Audio).mp3")
+the_Hills_MP3 = open("https://active-storage-big-time-sound-seeds.s3.amazonaws.com/The+Weeknd+-+The+Hills+(Official+Video).mp3")
+cant_Feel_My_Face_MP3 = open("https://active-storage-big-time-sound-seeds.s3.amazonaws.com/The+Weeknd+-+Can't+Feel+My+Face+(Official+Video).mp3")
+in_The_Night_MP3 = open("https://active-storage-big-time-sound-seeds.s3.amazonaws.com/The+Weeknd+-+In+The+Night+(Official+Audio).mp3")
 
 # Timbre
-timbre_song_MP3 = open("https://active-storage-big-time-sound-dev.s3.amazonaws.com/Timbre_wav.wav")
-the_Fall_MP3 = open("https://active-storage-big-time-sound-dev.s3.amazonaws.com/The_Fall_wav.wav")
+timbre_song_MP3 = open("https://active-storage-big-time-sound-seeds.s3.amazonaws.com/Timbre_wav.wav")
+the_Fall_MP3 = open("https://active-storage-big-time-sound-seeds.s3.amazonaws.com/The_Fall_wav.wav")
 
 # Dark Lane Demo Tapes
-war_MP3 = open("https://active-storage-big-time-sound-dev.s3.amazonaws.com/Drake+-+War+(Audio).mp3")
-demons_MP3 = open("https://active-storage-big-time-sound-dev.s3.amazonaws.com/Drake+-+Demons+(Audio)+ft.+Fivio+Foreign%2C+Sosa+Geek.mp3")
-time_Flies_MP3 = open("https://active-storage-big-time-sound-dev.s3.amazonaws.com/Drake+-+Time+Flies+(Audio).mp3")
+war_MP3 = open("https://active-storage-big-time-sound-seeds.s3.amazonaws.com/Drake+-+War+(Audio).mp3")
+demons_MP3 = open("https://active-storage-big-time-sound-seeds.s3.amazonaws.com/Drake+-+Demons+(Audio)+ft.+Fivio+Foreign%2C+Sosa+Geek.mp3")
+time_Flies_MP3 = open("https://active-storage-big-time-sound-seeds.s3.amazonaws.com/Drake+-+Time+Flies+(Audio).mp3")
 
 # Flower Boy
-november_MP3 = open("https://active-storage-big-time-sound-dev.s3.amazonaws.com/November.mp3")
-where_This_Flower_Blooms_MP3 = open("https://active-storage-big-time-sound-dev.s3.amazonaws.com/Where+This+Flower+Blooms.mp3")
-see_You_Again_MP3 = open("https://active-storage-big-time-sound-dev.s3.amazonaws.com/See+You+Again.mp3")
+november_MP3 = open("https://active-storage-big-time-sound-seeds.s3.amazonaws.com/November.mp3")
+where_This_Flower_Blooms_MP3 = open("https://active-storage-big-time-sound-seeds.s3.amazonaws.com/Where+This+Flower+Blooms.mp3")
+see_You_Again_MP3 = open("https://active-storage-big-time-sound-seeds.s3.amazonaws.com/See+You+Again.mp3")
 
 # Attaching songs and mp3s...
 # Beauty_Behind_The_Madness
@@ -103,18 +103,18 @@ see_You_Again.mp3.attach(io: see_You_Again_MP3, filename: "See+You+Again.mp3")
 
 # Likes
 the_Hills_Like = Like.create!(user_id: demo_user.id, song_id: the_Hills.id)
-cant_Feel_My_Face_Like = Like.create!(user_id: demo_user.id, song_id: cant_Feel_My_Face.id)
-war_Like = Like.create!(user_id: demo_user.id, song_id: war.id)
+in_The_Night_Like = Like.create!(user_id: demo_user.id, song_id: in_The_Night.id)
+time_Flies_Like = Like.create!(user_id: demo_user.id, song_id: time_Flies.id)
 november_Like = Like.create!(user_id: demo_user.id, song_id: november.id)
 the_Fall_Like = Like.create!(user_id: demo_user.id, song_id: the_Fall.id)
 
 # Playlists
-# myHits = Playlist.create!(name: 'MyHits', user_id: demo_user.id)
+myHits = Playlist.create!(name: 'MyHits', user_id: demo_user.id)
 
 # # Playlist Inclusions
-# pi_1 = PlaylistInclusion.create!(playlist_id: myHits.id, song_id: cant_Feel_My_Face.id)
-# pi_2 = PlaylistInclusion.create!(playlist_id: myHits.id, song_id: the_Hills.id)
-# pi_3 = PlaylistInclusion.create!(playlist_id: myHits.id, song_id: war.id)
-# pi_4 = PlaylistInclusion.create!(playlist_id: myHits.id, song_id: november.id)
-# pi_5 = PlaylistInclusion.create!(playlist_id: myHits.id, song_id: where_This_Flower_Blooms.id)
-# pi_6 = PlaylistInclusion.create!(playlist_id: myHits.id, song_id: timbre_song.id)
+pi_1 = PlaylistInclusion.create!(playlist_id: myHits.id, song_id: cant_Feel_My_Face.id)
+pi_2 = PlaylistInclusion.create!(playlist_id: myHits.id, song_id: the_Hills.id)
+pi_3 = PlaylistInclusion.create!(playlist_id: myHits.id, song_id: war.id)
+pi_4 = PlaylistInclusion.create!(playlist_id: myHits.id, song_id: november.id)
+pi_5 = PlaylistInclusion.create!(playlist_id: myHits.id, song_id: where_This_Flower_Blooms.id)
+pi_6 = PlaylistInclusion.create!(playlist_id: myHits.id, song_id: timbre_song.id)

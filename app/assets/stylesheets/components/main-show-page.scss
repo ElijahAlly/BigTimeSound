@@ -23,6 +23,8 @@
 			padding-left: 19px;
 			font-weight: 500;
 			font-size: 25px;
+			// color: whitesmoke;
+			z-index: 213;
 		}
 
 		.suggested {
@@ -112,11 +114,11 @@
 	// liked-songs screen
 	.liked-songs-screen {
 		padding-top: 150px;
-		background: linear-gradient(360deg, #1a1818 76%, #5038a0 80%);
+		background: linear-gradient(360deg, #1a1818 69%, #5038a0 78%);
 		height: fit-content;
 		padding-left: 40px;
 		padding-right: 40px;
-		padding-bottom: 200px;
+		padding-bottom: 400px;
 
 		h1 {
 			position: fixed;
@@ -146,7 +148,7 @@
 				h2 {
 					margin-top: 10px;
 					margin-bottom: 10px;
-					font-size: 50px;
+					font-size: 70px;
 					font-weight: bold;
 				}
 	

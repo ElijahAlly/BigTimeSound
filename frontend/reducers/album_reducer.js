@@ -6,15 +6,10 @@ const _noAlbum = {};
 
 const albumReducer = (state = _noAlbum, action) => {
 	Object.freeze(state);
-	const newState = {}
 
 	switch (action.type) {
 		case RECEIVE_ALBUMS:
-			console.log(action.albums.albums)
-			action.albums.albums.forEach((album) => {
-				newState[album.id] = album;
-			})
-			return newState;
+			return action.albums;
 		default:
 			return state;
 	}

@@ -4,7 +4,7 @@
 	bottom: 0;
 	right: 0;
 	left: 0;
-	background: rgba(22, 25, 26, 0.822);
+	background: rgba(152, 153, 153, 0.322);
 	z-index: 10;
 
 	.playlist-more-info-modal {
@@ -40,7 +40,7 @@
 		position: absolute;
 		width: 160px;
 		border-radius: 5px;
-		background-color: whitesmoke;
+		background-color: $big-lightblack;
 		z-index: 21;
 		display: flex;
 		flex-direction: column;
@@ -51,19 +51,19 @@
 		// padding: 34px;
 
 		&:first-child {
-			border-top-left-radius: 2px;
-			border-top-right-radius: 2px;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
 		}
 
 		&:last-child {
-			border-bottom-left-radius: 2px;
-			border-bottom-right-radius: 2px;
+			border-bottom-left-radius: 5px;
+			border-bottom-right-radius: 5px;
 		}
 
 		button {
 			width: 100%;
-			background-color: whitesmoke;
-			color: $big-darkgray;
+			background-color: $big-lightblack;
+			color: whitesmoke;
 			padding: 7px;
 			height: 35px;
 			border-radius: 0;
@@ -71,7 +71,7 @@
 			&:hover {
 				color: whitesmoke;
 				cursor: pointer;
-				background-color: $big-lightgray;
+				background-color: rgba(151, 150, 150, 0.767);
 			}
 		}
 

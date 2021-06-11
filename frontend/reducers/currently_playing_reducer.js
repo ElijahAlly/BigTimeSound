@@ -4,6 +4,7 @@ import {PAUSE_SONG, PLAY_SONG} from '../actions/currently_playing';
 const _InitialState = {
     song: null, 
     isPlaying: false,
+    audio: null,
 }
 
 const currentlyPlayingReducer = (state = _InitialState, action) => {
@@ -12,10 +13,14 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 
     switch (action.type) {
         case PLAY_SONG:
+            action.audio.play()
+            newState.audio = action.audio
             newState.song = action.song
             newState.isPlaying = true
             return newState;
         case PAUSE_SONG:
+            action.audio.pause()
+            newState.audio = action.audio
             newState.isPlaying = false;
             return newState;
         default:

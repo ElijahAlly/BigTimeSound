@@ -4,26 +4,27 @@ import { Redirect } from 'react-router-dom';
 class PlaylistShow extends Component {
 	constructor(props) {
 		super(props);
+		console.log('playlist-show props', this.props)
 		const curUser = this.props.currentUser;
-		let name;
-		this.props.playlist
-			? (name = this.props.playlist.name)
-			: (name = `My Playlist #${this.props.location}`);
-
+		const playlist = this.props.playlist || { name: `My Playlist #${this.props.location}`, user_id: null, id: null }
 		this.state = {
 			currentUser: curUser,
-			clicked: 0,
-			playlist: { name, user_id: null, id: null },
+			playlist,
 		};
-
+		console.log('playlist-show state', this.state)
+		
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	componentDidMount() {
-		const { playlists, location, currentUser } = this.props;
-		// this.props.fetchAllPlaylists(currentUser.id)
+		const { playlists, location } = this.props;
+		let isInPlaylists = false;
+		Object.values(playlists).forEach((playlist) => {
+			if (playlist.id === parseInt(location)) isInPlaylists = true;
+		})
+		console.log('playlist-show mounted', this.props)
 
-		if (playlists && location <= Object.values(playlists).length) {
+		if (playlists && isInPlaylists) {
 			this.setState({
 				playlist: playlists[location],
 			});
@@ -32,7 +33,6 @@ class PlaylistShow extends Component {
 				.createPlaylist({
 					name: `My Playlist #${location}`,
 					user_id: this.props.currentUser.id,
-					id: location,
 				})
 				.then(({ playlist }) => {
 					return this.props.history.push(
@@ -54,7 +54,12 @@ class PlaylistShow extends Component {
 		// ));
 	}
 
+	componentDidUpdate() {
+		console.log('updated show', this.props)
+	}
+
 	render() {
+		console.log('rendering show', this.props)
 		return (
 			<div className='playlist-show-screen'>
 				<section className='header'>
@@ -83,7 +88,7 @@ class PlaylistShow extends Component {
 						onClick={() =>
 							this.props
 								.deletePlaylist(
-									this.state.currentUser.id,
+									this.props.currentUser.id,
 									this.state.playlist.id
 								)
 								.then(() => (

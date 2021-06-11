@@ -1,19 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import CurrentlyPlayingAlbum from '../items/currently_playing_album';
 
 class SideNavBar extends React.Component {
 	constructor(props) {
 		super(props);
+		console.log('nav-bar props', this.props)
 		this.state = {
 			user: this.props.currentUser,
 			selected: this.props.selected,
 		};
-
+	}
+	componentDidUpdate() {
+		console.log('updated side-nav', this.props)
 	}
 
 	componentDidMount() {
 		this.props.fetchAllPlaylists(this.state.user.id);
-
 		if (this.state.selected === 'search') {
 			this.handleClass('search');
 		} else if (this.state.selected === 'library') {
@@ -25,8 +28,10 @@ class SideNavBar extends React.Component {
 		}
 	}
 
-	handleClass(type = 'none') {  
-		if (type === 'none') { type = 'no-element-has-this'}
+	handleClass(type = 'none') {
+		if (type === 'none') {
+			type = 'no-element-has-this';
+		}
 		const element = document.getElementsByClassName(type)[0];
 		const oldChecked = document.getElementsByClassName('checked')[0];
 		if (oldChecked) {
@@ -63,10 +68,10 @@ class SideNavBar extends React.Component {
 							className='side home'
 							to={`/users/${id}`}
 							onClick={() => this.handleClass('home')}>
-							<svg className='svg-home' viewBox='0 0 576 512'>
+							<svg viewBox='0 0 512 512' width='24' height='24'>
 								<path
-									fill='currentColor'
-									d='M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z'></path>
+									d='M 256.274 60.84 L 84.324 166.237 L 84.324 443.063 L 193.27 443.063 L 193.27 293.73 L 320.228 293.73 L 320.228 443.063 L 428.222 443.063 L 428.222 165.476 L 256.274 60.84 Z M 256.274 35.95 L 448.452 149.145 L 448.452 464.395 L 300 464.395 L 300 315.062 L 213.499 315.062 L 213.499 464.395 L 64.095 464.395 L 64.095 150.161 L 256.274 35.95 Z'
+									fill='currentColor'></path>
 							</svg>
 							<div>Home</div>
 						</Link>
@@ -74,10 +79,11 @@ class SideNavBar extends React.Component {
 							className='side search'
 							to={`/users/${id}/search`}
 							onClick={() => this.handleClass('search')}>
-							<svg className='svg-search' viewBox='0 0 512 512'>
+							<svg viewBox='0 0 512 512' width='22' height='22'>
 								<path
+									d='M349.714 347.937l93.714 109.969-16.254 13.969-93.969-109.969q-48.508 36.825-109.207 36.825-36.826 0-70.476-14.349t-57.905-38.603-38.603-57.905-14.349-70.476 14.349-70.476 38.603-57.905 57.905-38.603 70.476-14.349 70.476 14.349 57.905 38.603 38.603 57.905 14.349 70.476q0 37.841-14.73 71.619t-40.889 58.921zM224 377.397q43.428 0 80.254-21.461t58.286-58.286 21.461-80.254-21.461-80.254-58.286-58.285-80.254-21.46-80.254 21.46-58.285 58.285-21.46 80.254 21.46 80.254 58.285 58.286 80.254 21.461z'
 									fill='currentColor'
-									d='M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z'></path>
+									></path>
 							</svg>
 							<div>Search</div>
 						</Link>
@@ -85,10 +91,10 @@ class SideNavBar extends React.Component {
 							className='side library'
 							to={`/users/${id}/library`}
 							onClick={() => this.handleClass('library')}>
-							<svg className='svg-library' viewBox='0 0 576 512'>
+							<svg viewBox='0 0 512 512' width='22' height='22'>
 								<path
-									fill='currentColor'
-									d='M542.22 32.05c-54.8 3.11-163.72 14.43-230.96 55.59-4.64 2.84-7.27 7.89-7.27 13.17v363.87c0 11.55 12.63 18.85 23.28 13.49 69.18-34.82 169.23-44.32 218.7-46.92 16.89-.89 30.02-14.43 30.02-30.66V62.75c.01-17.71-15.35-31.74-33.77-30.7zM264.73 87.64C197.5 46.48 88.58 35.17 33.78 32.05 15.36 31.01 0 45.04 0 62.75V400.6c0 16.24 13.13 29.78 30.02 30.66 49.49 2.6 149.59 12.11 218.77 46.95 10.62 5.35 23.21-1.94 23.21-13.46V100.63c0-5.29-2.62-10.14-7.27-12.99z'></path>
+									d='M291.301 81.778l166.349 373.587-19.301 8.635-166.349-373.587zM64 463.746v-384h21.334v384h-21.334zM192 463.746v-384h21.334v384h-21.334z'
+									fill='currentColor'></path>
 							</svg>
 							<div>Your Library</div>
 						</Link>
@@ -96,9 +102,8 @@ class SideNavBar extends React.Component {
 							className='side create-playlist'
 							to={`/users/${id}/playlist/${playlistsLength}`}
 							onClick={() => this.handleClass()}>
-							<svg viewBox='0 0 16 16' className='svg-create-playlist'>
+							<svg viewBox='0 0 16 16' fill='currentColor'>
 								<path
-									fill='currentColor'
 									d='M14 7H9V2H7v5H2v2h5v5h2V9h5z'></path>
 								<path fill='none' d='M0 0h16v16H0z'></path>
 							</svg>
@@ -108,12 +113,10 @@ class SideNavBar extends React.Component {
 							className='side liked-songs'
 							to={`/users/${id}/liked-songs`}
 							onClick={() => this.handleClass()}>
-							<svg viewBox='0 0 16 16' className='svg-liked-songs'>
-								<path fill='none' d='M0 0h16v16H0z'></path>
-								<path
-									fill='currentColor'
-									d='M13.797 2.727a4.057 4.057 0 00-5.488-.253.558.558 0 01-.31.112.531.531 0 01-.311-.112 4.054 4.054 0 00-5.487.253c-.77.77-1.194 1.794-1.194 2.883s.424 2.113 1.168 2.855l4.462 5.223a1.791 1.791 0 002.726 0l4.435-5.195a4.052 4.052 0 001.195-2.883 4.057 4.057 0 00-1.196-2.883z'></path>
-							</svg>
+							<img
+								fill='currentColor'
+								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
+							/>
 							<div>Liked Songs</div>
 						</Link>
 					</section>
@@ -126,7 +129,7 @@ class SideNavBar extends React.Component {
 								<Link
 									key={playlist.id}
 									to={`/users/${id}/playlist/${playlist.id}`}
-									onClick={() => this.props.history.push(`/users/${id}/playlist/${playlist.id}`, this.state)}
+									onClick={() => <Redirect to={`/users/${id}/playlist/${playlist.id}`} />}
 									onClick={() => this.handleClass('none')}>
 									{playlist.name}
 								</Link>
@@ -137,7 +140,7 @@ class SideNavBar extends React.Component {
 					)}
 				</section>
 				<section className='album-cover'>
-					<img src='https://images.roughtrade.com/product/images/files/000/000/135/original/R-567336-1249586205.jpeg.jpg?1617720633' />
+					<CurrentlyPlayingAlbum />
 				</section>
 			</section>
 		);

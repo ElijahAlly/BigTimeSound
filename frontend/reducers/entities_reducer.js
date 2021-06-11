@@ -4,6 +4,7 @@ import playlistReducer from './playlist_reducer'
 import allPlaylistReducer from './all_playlists_reducer'
 import songsReducer from './songs_reducer'
 import albumReducer from './album_reducer'
+import artistsReducer from './artists_reducer'
 
 const entities = combineReducers({
 	user: userReducer,
@@ -11,6 +12,7 @@ const entities = combineReducers({
 	playlists: allPlaylistReducer,
 	songs: songsReducer,
 	albums: albumReducer,
+	artists: artistsReducer,
 });
 
 export default entities;

@@ -41,6 +41,7 @@ const MainShowPage = (props) => {
 		return <div>somethings wrong</div>;
 	}
 
+	props.fetchAllPlaylists(props.currentUser.id);
 
 	return (
 		<section className='main-show-page'>

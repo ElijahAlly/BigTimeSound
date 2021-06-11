@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
 import SideNavBar from './side_nav_bar';
+import {refreshPage} from '../../actions/refresh_page_actions'
+
 import {
 	fetchAllPlaylists,
 	fetchPlaylist,
@@ -18,6 +20,7 @@ const mDTP = (dispatch) => ({
 	fetchAllPlaylists: (userId) => dispatch(fetchAllPlaylists(userId)),
 	fetchPlaylist: (userId, playlistId) =>
 		dispatch(fetchPlaylist(userId, playlistId)),
+	refreshPage: () => dispatch(refreshPage())
 });
 
 export default withRouter(connect(mSTP, mDTP)(SideNavBar));
