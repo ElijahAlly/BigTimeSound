@@ -27,7 +27,13 @@
 * Like song to add to their liked songs playlist
 * Search for artists, albums, songs, or playlists
 
-# Below Are Live Demos
+# Screenshots
 
+[<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/splash+page.png'>]
+[<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/signup.png'>]
+[<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/login.png'>]
+[<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/user-home.png'>]
+[<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/Liked-songs.png'>]
+[<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/playlist-show-page.png'>]
 
 * [Live App On Heroku](https://big-time-sound.herokuapp.com/#/)
