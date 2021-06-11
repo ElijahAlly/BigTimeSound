@@ -33,11 +33,11 @@ class HomeScreen extends Component {
 						</Link>
 						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
 							<img height='100' width='100' src="https://misc.scdn.co/liked-songs/liked-songs-640.png"/>
-							<h2>Flower Boy</h2>
+							<h2>Chill</h2>
 						</Link>
 						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
 							<img height='100' width='100' src="https://misc.scdn.co/liked-songs/liked-songs-640.png"/>
-							<h2>Timbre</h2>
+							<h2>Dance</h2>
 						</Link>
 					</div>
 					<div className='outer-div'>
@@ -47,11 +47,11 @@ class HomeScreen extends Component {
 						</Link>
 						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
 							<img height='100' width='100' src="https://misc.scdn.co/liked-songs/liked-songs-640.png"/>
-							<h2>SLATT</h2>
+							<h2>HYPE</h2>
 						</Link>
 						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
 							<img height='100' width='100' src="https://misc.scdn.co/liked-songs/liked-songs-640.png"/>
-							<h2>Starboy</h2>
+							<h2>Your Daily Mix</h2>
 						</Link>
 					</div>
 				</section>
