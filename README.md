@@ -16,11 +16,11 @@
 * AWS S3
 * Heroku
 
-# Features ### Live Demos Below
+# Features
 
 * A user can signup, login, or continue as a demo user for temporary visitors
 * 
-## * Once logged in a user can...
+### * Once logged in a user can...
 * 
 
 
