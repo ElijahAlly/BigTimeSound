@@ -1,29 +1,50 @@
-# BigTimeSound!
-
-[<img src="https://user-images.githubusercontent.com/75961076/119849262-7b8e3f80-beda-11eb-9f78-f1b5312d08fd.png" width="256" height="256">](https://big-time-sound.herokuapp.com/#/signup)
+[<img src="https://active-storage-big-time-sound-seeds.s3.amazonaws.com/big-time-sound-transparent-removebg-preview.png" height='auto' width='650'>](https://big-time-sound.herokuapp.com/#/)
 
 
 
-### BigTimeSound is a Spotify clone, a popular music streaming service. Spotify has paved the way for streaming in the music industry. It maintains its many users due to its up-to-date UI and interactive features.
+### [BigTimeSound](https://big-time-sound.herokuapp.com/#/) is a [Spotify](https://www.spotify.com/us/) clone. 
 
-* [Live App On Heroku](https://big-time-sound.herokuapp.com/#/signup)
+#### The audio streaming service, Spotify, has paved the way for streaming in the music industry. Both my clone and Spotify, allow its users to create, edit, and delete playlists, along with searching for artists, albums, and songs. Most importantly, BigTimeSound allows for seamless audio playback, with a clean intuitive design. 
 
-* Ruby version: 2.5.1
 
-* Rails version: 5.2.6
 
-<!-- * System dependencies
+# Technologies Used
 
-* Configuration
+* Ruby on Rails
+* React/Redux
+* PostgreSQL
+* AWS S3
+* Heroku
 
-* Database creation
+# Features
 
-* Database initialization
+* A user can signup, login, or continue as a demo user for temporary visitors
 
-* How to run the test suite
+#### Once logged in a user can...
+* Create, Edit, and delete playlists
+* Play songs by clicking on the song
+* Use the playback bar to fully control the audio playing
+* Like song to add to their liked songs playlist
+* Search for artists, albums, songs, or playlists
 
-* Services (job queues, cache servers, search engines, etc.)
+# Screenshots
 
-* Deployment instructions
+### Splash Page
+<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/splash+page.png' height='auto' width='650'>
 
-* ... -->
+### Signup
+<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/signup.png' height='auto' width='650'>
+
+### Login
+<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/login.png' height='auto' width='650'>
+
+### User Home
+<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/user-home.png' height='auto' width='650'>
+
+### Liked Songs
+<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/Liked-songs.png' height='auto' width='650'>
+
+### Playlist Show Page
+<img src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/playlist-show-page.png' height='auto' width='650'>
+
+[Live App On Heroku](https://big-time-sound.herokuapp.com/#/)
