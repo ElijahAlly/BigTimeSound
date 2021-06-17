@@ -54,8 +54,13 @@ class PlaylistShow extends Component {
 		// ));
 	}
 
-	componentDidUpdate() {
-		console.log('updated show', this.props)
+
+	shouldComponentUpdate(prevProps) {
+		if (this.props !== prevProps) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	render() {

@@ -40,6 +40,14 @@ class SideNavBar extends React.Component {
 		if (element) element.classList.add('checked');
 	}
 
+	shouldComponentUpdate(prevProps) {
+		if (this.props !== prevProps) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	render() {
 		const { user, selected } = this.state;
 		const { username, email, id } = user;
