@@ -15,6 +15,7 @@
 * PostgreSQL
 * AWS S3
 * Heroku
+* jQuery
 
 # Features
 
