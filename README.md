@@ -17,6 +17,7 @@
 * JBuilder
 * OpenURI
 * Heroku
+* jQuery
 
 # Features
 
