@@ -14,6 +14,8 @@
 * React/Redux
 * PostgreSQL
 * AWS S3
+* JBuilder
+* OpenURI
 * Heroku
 
 # Features
