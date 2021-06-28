@@ -4,7 +4,7 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
 import SignupContainer from './session/signup_container';
 import LoginContainer from './session/login_container';
-import HomeContainer from './home/home_container';
+import Home from './home/home';
 import SwitchScreen from './user/switch_screen_container'
 import Modal from './modals/modal';
 
@@ -20,7 +20,7 @@ const App = () => (
 			<ProtectedRoute path='/users/:id' component={SwitchScreen} />
 			<AuthRoute path='/login' component={LoginContainer} />
 			<AuthRoute path='/signup' component={SignupContainer} />
-			<AuthRoute path='/' component={HomeContainer} />
+			<AuthRoute path='/' component={Home} />
 		</Switch>
 	</>
 );
