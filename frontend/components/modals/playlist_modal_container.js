@@ -16,7 +16,7 @@ const mSTP = (state, ownProps) => {
 };
 
 const mDTP = (dispatch) => ({
-	fetchAllPlaylists: () => dispatch(fetchAllPlaylists()),
+	fetchAllPlaylists: (userId) => dispatch(fetchAllPlaylists(userId)),
 	updatePlaylist: (userId, playlist) => dispatch(updatePlaylist(userId, playlist)), 
 	closeModal: () => dispatch(closeModal()),
 });

@@ -11,9 +11,6 @@ class SideNavBar extends React.Component {
 			selected: this.props.selected,
 		};
 	}
-	componentDidUpdate() {
-		console.log('updated side-nav', this.props)
-	}
 
 	componentDidMount() {
 		this.props.fetchAllPlaylists(this.state.user.id);
@@ -32,6 +29,7 @@ class SideNavBar extends React.Component {
 		if (type === 'none') {
 			type = 'no-element-has-this';
 		}
+		
 		const element = document.getElementsByClassName(type)[0];
 		const oldChecked = document.getElementsByClassName('checked')[0];
 		if (oldChecked) {
@@ -40,8 +38,10 @@ class SideNavBar extends React.Component {
 		if (element) element.classList.add('checked');
 	}
 
-	shouldComponentUpdate(prevProps) {
-		if (this.props !== prevProps) {
+	shouldComponentUpdate(nextProps) {
+		// console.log('next', nextProps)
+		// console.log('this', this.props)
+		if (this.props !== nextProps) {
 			return true;
 		} else {
 			return false;

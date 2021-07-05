@@ -21,15 +21,10 @@ class PlaylistModal extends Component {
 		e.preventDefault();
 		this.props
 			.updatePlaylist(this.state.user_id, this.state)
-			.then(() =>
-				this.props
-					.fetchAllPlaylists()
-					.then((playlists) => {
-						return (<Redirect
-							to={`/users/${this.state.user_id}/playlist/${this.state.id}`}
-						/>)
-					})
-			)
+			.then(({playlist}) => {
+				this.props.history.push(`/users/${playlist.user_id}`)
+				this.props.history.push(`/users/${playlist.user_id}/playlist/${playlist.id}`)
+			})
 			.then(this.props.closeModal());
 	}
 

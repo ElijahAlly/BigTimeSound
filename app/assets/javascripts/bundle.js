@@ -1398,7 +1398,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1455,12 +1454,12 @@ var PlaylistModal = /*#__PURE__*/function (_Component) {
       var _this2 = this;
 
       e.preventDefault();
-      this.props.updatePlaylist(this.state.user_id, this.state).then(function () {
-        return _this2.props.fetchAllPlaylists().then(function (playlists) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Redirect, {
-            to: "/users/".concat(_this2.state.user_id, "/playlist/").concat(_this2.state.id)
-          });
-        });
+      this.props.updatePlaylist(this.state.user_id, this.state).then(function (_ref) {
+        var playlist = _ref.playlist;
+
+        _this2.props.history.push("/users/".concat(playlist.user_id));
+
+        _this2.props.history.push("/users/".concat(playlist.user_id, "/playlist/").concat(playlist.id));
       }).then(this.props.closeModal());
     }
   }, {
@@ -1544,8 +1543,8 @@ var mSTP = function mSTP(state, ownProps) {
 
 var mDTP = function mDTP(dispatch) {
   return {
-    fetchAllPlaylists: function fetchAllPlaylists() {
-      return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_2__.fetchAllPlaylists)());
+    fetchAllPlaylists: function fetchAllPlaylists(userId) {
+      return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_2__.fetchAllPlaylists)(userId));
     },
     updatePlaylist: function updatePlaylist(userId, playlist) {
       return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_2__.updatePlaylist)(userId, playlist));
@@ -1989,8 +1988,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2014,7 +2018,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-
 var PlaylistShow = /*#__PURE__*/function (_Component) {
   _inherits(PlaylistShow, _Component);
 
@@ -2025,10 +2028,10 @@ var PlaylistShow = /*#__PURE__*/function (_Component) {
 
     _classCallCheck(this, PlaylistShow);
 
-    _this = _super.call(this, props);
-    console.log('playlist-show props', _this.props);
+    _this = _super.call(this, props); // console.log('playlist-show props', this.props)
+
     var curUser = _this.props.currentUser;
-    var playlist = _this.props.playlist || {
+    var playlist = Object.values(_this.props.playlist).length > 0 ? _this.props.playlist : {
       name: "My Playlist #".concat(_this.props.location),
       user_id: null,
       id: null
@@ -2037,65 +2040,93 @@ var PlaylistShow = /*#__PURE__*/function (_Component) {
       currentUser: curUser,
       playlist: playlist
     };
-    console.log('playlist-show state', _this.state);
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.selectOrCreatePlaylist = _this.selectOrCreatePlaylist.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(PlaylistShow, [{
+    key: "shouldComponentUpdate",
+    value: function shouldComponentUpdate(nextProps) {
+      console.log('in should update');
+      if (this.props.playlists !== nextProps.playlists) return true;
+      console.log('returned false');
+      return false;
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.selectOrCreatePlaylist();
+    }
+  }, {
+    key: "selectOrCreatePlaylist",
+    value: function selectOrCreatePlaylist(_ref) {
       var _this2 = this;
 
-      var _this$props = this.props,
-          playlists = _this$props.playlists,
-          location = _this$props.location;
-      var isInPlaylists = false;
-      Object.values(playlists).forEach(function (playlist) {
-        if (playlist.id === parseInt(location)) isInPlaylists = true;
-      });
-      console.log('playlist-show mounted', this.props);
+      var playlists = _ref.playlists;
+      var location = this.props.location;
+      console.log('playlists', this.props.playlists); // console.log('location', parseInt(location));
 
-      if (playlists && isInPlaylists) {
+      var isInPlaylists = false;
+      var selectPlaylist;
+      playlists.forEach(function (playlist) {
+        if (playlist.id === parseInt(location)) {
+          isInPlaylists = true;
+          selectPlaylist = playlist;
+        }
+      });
+
+      if (playlists.length > 0 && isInPlaylists) {
+        console.log('in set state');
         this.setState({
-          playlist: playlists[location]
+          playlist: selectPlaylist
         });
       } else {
         this.props.createPlaylist({
           name: "My Playlist #".concat(location),
           user_id: this.props.currentUser.id
-        }).then(function (_ref) {
-          var playlist = _ref.playlist;
-          return _this2.props.history.push("/users/".concat(playlist.user_id, "/playlist/").concat(playlist.id));
+        }).then(function (_ref2) {
+          var playlist = _ref2.playlist;
+
+          _this2.props.fetchAllPlaylists(playlist.user_id).then(function () {
+            _this2.props.history.push("/users/".concat(playlist.user_id, "/playlist/").concat(playlist.id));
+          });
         });
       }
     }
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
+      var _this3 = this;
+
       e.preventDefault();
       this.props.updatePlaylist({
         name: this.state.playlist.name,
         user_id: this.state.playlist.user_id
-      }); // .then((playlist) => (
-      // 	<Redirect to={`/users/${playlist.user_id}/playlist/${playlist.id}`} />
-      // ));
+      }).then(function (playlist) {
+        console.log(playlist);
+
+        _this3.props.history.push("/users/".concat(playlist.user_id, "/playlist/").concat(playlist.id));
+      });
     }
   }, {
-    key: "shouldComponentUpdate",
-    value: function shouldComponentUpdate(prevProps) {
-      if (this.props !== prevProps) {
-        return true;
-      } else {
-        return false;
-      }
+    key: "deletePlaylist",
+    value: function deletePlaylist() {
+      var _this4 = this;
+
+      console.log(this.props.currentUser);
+      console.log(this.state.playlist);
+      var homeButton = document.getElementsByClassName('home')[0];
+      homeButton.classList.add('checked');
+      this.props.deletePlaylist(this.props.currentUser.id, this.state.playlist.id).then(function () {
+        _this4.props.history.push("/users/".concat(_this4.props.currentUser.id));
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this5 = this;
 
-      console.log('rendering show', this.props);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "playlist-show-screen"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
@@ -2107,7 +2138,9 @@ var PlaylistShow = /*#__PURE__*/function (_Component) {
         viewBox: "0 0 48 48",
         className: "svg-pencil",
         onClick: function onClick() {
-          return _this3.props.openModal('edit-playlist-modal', _this3.props);
+          return _this5.props.openModal('edit-playlist-modal', _objectSpread(_objectSpread({}, _this5.props), {}, {
+            playlist: _this5.state.playlist
+          }));
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
         d: "M33.402 3.006L8.852 31.751l-2.337 12.61 12.09-4.281 24.552-28.746-9.755-8.328zM9.112 41.32l1.543-8.327 6.44 5.5-7.983 2.827zm9.418-4.231l-6.712-5.732L33.625 5.825l6.711 5.731L18.53 37.089z"
@@ -2119,11 +2152,7 @@ var PlaylistShow = /*#__PURE__*/function (_Component) {
         className: "more-info"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         onClick: function onClick() {
-          return _this3.props.deletePlaylist(_this3.props.currentUser.id, _this3.state.playlist.id).then(function () {
-            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Redirect, {
-              to: "/users/".concat(_this3.state.currentUser.id)
-            });
-          });
+          return _this5.deletePlaylist();
         }
       }, "Delete Playlist")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "search"
@@ -2944,11 +2973,6 @@ var SideNavBar = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(SideNavBar, [{
-    key: "componentDidUpdate",
-    value: function componentDidUpdate() {
-      console.log('updated side-nav', this.props);
-    }
-  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchAllPlaylists(this.state.user.id);
@@ -2983,8 +3007,10 @@ var SideNavBar = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "shouldComponentUpdate",
-    value: function shouldComponentUpdate(prevProps) {
-      if (this.props !== prevProps) {
+    value: function shouldComponentUpdate(nextProps) {
+      // console.log('next', nextProps)
+      // console.log('this', this.props)
+      if (this.props !== nextProps) {
         return true;
       } else {
         return false;
