@@ -8,6 +8,7 @@ class LikedSongsScreen extends Component {
 
 	componentDidMount() {
 		this.props.fetchAllSongs()
+		window.scrollTo(0, 0)
 	}
 
 	render() {

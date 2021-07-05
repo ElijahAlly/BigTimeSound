@@ -1690,17 +1690,8 @@ var HomeScreen = /*#__PURE__*/function (_Component) {
     _classCallCheck(this, HomeScreen);
 
     _this = _super.call(this, props);
-    var date = new Date();
-    var hrs = date.getHours();
-    var greet;
 
-    if (hrs >= 5 && hrs <= 11) {
-      greet = 'morning';
-    } else if (hrs >= 12 && hrs <= 17) {
-      greet = 'afternoon';
-    } else {
-      greet = 'evening';
-    }
+    var greet = _this.greeting();
 
     _this.state = {
       greet: greet
@@ -1709,6 +1700,28 @@ var HomeScreen = /*#__PURE__*/function (_Component) {
   }
 
   _createClass(HomeScreen, [{
+    key: "greeting",
+    value: function greeting() {
+      var date = new Date();
+      var hrs = date.getHours();
+      var greet;
+
+      if (hrs >= 5 && hrs <= 11) {
+        greet = 'morning';
+      } else if (hrs >= 12 && hrs <= 17) {
+        greet = 'afternoon';
+      } else {
+        greet = 'evening';
+      }
+
+      return greet;
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      window.scrollTo(0, 0);
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -1735,7 +1748,13 @@ var HomeScreen = /*#__PURE__*/function (_Component) {
         height: "100",
         width: "100",
         src: "https://misc.scdn.co/liked-songs/liked-songs-640.png"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Dance"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Dance")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+        to: "/users/".concat(this.props.props.currentUser.id, "/liked-songs")
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+        height: "100",
+        width: "100",
+        src: "https://misc.scdn.co/liked-songs/liked-songs-640.png"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Grooves"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "outer-div"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
         to: "/users/".concat(this.props.props.currentUser.id, "/liked-songs")
@@ -1755,7 +1774,13 @@ var HomeScreen = /*#__PURE__*/function (_Component) {
         height: "100",
         width: "100",
         src: "https://misc.scdn.co/liked-songs/liked-songs-640.png"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Your Daily Mix")))));
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Your Daily Mix")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+        to: "/users/".concat(this.props.props.currentUser.id, "/liked-songs")
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+        height: "100",
+        width: "100",
+        src: "https://misc.scdn.co/liked-songs/liked-songs-640.png"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "The Hits")))));
     }
   }]);
 
@@ -1814,6 +1839,11 @@ var LibraryScreen = /*#__PURE__*/function (_Component) {
   }
 
   _createClass(LibraryScreen, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      window.scrollTo(0, 0);
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -1888,6 +1918,7 @@ var LikedSongsScreen = /*#__PURE__*/function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchAllSongs();
+      window.scrollTo(0, 0);
     }
   }, {
     key: "render",
@@ -2286,6 +2317,11 @@ var SearchScreen = /*#__PURE__*/function (_Component) {
   }
 
   _createClass(SearchScreen, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      window.scrollTo(0, 0);
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
