@@ -1159,6 +1159,24 @@ var SongItem = /*#__PURE__*/function (_Component) {
       }
     }
   }, {
+    key: "formatDuration",
+    value: function formatDuration(duration) {
+      console.log(duration);
+      var mins = Math.floor(duration / 60);
+
+      if (mins < 10) {
+        mins = '0' + String(mins);
+      }
+
+      var secs = Math.floor(duration % 60);
+
+      if (secs < 10) {
+        secs = '0' + String(secs);
+      }
+
+      return mins + ':' + secs;
+    }
+  }, {
     key: "render",
     value: function render() {
       var highlighted = '';
@@ -1170,6 +1188,7 @@ var SongItem = /*#__PURE__*/function (_Component) {
       ;
       var albumCover = 'no album cover';
       var albumName = 'no album name';
+      var duration = this.formatDuration("".concat(this.state.audio.duration));
 
       if (this.props.album) {
         albumCover = this.props.album.url;
@@ -1193,7 +1212,7 @@ var SongItem = /*#__PURE__*/function (_Component) {
         className: "album-name"
       }, albumName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h4", {
         className: "duration"
-      }));
+      }, duration));
     }
   }]);
 
@@ -2032,7 +2051,7 @@ var PlaylistShow = /*#__PURE__*/function (_Component) {
 
     var curUser = _this.props.currentUser;
     var playlist = Object.values(_this.props.playlist).length > 0 ? _this.props.playlist : {
-      name: "My Playlist #".concat(_this.props.location),
+      name: '',
       user_id: null,
       id: null
     };
@@ -2047,52 +2066,92 @@ var PlaylistShow = /*#__PURE__*/function (_Component) {
 
   _createClass(PlaylistShow, [{
     key: "shouldComponentUpdate",
-    value: function shouldComponentUpdate(nextProps) {
-      console.log('in should update');
-      if (this.props.playlists !== nextProps.playlists) return true;
+    value: function shouldComponentUpdate(nextProps, nextState) {
+      console.log('in should update: this props', this.props);
+      console.log('nextprops', nextProps);
+
+      if (this.state.playlist !== nextState.playlist || this.props.location !== nextProps.location) {
+        console.log('in true');
+        return true;
+      }
+
       console.log('returned false');
       return false;
     }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
+      window.scrollTo(0, 0);
       this.selectOrCreatePlaylist();
     }
   }, {
     key: "selectOrCreatePlaylist",
-    value: function selectOrCreatePlaylist(_ref) {
+    value: function selectOrCreatePlaylist() {
       var _this2 = this;
 
-      var playlists = _ref.playlists;
-      var location = this.props.location;
-      console.log('playlists', this.props.playlists); // console.log('location', parseInt(location));
+      this.props.fetchAllPlaylists(this.props.currentUser.id).then(function (_ref) {
+        var playlists = _ref.playlists;
+        var location = _this2.props.location;
+        var isInPlaylists = false;
+        var numForPlaylistName = null;
+        var selectPlaylist;
+        var temp = playlists.pop();
+        playlists.unshift(temp);
+        console.log('playlists', playlists);
+        var length = playlists.length;
+        playlists.forEach(function (playlist, i) {
+          console.log('playlist id: ', playlist.id); // console.log(parseInt(location));
 
-      var isInPlaylists = false;
-      var selectPlaylist;
-      playlists.forEach(function (playlist) {
-        if (playlist.id === parseInt(location)) {
-          isInPlaylists = true;
-          selectPlaylist = playlist;
+          if (playlist.id === parseInt(location)) {
+            isInPlaylists = true;
+            selectPlaylist = playlist;
+          }
+
+          console.log('i: ', i);
+          console.log('length - 1: ', length - 1);
+
+          if (i === length - 1) {
+            console.log(playlist, playlist.id + 1);
+            numForPlaylistName = playlist.id + 1;
+          }
+        });
+
+        if (playlists.length > 0 && isInPlaylists) {
+          console.log('b4 set state', _this2.state);
+
+          _this2.setState({
+            playlist: selectPlaylist
+          });
+
+          console.log('right after set state', _this2.state);
+        } else {
+          var numName = numForPlaylistName;
+          var sorted = false;
+
+          while (!sorted) {
+            sorted = true;
+
+            _this2.props.createPlaylist({
+              name: "My Playlist #".concat(numName),
+              user_id: _this2.props.currentUser.id
+            }).then(function (_ref2) {
+              var playlist = _ref2.playlist;
+              console.log(playlist);
+
+              _this2.props.fetchAllPlaylists(playlist.user_id).then(function () {
+                console.log('created!');
+                sorted = false;
+
+                _this2.props.history.push("/users/".concat(playlist.user_id));
+
+                _this2.props.history.push("/users/".concat(playlist.user_id, "/playlist/").concat(playlist.id));
+              });
+            });
+
+            numName = numName++;
+          }
         }
       });
-
-      if (playlists.length > 0 && isInPlaylists) {
-        console.log('in set state');
-        this.setState({
-          playlist: selectPlaylist
-        });
-      } else {
-        this.props.createPlaylist({
-          name: "My Playlist #".concat(location),
-          user_id: this.props.currentUser.id
-        }).then(function (_ref2) {
-          var playlist = _ref2.playlist;
-
-          _this2.props.fetchAllPlaylists(playlist.user_id).then(function () {
-            _this2.props.history.push("/users/".concat(playlist.user_id, "/playlist/").concat(playlist.id));
-          });
-        });
-      }
     }
   }, {
     key: "handleSubmit",
@@ -2127,6 +2186,7 @@ var PlaylistShow = /*#__PURE__*/function (_Component) {
     value: function render() {
       var _this5 = this;
 
+      console.log(this.state.playlist);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "playlist-show-screen"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
@@ -2927,8 +2987,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _items_currently_playing_album__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../items/currently_playing_album */ "./frontend/components/items/currently_playing_album.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -3008,9 +3066,7 @@ var SideNavBar = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "shouldComponentUpdate",
     value: function shouldComponentUpdate(nextProps) {
-      // console.log('next', nextProps)
-      // console.log('this', this.props)
-      if (this.props !== nextProps) {
+      if (this.props !== nextProps || this.props.match.params.id != nextProps.match.params.id) {
         return true;
       } else {
         return false;
@@ -3115,17 +3171,14 @@ var SideNavBar = /*#__PURE__*/function (_React$Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "side-playlists"
       }, playlists ? playlists.map(function (playlist) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, _defineProperty({
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", {
           key: playlist.id,
-          to: "/users/".concat(id, "/playlist/").concat(playlist.id),
           onClick: function onClick() {
-            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Redirect, {
-              to: "/users/".concat(id, "/playlist/").concat(playlist.id)
-            });
+            _this2.props.history.push("/users/".concat(id, "/playlist/").concat(playlist.id));
+
+            _this2.handleClass('none');
           }
-        }, "onClick", function onClick() {
-          return _this2.handleClass('none');
-        }), playlist.name);
+        }, playlist.name);
       }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "No Playlists")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
         className: "album-cover"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_items_currently_playing_album__WEBPACK_IMPORTED_MODULE_1__.default, null)));

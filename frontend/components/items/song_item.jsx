@@ -23,7 +23,7 @@ class SongItem extends Component {
 	
 	componentDidMount() {
 		this.props.fetchAlbums();
-		this.props.fetchArtists()
+		this.props.fetchArtists();
 		// this.props.fetchAllSongs();
 		// 	this.props.fetchArtist(this.state.artist_id)
 	}
@@ -36,11 +36,27 @@ class SongItem extends Component {
 		}
 	}
 
+	formatDuration(duration) {
+		console.log(duration);
+		let mins = Math.floor(duration / 60);
+		if (mins < 10) {
+		mins = '0' + String(mins);
+		}
+		let secs = Math.floor(duration % 60);
+		if (secs < 10) {
+		secs = '0' + String(secs);
+		}
+
+		return mins + ':' + secs;
+	}
+
 	render() {
 		let highlighted = '';
 		if (this.props.currentlyPlayingSong && this.props.currentlyPlayingSong.id === this.state.song.id) {highlighted = 'now-playing'};
 		let albumCover = 'no album cover'
 		let albumName = 'no album name'
+		let duration = this.formatDuration(`${this.state.audio.duration}`);
+		
 		if (this.props.album) {
 			albumCover = this.props.album.url
 			albumName = this.props.album.name
@@ -62,6 +78,7 @@ class SongItem extends Component {
 				<h4>{this.state.song.title}</h4>
 				<h4 className='album-name'>{albumName}</h4>
 				<h4 className='duration'>
+					{duration}
 				</h4>
 			</li>
 		);

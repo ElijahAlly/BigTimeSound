@@ -5,7 +5,7 @@ class PlaylistShow extends Component {
 		super(props);
 		// console.log('playlist-show props', this.props)
 		const curUser = this.props.currentUser;
-		const playlist = Object.values(this.props.playlist).length > 0 ? this.props.playlist : { name: `My Playlist #${this.props.location}`, user_id: null, id: null }
+		const playlist = Object.values(this.props.playlist).length > 0 ? this.props.playlist : { name: '', user_id: null, id: null }
 		this.state = {
 			currentUser: curUser,
 			playlist,
@@ -15,48 +15,80 @@ class PlaylistShow extends Component {
 		this.selectOrCreatePlaylist = this.selectOrCreatePlaylist.bind(this);
 	}
 
-	shouldComponentUpdate(nextProps) {
-		console.log('in should update');
-		if (this.props.playlists !== nextProps.playlists) return true;
+	shouldComponentUpdate(nextProps, nextState) {
+		console.log('in should update: this props', this.props);
+		console.log('nextprops', nextProps);
+		if (this.state.playlist !== nextState.playlist || this.props.location !== nextProps.location) {
+			console.log('in true');
+			return true;
+		}
 		console.log('returned false');
 		return false;
 	}
 
 	componentDidMount() {
+		window.scrollTo(0, 0)
 		this.selectOrCreatePlaylist();
 	}
+  
+	selectOrCreatePlaylist() {
+		this.props.fetchAllPlaylists(this.props.currentUser.id).then(({playlists}) => {
+			const { location } = this.props;
+			let isInPlaylists = false;
+			let numForPlaylistName = null;
+			let selectPlaylist;
+			let temp = playlists.pop();
+			playlists.unshift(temp);
+			console.log('playlists', playlists);
 
-	selectOrCreatePlaylist({playlists}) {
-		const { location } = this.props;
-		console.log('playlists', this.props.playlists);
-		// console.log('location', parseInt(location));
-		let isInPlaylists = false;
-		let selectPlaylist;
-		playlists.forEach((playlist) => {
-			if (playlist.id === parseInt(location)) {
-				isInPlaylists = true;
-				selectPlaylist = playlist;
+			let length = playlists.length
+			playlists.forEach((playlist, i) => {
+				console.log('playlist id: ',playlist.id);
+				// console.log(parseInt(location));
+				if (playlist.id === parseInt(location)) {
+					isInPlaylists = true;
+					selectPlaylist = playlist;
+				}
+
+				console.log('i: ',i)
+				console.log('length - 1: ',length-1)
+				if (i === length - 1) {
+					console.log(playlist, playlist.id+1 )
+					numForPlaylistName = playlist.id + 1
+				}
+			})
+			
+			if (playlists.length > 0 && isInPlaylists) {
+				console.log('b4 set state', this.state);
+				this.setState({
+					playlist: selectPlaylist,
+				});
+				console.log('right after set state', this.state)
+			} else {
+				let numName = numForPlaylistName;
+				let sorted = false;
+
+				while (!sorted) {
+					sorted = true;
+					this.props
+					.createPlaylist({
+						name: `My Playlist #${numName}`,
+						user_id: this.props.currentUser.id,
+					})
+					.then(({ playlist }) => {
+						console.log(playlist)
+						this.props.fetchAllPlaylists(playlist.user_id)
+						.then(() => {
+							console.log('created!')
+							sorted = false;
+							this.props.history.push(`/users/${playlist.user_id}`)
+							this.props.history.push(`/users/${playlist.user_id}/playlist/${playlist.id}`)
+						})
+					})
+					numName = numName++;
+				}
 			}
-		})
-		
-		if (playlists.length > 0 && isInPlaylists) {
-			console.log('in set state');
-			this.setState({
-				playlist: selectPlaylist,
-			});
-		} else {
-			this.props
-			.createPlaylist({
-				name: `My Playlist #${location}`,
-				user_id: this.props.currentUser.id,
-			})
-			.then(({ playlist }) => {
-				this.props.fetchAllPlaylists(playlist.user_id)
-				.then(() => {
-					this.props.history.push(`/users/${playlist.user_id}/playlist/${playlist.id}`)
-				})
-			})
-		}
+		});
 	}
 
 	handleSubmit(e) {
@@ -86,6 +118,7 @@ class PlaylistShow extends Component {
 	}
 
 	render() {
+		console.log(this.state.playlist);
 		return (
 			<div className='playlist-show-screen'>
 				<section className='header'>

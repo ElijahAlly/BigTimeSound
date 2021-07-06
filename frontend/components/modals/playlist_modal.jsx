@@ -56,6 +56,7 @@ class PlaylistModal extends Component {
 							value={this.state.name}
 							onChange={this.handleInput()}
 						/>
+
 						<button>SAVE</button>
 					</form>
 				</div>

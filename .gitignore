@@ -34,4 +34,4 @@ npm-debug.og
 bunde.js
 bunde.js.map
 node_modules/
-log/development.log
+/development.log

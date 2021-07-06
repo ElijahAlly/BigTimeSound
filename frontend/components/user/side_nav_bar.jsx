@@ -5,7 +5,7 @@ import CurrentlyPlayingAlbum from '../items/currently_playing_album';
 class SideNavBar extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log('nav-bar props', this.props)
+		console.log('nav-bar props', this.props);
 		this.state = {
 			user: this.props.currentUser,
 			selected: this.props.selected,
@@ -29,7 +29,7 @@ class SideNavBar extends React.Component {
 		if (type === 'none') {
 			type = 'no-element-has-this';
 		}
-		
+
 		const element = document.getElementsByClassName(type)[0];
 		const oldChecked = document.getElementsByClassName('checked')[0];
 		if (oldChecked) {
@@ -39,15 +39,13 @@ class SideNavBar extends React.Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		// console.log('next', nextProps)
-		// console.log('this', this.props)
-		if (this.props !== nextProps) {
+		if (this.props !== nextProps || this.props.match.params.id != nextProps.match.params.id) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	render() {
 		const { user, selected } = this.state;
 		const { username, email, id } = user;
@@ -90,8 +88,7 @@ class SideNavBar extends React.Component {
 							<svg viewBox='0 0 512 512' width='22' height='22'>
 								<path
 									d='M349.714 347.937l93.714 109.969-16.254 13.969-93.969-109.969q-48.508 36.825-109.207 36.825-36.826 0-70.476-14.349t-57.905-38.603-38.603-57.905-14.349-70.476 14.349-70.476 38.603-57.905 57.905-38.603 70.476-14.349 70.476 14.349 57.905 38.603 38.603 57.905 14.349 70.476q0 37.841-14.73 71.619t-40.889 58.921zM224 377.397q43.428 0 80.254-21.461t58.286-58.286 21.461-80.254-21.461-80.254-58.286-58.285-80.254-21.46-80.254 21.46-58.285 58.285-21.46 80.254 21.46 80.254 58.285 58.286 80.254 21.461z'
-									fill='currentColor'
-									></path>
+									fill='currentColor'></path>
 							</svg>
 							<div>Search</div>
 						</Link>
@@ -111,8 +108,7 @@ class SideNavBar extends React.Component {
 							to={`/users/${id}/playlist/${playlistsLength}`}
 							onClick={() => this.handleClass()}>
 							<svg viewBox='0 0 16 16' fill='currentColor'>
-								<path
-									d='M14 7H9V2H7v5H2v2h5v5h2V9h5z'></path>
+								<path d='M14 7H9V2H7v5H2v2h5v5h2V9h5z'></path>
 								<path fill='none' d='M0 0h16v16H0z'></path>
 							</svg>
 							<div>Create Playlist</div>
@@ -134,13 +130,14 @@ class SideNavBar extends React.Component {
 					{playlists ? (
 						playlists.map((playlist) => {
 							return (
-								<Link
+								<h3
 									key={playlist.id}
-									to={`/users/${id}/playlist/${playlist.id}`}
-									onClick={() => <Redirect to={`/users/${id}/playlist/${playlist.id}`} />}
-									onClick={() => this.handleClass('none')}>
+									onClick={() => {
+										this.props.history.push(`/users/${id}/playlist/${playlist.id}`);
+										this.handleClass('none')
+									}}>
 									{playlist.name}
-								</Link>
+								</h3>
 							);
 						})
 					) : (
