@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { createUser, clearErrors } from '../../actions/user_actions';
 import { createSession } from '../../actions/session_actions';
+import { fetchAllSongs } from '../../actions/song_actions';
 import SignUp from './signup';
 
 const mSTP = (state) => ({
@@ -12,6 +13,7 @@ const mDTP = (dispatch) => ({
 	createUser: (formUser) => dispatch(createUser(formUser)),
 	login: (user) => dispatch(createSession(user)),
 	clearErrors: () => dispatch(clearErrors()),
+	fetchAllSongs: () => dispatch(fetchAllSongs()),
 });
 
 export default connect(mSTP, mDTP)(SignUp);

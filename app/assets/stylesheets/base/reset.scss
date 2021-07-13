@@ -31,6 +31,10 @@ time, mark, audio, video {
 	&::-webkit-scrollbar-thumb {
 		background-color: rgba(90, 89, 89, 0.644);
 	}
+
+	&::-webkit-scrollbar-track-piece {
+		background-color: #1a1818;
+	}
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 

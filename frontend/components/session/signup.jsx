@@ -14,7 +14,12 @@ class SignUp extends Component {
 		this.handleDemo = this.handleDemo.bind(this);
 	}
 
+	componentDidMount() {
+		this.props.fetchAllSongs();
+	}
+	
 	componentWillUnmount() {
+		this.props.fetchAllSongs();
 		this.props.clearErrors();
 	}
 

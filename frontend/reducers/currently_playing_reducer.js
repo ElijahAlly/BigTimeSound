@@ -13,16 +13,27 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 
     switch (action.type) {
         case PLAY_SONG:
-            action.audio.play()
-            newState.audio = action.audio
-            newState.song = action.song
-            newState.isPlaying = true
+            if (state.isPlaying) state.audio.pause()
+            if (action.audio.controls) { // true or undefined
+                newState.audio = action.audio;
+            } else {
+                const audio = new Audio(action.song.url);
+                audio.preload = 'auto';
+                audio.controls = 'true';
+                newState.audio = audio;
+            }
+
+            newState.song = action.song;
+            newState.audio.play();
+            newState.isPlaying = true;
             return newState;
+
         case PAUSE_SONG:
-            action.audio.pause()
-            newState.audio = action.audio
+            newState.audio = action.audio;
+            newState.audio.pause();
             newState.isPlaying = false;
             return newState;
+            
         default:
             return state;
     }

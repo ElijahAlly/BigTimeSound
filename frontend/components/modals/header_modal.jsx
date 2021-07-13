@@ -8,6 +8,7 @@ const HeaderModal = ({ logout, currentUser, closeModal }) => {
 	return (
 		<>
 			<button
+			id='profile-link'
 				onClick={() =>
 					(<Link to={`/users/${currentUser.id}/profile`} />).then(() =>
 						closeModal()
@@ -15,7 +16,7 @@ const HeaderModal = ({ logout, currentUser, closeModal }) => {
 				}>
 				Profile
 			</button>
-			<button onClick={() => logout().then(() => closeModal())}>logout</button>
+			<button id='logout-link' onClick={() => logout().then(() => closeModal())}>Logout</button>
 		</>
 	);
 };

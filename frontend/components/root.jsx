@@ -1,14 +1,18 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor } from "../store/store";
 
 import App from './app';
 
 const Root = ({ store }) => (
 	<Provider store={store}>
-		<HashRouter>
-			<App />
-		</HashRouter>
+	    <PersistGate persistor={persistor}>
+			<HashRouter>
+				<App />
+			</HashRouter>
+		</PersistGate>
 	</Provider>
 );
 

@@ -4,15 +4,15 @@
 	bottom: 0;
 	right: 0;
 	left: 0;
-	background: rgba(152, 153, 153, 0.322);
-	z-index: 10;
+	background: rgba(152, 153, 153, 0.6);
+	z-index: 5;
 
 	.playlist-more-info-modal {
 		position: absolute;
 		width: 160px;
 		border-radius: 5px;
 		background-color: $big-lightgray;
-		z-index: 21;
+		z-index: 5;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -35,38 +35,30 @@
 			}
 		}
 	}
-	
+
 	.header-modal {
 		position: absolute;
-		width: 160px;
-		border-radius: 5px;
+		width: 200px;
 		background-color: $big-lightblack;
-		z-index: 2121;
+		z-index: 5;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 		top: 50px;
 		right: 43px;
-		height: 70px;
-		// padding: 34px;
+		height: 80px;
+		border-radius: 4px;
 
-		&:first-child {
-			border-top-left-radius: 5px;
-			border-top-right-radius: 5px;
-		}
-
-		&:last-child {
-			border-bottom-left-radius: 5px;
-			border-bottom-right-radius: 5px;
-		}
-
-		button {
-			width: 100%;
+		#logout-link, #profile-link {
 			background-color: $big-lightblack;
 			color: whitesmoke;
 			padding: 7px;
 			height: 35px;
-			border-radius: 0;
+			border-radius: 4px;
+			margin-left: 5px;
+			margin-top: 5px;
+			margin-right: 5px;
+			margin-bottom: 0px;
 
 			&:hover {
 				color: whitesmoke;
@@ -75,7 +67,10 @@
 			}
 		}
 
-		
+		#logout-link {
+			margin-top: 0px;
+			margin-bottom: 5px;
+		}
 	}
 
 	.edit-playlist-modal {
@@ -84,7 +79,7 @@
 		height: 200px;
 		border-radius: 5px;
 		background-color: $big-darkgray;
-		z-index: 21;
+		z-index: 5;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -108,6 +103,7 @@
 				}
 			}
 		}
+
 		div {
 			height: 100%;
 			width: 100%;
@@ -147,39 +143,3 @@
 	}
 }
 
-// 	top: 50%;
-// 	left: 50%;
-// 	transform: translate(-50%, -50%);
-
-// 	h2 {
-// 		padding: 5px;
-// 	}
-
-// 	svg {
-// 		border-radius: 50px;
-// 		padding: 5px;
-
-// 		&:hover {
-// 			cursor: pointer;
-// 			background-color: gray;
-// 		}
-// 	}
-
-// 	.info {
-// 		display: flex;
-// 		flex-direction: column;
-// 		align-items: center;
-// 		width: 100%;
-
-// 		input {
-// 			width: 75%;
-// 			height: 30px;
-// 			border-radius: 10px;
-// 			border: none;
-// 		}
-
-//
-// 		}
-// 	}
-
-// }

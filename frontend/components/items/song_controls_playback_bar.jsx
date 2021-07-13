@@ -25,6 +25,7 @@ class SongControlsPlaybackBar extends Component {
 				<path d='M4.018 14L14.41 8 4.018 2z'></path>
 			</svg>
 		);
+
 		if (this.props.isPlaying) {
 			togglePlayButton = (
 				<svg height='16' width='16' viewBox='0 0 16 16'>
@@ -37,7 +38,7 @@ class SongControlsPlaybackBar extends Component {
         // if (this.props.audio) {currentTime = this.props.audio.currentTime}
 		return (
 			<>
-				<h3 className='play-pause' onClick={this.togglePlay}>{togglePlayButton}</h3>
+				<h3 className='play-pause' onClick={() => this.togglePlay()}>{togglePlayButton}</h3>
 				{/* <h3>{currentTime}</h3> */}
 			</>
 		);
@@ -47,6 +48,7 @@ class SongControlsPlaybackBar extends Component {
 const mSTP = (state, ownProps) => {
 	return {
 		isPlaying: state.ui.currentlyPlaying.isPlaying,
+		song: state.ui.currentlyPlaying.song,
 		audio: state.ui.currentlyPlaying.audio,
 	};
 };

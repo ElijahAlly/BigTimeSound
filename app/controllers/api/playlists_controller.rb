@@ -39,7 +39,8 @@ class Api::PlaylistsController < ApplicationController
     def destroy
         @playlist = Playlist.find_by(id: params[:id])
         @playlist.destroy
-        render json: ['Playlist deleted'] 
+        @playlists = Playlist.all
+        render :index
     end
 
     private

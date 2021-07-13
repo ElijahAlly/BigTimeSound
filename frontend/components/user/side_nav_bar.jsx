@@ -127,7 +127,7 @@ class SideNavBar extends React.Component {
 					<div id='side-line-break'></div>
 				</div>
 				<section className='side-playlists'>
-					{playlists ? (
+					{playlists.length > 0 ? (
 						playlists.map((playlist) => {
 							return (
 								<h3

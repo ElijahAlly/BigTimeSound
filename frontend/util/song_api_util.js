@@ -11,3 +11,24 @@ export const fetchAllSongs = () => {
 		method: 'GET',
 	});
 };
+
+export const fetchLikedSongs = (userId) => {
+	return $.ajax({
+		url: `/api/users/${userId}/likes`,
+		method: 'GET',
+	});
+};
+
+export const likeSong = (userId, songId) => {
+	return $.ajax({
+		url: `/api/users/${userId}/likes/${songId}`,
+		method: 'POST',
+	});
+};
+
+export const unlikeSong = (userId, songId) => {
+	return $.ajax({
+		url: `/api/users/${userId}/likes/${songId}`,
+		method: 'DELETE',
+	});
+};

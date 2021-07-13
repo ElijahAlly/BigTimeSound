@@ -17,6 +17,10 @@ class Login extends Component {
 		this.handleDemo = this.handleDemo.bind(this);
 	}
 
+	componentDidMount() {
+		this.props.fetchAllSongs();
+	}
+
 	componentWillUnmount() {
 		this.props.clearErrors();
 	}
