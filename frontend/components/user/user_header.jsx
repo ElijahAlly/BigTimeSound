@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ArrowButton from '../items/arrow_button';
 
 class UserHeader extends Component {
 	constructor(props) {
@@ -8,11 +9,25 @@ class UserHeader extends Component {
 		this.state = {
 			currentUser: cUser,
 		};
+
+	}
+
+	goForward() {
+		console.log('goForward')
+	}
+	
+	goBack() {
+		console.log('goBack')
 	}
 
 	render() {
+
 		return (
 			<div className='user-header'>
+				<div className='path-arrows'>
+					<ArrowButton classname={'path-back'} action={this.goBack} />
+					<ArrowButton classname={'path-forward'} action={this.goForward} />
+				</div>
 				<svg
 					width='16'
 					height='16'

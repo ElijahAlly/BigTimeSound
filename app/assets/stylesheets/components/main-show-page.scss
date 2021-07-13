@@ -12,17 +12,14 @@
 	// home screen
 	.home-screen {
 		padding-top: 150px;
-		background: linear-gradient(360deg, $big-lightblack 80%, $big-darkpurple);
+		background: linear-gradient(360deg, $big-lightblack 80%, $big-darkpurple 96%);
 		height: 1500px;
 
 		h1 {
-			position: fixed;
-			top: 19px;
-			padding-left: 19px;
-			font-weight: 500;
-			font-size: 25px;
-			// color: whitesmoke;
-			z-index: 4;
+			margin-left: 40px;
+			padding-bottom: 25px;
+			font-weight: 600;
+			font-size: 28px;
 		}
 
 		.suggested {
@@ -49,7 +46,7 @@
 					border-radius: 5px;
 					display: flex;
 					align-items: center;
-					transition-duration: .5s;
+					transition-duration: 0.5s;
 					box-shadow: inset 84px 0px 20px 0px $big-darkgray;
 
 					&:hover {
@@ -73,7 +70,7 @@
 	// search screen
 	.search-screen {
 		padding-top: 150px;
-		background: linear-gradient(360deg, $big-lightblack 80%, $big-blue);
+		background: linear-gradient(360deg, $big-lightblack 80%, $big-blue 96%);
 		height: 1500px;
 
 		h1 {
@@ -92,7 +89,7 @@
 	// library screen
 	.library-screen {
 		padding-top: 150px;
-		background: linear-gradient(360deg, $big-lightblack 80%, $big-lightgray);
+		background: linear-gradient(360deg, $big-lightblack 80%, $big-lightgray 96%);
 		height: 1500px;
 
 		h1 {
@@ -111,7 +108,7 @@
 	// liked-songs screen
 	.liked-songs-screen {
 		padding-top: 150px;
-		background: linear-gradient(360deg, #1a1818 69%, #5038a0 78%);
+		background: linear-gradient(360deg, #1a1818 69%, transparent 78%);
 		height: fit-content;
 		padding-left: 40px;
 		padding-right: 40px;

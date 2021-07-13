@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchAlbums, collapseAlbumCover } from '../../actions/album_actions';
+import ArrowButton from './arrow_button';
 
 class CurrentlyPlayingAlbum extends Component {
 	componentDidUpdate() {
@@ -18,19 +19,10 @@ class CurrentlyPlayingAlbum extends Component {
 					<></>
 				) : (
 					<>
-						<svg
-							fill='currentColor'
-							height='24'
-							role='img'
-							width='24'
-							viewBox='0 0 24 24'
-							className='collapse-album-cover'
-							onClick={() => this.props.collapseAlbumCover()}>
-							<polygon points='7.96,21.151 7.311,20.39 16.865,12.229 7.311,4.069 7.96,3.309 18.405,12.229 '></polygon>
-						</svg>
+						<ArrowButton classname={'collapse-album-cover'} action={this.props.collapseAlbumCover}/>
 						<img src={albumCover} />
-					</>
-				)}
+						</>
+						)}
 			</section>
 		);
 	}

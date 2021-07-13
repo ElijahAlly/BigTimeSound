@@ -4,16 +4,22 @@ import { withRouter } from 'react-router-dom';
 import { fetchLikedSongs } from '../../actions/song_actions';
 import SongItem from '../items/song_item';
 import SongListHeader from '../items/song_list_header';
+import {addPath} from '../../actions/path_actions'
+import {handleColorShift} from '../../util/header_color_switch'
 
 class LikedSongsScreen extends Component {
 	componentDidMount() {
+		this.props.addPath(this.props.history.location.pathname)
 		this.props.fetchLikedSongs(this.props.currentUser.id);
 		window.scrollTo(0, 0);
+		handleColorShift('#5038a0')
+		const main = document.getElementById('main')
+		main.style.background = '#5038a0';
 	}
 
 	render() {
 		return (
-			<div className='liked-songs-screen'>
+			<div className='screen liked-songs-screen'>
 				<section className='liked-songs-header'>
 					<div>
 						<img
@@ -55,6 +61,7 @@ const mSTP = ({ entities, session }, ownProps) => {
 
 const mDTP = (dispatch) => ({
 	fetchLikedSongs: (userId) => dispatch(fetchLikedSongs(userId)),
+	addPath: (path) => dispatch(addPath(path)),
 });
 
 export default withRouter(connect(mSTP, mDTP)(LikedSongsScreen));

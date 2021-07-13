@@ -1,28 +1,48 @@
 .user-header {
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-between;
 	align-items: center;
 	height: 60px;
-	background: rgba(21, 21, 21, 0.821);
 	top: 0;
 	right: 0;
 	left: 175px;
 	position: fixed;
 	z-index: 3;
+	background: transparent;
+
+	.path-arrows {
+		width: 100px;
+		display: flex;
+		margin-left: 40px;
+	}
 
 	svg {
-		margin-right: 43px;
-		padding: 5px;
+		padding: 6px;
 		border-radius: 3px;
 		background-color: #282828;
-		border: .3px solid  $big-darkblack;
-        transition: background-color 0.3s ease;
+		border: 0.3px solid $big-darkblack;
+		transition: background-color 0.3s ease;
+		margin-right: 40px;
+		border-radius: 50px;
 
 		&:hover {
 			cursor: pointer;
 			color: $big-black;
 			background-color: $big-lightgray;
 		}
+	}
+
+	.path-back , .path-forward{
+		border: none;
+		margin-right: 0px;
+	}
+
+	.path-back {
+		transform: rotate(180deg);
+	}
+
+	.path-forward {
+		margin-left: 10px;
 	}
 
 	.profile-closed {
@@ -33,7 +53,8 @@
 		display: block;
 	}
 
-	.header-dropdown, #more-info {
+	.header-dropdown,
+	#more-info {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;

@@ -5,6 +5,7 @@ import UserHeader from './user_header';
 
 const mSTP = ({ entities: { user }, session }, ownProps) => ({
 	currentUser: user[session.currentUser],
+	
 });
 
 const mDTP = (dispatch) => ({

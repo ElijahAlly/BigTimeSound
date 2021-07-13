@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
+import { addPath } from '../../actions/path_actions';
+import {handleColorShift} from '../../util/header_color_switch'
 
 class HomeScreen extends Component {
 	constructor(props) {
 		super(props);
-		const greet = this.greeting()
+		const greet = this.greeting();
 		this.state = { greet };
-	} 
+	}
 
 	greeting() {
 		const date = new Date();
@@ -25,49 +28,86 @@ class HomeScreen extends Component {
 	}
 
 	componentDidMount() {
-		window.scrollTo(0, 0)
+		this.props.addPath(this.props.history.location.pathname);
+		window.scrollTo(0, 0);
+		handleColorShift('#3f2657');
+		const main = document.getElementById('main')
+		main.style.background = '#3f2657';
 	}
+
 
 	render() {
 		return (
-			<div className='home-screen'>
+			<div className='screen home-screen'>
 				<h1>
 					Good {this.state.greet}, {this.props.props.currentUser.username}
 				</h1>
 				<section className='suggested'>
 					<div className='outer-div'>
 						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
-							<img height='100' width='100' src="https://misc.scdn.co/liked-songs/liked-songs-640.png"/>
+							<img
+								height='100'
+								width='100'
+								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
+							/>
 							<h2>Liked Songs</h2>
 						</Link>
 						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
-							<img height='100' width='100' src="https://misc.scdn.co/liked-songs/liked-songs-640.png"/>
+							<img
+								height='100'
+								width='100'
+								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
+							/>
 							<h2>Chill</h2>
 						</Link>
 						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
-							<img height='100' width='100' src="https://misc.scdn.co/liked-songs/liked-songs-640.png"/>
+							<img
+								height='100'
+								width='100'
+								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
+							/>
 							<h2>Dance</h2>
 						</Link>
 						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
-							<img height='100' width='100' src="https://misc.scdn.co/liked-songs/liked-songs-640.png"/>
+							<img
+								height='100'
+								width='100'
+								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
+							/>
 							<h2>Grooves</h2>
 						</Link>
 					</div>
 					<div className='outer-div'>
 						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
-							<img height='100' width='100' src="https://misc.scdn.co/liked-songs/liked-songs-640.png"/>
+							<img
+								height='100'
+								width='100'
+								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
+							/>
 							<h2>Sleep</h2>
 						</Link>
 						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
-							<img height='100' width='100' src="https://misc.scdn.co/liked-songs/liked-songs-640.png"/>
+							<img
+								height='100'
+								width='100'
+								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
+							/>
 							<h2>HYPE</h2>
 						</Link>
 						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
-							<img height='100' width='100' src="https://misc.scdn.co/liked-songs/liked-songs-640.png"/>
+							<img
+								height='100'
+								width='100'
+								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
+							/>
 							<h2>Your Daily Mix</h2>
 						</Link>
 						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
-							<img height='100' width='100' src="https://misc.scdn.co/liked-songs/liked-songs-640.png"/>
+							<img
+								height='100'
+								width='100'
+								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
+							/>
 							<h2>The Hits</h2>
 						</Link>
 					</div>
@@ -77,4 +117,8 @@ class HomeScreen extends Component {
 	}
 }
 
-export default HomeScreen;
+const mDTP = (dispatch) => ({
+	addPath: (path) => dispatch(addPath(path)),
+});
+
+export default withRouter(connect(null, mDTP)(HomeScreen));

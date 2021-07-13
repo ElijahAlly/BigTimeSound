@@ -127,7 +127,7 @@ class SideNavBar extends React.Component {
 					</section>
 					<div id='side-line-break'></div>
 				</div>
-				<SideNavPlaylistList playlists={playlists} handleClass={() => this.handleClass(type)}/>
+				<SideNavPlaylistList playlists={playlists} handleClass={(type) => this.handleClass(type)}/>
 				<CurrentlyPlayingAlbum />
 			</section>
 		);

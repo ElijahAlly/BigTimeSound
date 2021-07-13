@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { expandAlbumCover } from '../../actions/album_actions';
 import { connect } from 'react-redux';
+import ArrowButton from '../items/arrow_button';
 
 class SongInfoPlaybackBar extends Component {
 	componentDidUpdate() {
@@ -23,20 +24,11 @@ class SongInfoPlaybackBar extends Component {
 			<>
 				{this.props.albumIsCollapsed ? (
 					<>
-						<svg
-							fill='currentColor'
-							height='24'
-							role='img'
-							width='24'
-							viewBox='0 0 24 24'
-							className='expand-album-cover'
-							onClick={() => this.props.expandAlbumCover()}>
-							<polygon points='7.96,21.151 7.311,20.39 16.865,12.229 7.311,4.069 7.96,3.309 18.405,12.229 '></polygon>
-						</svg>
+						<ArrowButton classname={'expand-album-cover'} action={this.props.expandAlbumCover}/>
 						<img id='playback-bar-album-cover' src={albumCover} />
-                    </>
-				) : (
-					<>
+						</>
+						) : (
+							<>
 					</>
 				)}
                 <div>
