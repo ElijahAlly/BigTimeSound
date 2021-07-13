@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CurrentlyPlayingAlbum from '../items/currently_playing_album';
+import SideNavPlaylistList from '../items/side_nav_playlist_list';
 
 class SideNavBar extends React.Component {
 	constructor(props) {
@@ -126,27 +127,8 @@ class SideNavBar extends React.Component {
 					</section>
 					<div id='side-line-break'></div>
 				</div>
-				<section className='side-playlists'>
-					{playlists.length > 0 ? (
-						playlists.map((playlist) => {
-							return (
-								<h3
-									key={playlist.id}
-									onClick={() => {
-										this.props.history.push(`/users/${id}/playlist/${playlist.id}`);
-										this.handleClass('none')
-									}}>
-									{playlist.name}
-								</h3>
-							);
-						})
-					) : (
-						<div>No Playlists</div>
-					)}
-				</section>
-				<section className='album-cover'>
-					<CurrentlyPlayingAlbum />
-				</section>
+				<SideNavPlaylistList playlists={playlists} handleClass={() => this.handleClass(type)}/>
+				<CurrentlyPlayingAlbum />
 			</section>
 		);
 	}

@@ -78,13 +78,34 @@
 		}
 	}
 
-	.album-cover {
+	.collapse-album-cover {
+		position: fixed;
+		left: 140px;
+		margin-top: 10px;
+		border-radius: 20px;
+		color: $big-darkblack;
+		transform: rotate(90deg);
+		background-color: rgba(68, 67, 67, 0.9);
+		display: none;
+		
+		&:hover {
+			color: $big-lightgray;
+			background-color: rgba(12, 12, 12, 0.9);
+			cursor: pointer;
+		}
+	}
+
+	.side-nav-album-cover {
 		height: 175px;
 		width: 175px;
 
 		img {
 			height: inherit;
 			width: inherit;
+		}
+
+		&:hover .collapse-album-cover {
+			display: block;
 		}
 	}
 
@@ -124,6 +145,10 @@
 
 		&::-webkit-scrollbar-thumb {
 			background-color: rgba(153, 153, 153, .4);
+		}
+		
+		&::-webkit-scrollbar-track-piece {
+			background: transparent;
 		}
 
 		h3 {

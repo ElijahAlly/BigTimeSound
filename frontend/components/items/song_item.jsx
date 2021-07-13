@@ -74,7 +74,6 @@ class SongItem extends Component {
 			albumName = this.props.album.name;
 		}
 
-		console.log('audio',this.state.audio.duration);
 		return (
 			<li onClick={this.togglePlay} className={`${highlighted}`}>
 				<h4 className='song-number'>

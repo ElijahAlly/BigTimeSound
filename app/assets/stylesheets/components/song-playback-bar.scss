@@ -12,19 +12,47 @@
 		background-color: $big-lightblack;
 		border-top: 0.5px solid gray;
 		z-index: 2;
-        padding-top: 31px;
+        padding-top: 25px;
         padding-left: 17px;
         display: flex;
-        flex-direction: column;
 
-        h3 {
-            padding-bottom: 3px;
-        }
+		.expand-album-cover {
+			position: fixed;
+			left: 45px;
+    		bottom: 45px;
+			border-radius: 20px;
+			color: $big-darkblack;
+			transform: rotate(-90deg);
+			background-color: rgba(68, 67, 67, 0.9);
 
-        h5 {
-            font-size: 12px;
-            color: rgb(187, 183, 183);
-        }
+			&:hover {
+				color: $big-lightgray;
+				background-color: rgba(12, 12, 12, 0.9);
+				cursor: pointer;
+			}
+		}
+
+		#playback-bar-album-cover {
+			height: 56px;
+			width: 56px;
+		}
+
+		div {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			padding-left: 5px;
+			padding-bottom: 15px;
+
+			#playback-bar-song-title {
+				padding-bottom: 3px;
+			}
+	
+			#playback-bar-artist-name {
+				font-size: 12px;
+				color: rgb(187, 183, 183);
+			}
+		}
 	}
 
 	.song-controls {
