@@ -24,6 +24,7 @@
 			color: $big-darkblack;
 			transform: rotate(-90deg);
 			background-color: rgba(68, 67, 67, 0.9);
+			display: none;
 
 			&:hover {
 				color: $big-lightgray;
@@ -82,5 +83,9 @@
 		background-color: $big-lightblack;
 		border-top: 0.5px solid gray;
 		z-index: 2;
+	}
+
+	&:hover .expand-album-cover {
+		display: block;
 	}
 }
