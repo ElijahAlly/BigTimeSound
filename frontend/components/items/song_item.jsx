@@ -41,7 +41,7 @@ class SongItem extends Component {
 
 	togglePlay() {
 		if (this.state.audio.paused && !this.props.isPlaying) {
-			this.props.playSong(this.state.song, this.state.audio);
+			this.props.playSong(this.state.song, this.state.audio, this.props.fromWhere);
 		} else {
 			this.props.pauseSong(this.state.audio);
 		}

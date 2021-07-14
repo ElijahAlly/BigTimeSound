@@ -5,10 +5,6 @@ import {formatTime} from '../../util/format_time'
 
 class ProgressBar extends Component {
 
-	constructor(props) {
-		super(props);
-	}
-
     timeUpdate() {
         const progressBar = document.getElementById('progress-bar');
         if (progressBar) {

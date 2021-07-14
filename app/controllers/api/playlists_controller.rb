@@ -11,7 +11,6 @@ class Api::PlaylistsController < ApplicationController
         end
     end
 
-
     def show
         @playlist = Playlist.find_by(id: params[:id])
         if @playlist

@@ -10,3 +10,39 @@ button {
 
     }
 }
+
+.big-green-play-btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 65px;
+    width: 65px;
+    margin-bottom: 5px;
+
+    .big-green-play-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: whitesmoke;
+        background-color: $spotify-green;
+        height: 62px;
+        width: 60px;
+        shape-outside: circle();
+        clip-path: circle();
+
+        svg {
+            height: 30px;
+            width: 30px;
+        }
+
+        &:hover {
+            height: 63px;
+            width: 63px;
+
+            svg {
+                height: 31px;
+                width: 31px;
+            }
+        }
+    }
+}

@@ -9,7 +9,8 @@ const _InitialState = {
 	isPlaying: false,
 	audio: null,
 	albumIsCollapsed: false,
-	currentTime: 0
+	currentTime: 0,
+	playingFrom: null,
 };
 
 const currentlyPlayingReducer = (state = _InitialState, action) => {
@@ -18,7 +19,11 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 
 	switch (action.type) {
 		case PLAY_SONG:
-			if (state.isPlaying) state.audio.pause();
+			if (state.isPlaying) {
+				state.audio.currentTime = 0;
+				state.audio.pause();
+			};
+
 			if (action.audio.controls) {
 				// true or undefined
 				newState.audio = action.audio;
@@ -31,6 +36,7 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 
 			newState.song = action.song;
 			newState.audio.play();
+			newState.playingFrom = action.playingFrom;
 			newState.isPlaying = true;
 			return newState;
 

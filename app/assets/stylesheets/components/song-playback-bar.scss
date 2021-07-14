@@ -69,28 +69,46 @@
 		align-items: center;
 		justify-content: center;
 
-		.play-pause {
+		.controls-btns {
 			display: flex;
-			justify-content: center;
 			align-items: center;
-			background-color: whitesmoke;
-			border-radius: 50px;
-			padding: 8px;
+			justify-content: space-between;
+			width: 89px;
+			height: 40px;
 			position: fixed;
 			bottom: 45px;
-			
-			&:hover {
-				bottom: 44px;
-				padding: 9px;
+
+			.play-pause {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background-color: whitesmoke;
+				border-radius: 50px;
+				padding: 8px;
+				
+				&:hover {
+					padding: 9px;
+				}
 			}
-		}
+			
+			.skip-prev-btn {
+				color: rgba(228, 228, 228, 0.822);
+				
+				&:hover {
+					color: white;
+				}
+			}
+
+			.prev-track {
+				transform: rotate(180deg);
+			}
+		}	
 
 		#progress-info {
 			position: fixed;
 			bottom: 20px;
 			display: flex;
-			width: 650px;
-			justify-content: space-between;
+			width: 640px;
 			align-items: center;
 			font-size: 12px;
 
@@ -121,16 +139,21 @@
 				border-radius: 8px;
 				height: 4px;
 				width: 550px;
-				
+				margin-left: 5px;
+				margin-right: 9px;
+
 				&:hover #progress-bar {
-					background-color: #1db954;
+					background-color: $spotify-green;
 				}
 				
 				&:hover #progress-bar-circle {
 					display: block;
-					cursor: pointer;
 				}
 			}
+		}
+
+		h4 {
+			width: 37px;
 		}
 	}
 		
