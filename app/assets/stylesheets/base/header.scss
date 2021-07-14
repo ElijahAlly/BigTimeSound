@@ -10,7 +10,7 @@ header {
 
 	a {
 		text-decoration: none;
-		color: $big-blue;
+		color: white
 	}
 
 	h1 {
@@ -23,6 +23,7 @@ header {
 
 		#picture-logo {
 			display: flex;
+			margin-right: 5px;
 			justify-content: center;
 			width: 61px;
 			shape-outside: circle();

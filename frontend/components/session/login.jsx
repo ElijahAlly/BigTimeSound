@@ -22,6 +22,7 @@ class Login extends Component {
 	}
 
 	componentWillUnmount() {
+		this.props.resetPathCounts()
 		this.props.clearErrors();
 	}
 

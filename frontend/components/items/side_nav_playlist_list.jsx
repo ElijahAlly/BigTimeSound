@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-const SideNavPlaylistList = ({playlists, handleClass, history}) => {
+const SideNavPlaylistList = ({playlists, handleClass, history, addBackPath }) => {
 	return (
 		<section className='side-playlists'>
 			{playlists.length > 0 ? (
@@ -14,7 +14,7 @@ const SideNavPlaylistList = ({playlists, handleClass, history}) => {
 								history.push(
 									`/users/${playlist.user_id}/playlist/${playlist.id}`
 								);
-								handleClass('none');
+								handleClass() ? addBackPath() : null;
 							}}>
 							{playlist.name}
 						</h3>

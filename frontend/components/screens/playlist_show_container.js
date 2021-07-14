@@ -9,7 +9,6 @@ import {
 	deletePlaylist,
 } from '../../actions/playlist_actions';
 import PlaylistShow from './playlist_show';
-import {addPath} from '../../actions/path_actions'
 
 const mSTP = (
 	{ entities: { user, playlists, playlist }, session },
@@ -33,7 +32,6 @@ const mDTP = (dispatch) => ({
 		dispatch(deletePlaylist(userId, playlistId)),
 	createPlaylist: (playlist) => dispatch(createPlaylist(playlist)),
 	openModal: (modal, props) => dispatch(openModal(modal, props)),
-	addPath: (path) => dispatch(addPath(path)),
 });
 
 export default withRouter(connect(mSTP, mDTP)(PlaylistShow));

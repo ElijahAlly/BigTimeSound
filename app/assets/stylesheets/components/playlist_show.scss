@@ -42,7 +42,6 @@
 			transition: background-color 0.3s ease;
 
 			&:hover {
-				cursor: pointer;
 				background-color: $big-lightgray;
 			}
 		}
@@ -61,7 +60,6 @@
 
 		svg {
 			&:hover {
-				cursor: pointer;
 				color: whitesmoke;
 			}
 		}

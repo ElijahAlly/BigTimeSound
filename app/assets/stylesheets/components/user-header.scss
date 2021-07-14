@@ -10,6 +10,8 @@
 	z-index: 3;
 	background: transparent;
 
+	
+
 	.path-arrows {
 		width: 100px;
 		display: flex;
@@ -19,6 +21,7 @@
 	svg {
 		padding: 6px;
 		border-radius: 3px;
+		color: white;
 		background-color: #282828;
 		border: 0.3px solid $big-darkblack;
 		transition: background-color 0.3s ease;
@@ -26,15 +29,15 @@
 		border-radius: 50px;
 
 		&:hover {
-			cursor: pointer;
-			color: $big-black;
-			background-color: $big-lightgray;
+			background-color: $big-darkgray;
 		}
 	}
 
 	.path-back , .path-forward{
 		border: none;
 		margin-right: 0px;
+		height: 20px;
+		width: 20px;
 	}
 
 	.path-back {
@@ -43,6 +46,16 @@
 
 	.path-forward {
 		margin-left: 10px;
+	}
+	
+	.disabled-true {
+		opacity: .6;	
+
+		&:hover {
+			cursor: not-allowed;
+			background-color: #282828;
+			color: white;
+		}	
 	}
 
 	.profile-closed {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { expandAlbumCover } from '../../actions/album_actions';
+import { expandAlbumCover, fetchAlbums } from '../../actions/album_actions';
 import { connect } from 'react-redux';
 import ArrowButton from '../items/arrow_button';
 

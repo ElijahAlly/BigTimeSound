@@ -1,6 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux'
-import { withRouter } from 'react-router-dom';
+
 
 import UserHeaderContainer from './user_header_container';
 import SideNavBarContainer from './side_nav_bar_container'
@@ -66,4 +65,4 @@ const MainShowPage = (props) => {
 	);
 };
 
-export default withRouter(connect(null)(MainShowPage));
+export default MainShowPage;

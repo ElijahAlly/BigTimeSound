@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { addPath } from '../../actions/path_actions';
+import { addBackPath } from '../../actions/path_actions';
 import {handleColorShift} from '../../util/header_color_switch'
 
 class HomeScreen extends Component {
@@ -28,7 +28,6 @@ class HomeScreen extends Component {
 	}
 
 	componentDidMount() {
-		this.props.addPath(this.props.history.location.pathname);
 		window.scrollTo(0, 0);
 		handleColorShift('#3f2657');
 		const main = document.getElementById('main')
@@ -44,7 +43,7 @@ class HomeScreen extends Component {
 				</h1>
 				<section className='suggested'>
 					<div className='outer-div'>
-						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
+						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`} onClick={() => this.props.addBackPath()}>
 							<img
 								height='100'
 								width='100'
@@ -52,7 +51,7 @@ class HomeScreen extends Component {
 							/>
 							<h2>Liked Songs</h2>
 						</Link>
-						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
+						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`} onClick={() => this.props.addBackPath()}>
 							<img
 								height='100'
 								width='100'
@@ -60,7 +59,7 @@ class HomeScreen extends Component {
 							/>
 							<h2>Chill</h2>
 						</Link>
-						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
+						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`} onClick={() => this.props.addBackPath()}>
 							<img
 								height='100'
 								width='100'
@@ -68,7 +67,7 @@ class HomeScreen extends Component {
 							/>
 							<h2>Dance</h2>
 						</Link>
-						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
+						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`} onClick={() => this.props.addBackPath()}>
 							<img
 								height='100'
 								width='100'
@@ -78,7 +77,7 @@ class HomeScreen extends Component {
 						</Link>
 					</div>
 					<div className='outer-div'>
-						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
+						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`} onClick={() => this.props.addBackPath()}>
 							<img
 								height='100'
 								width='100'
@@ -86,7 +85,7 @@ class HomeScreen extends Component {
 							/>
 							<h2>Sleep</h2>
 						</Link>
-						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
+						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`} onClick={() => this.props.addBackPath()}>
 							<img
 								height='100'
 								width='100'
@@ -94,7 +93,7 @@ class HomeScreen extends Component {
 							/>
 							<h2>HYPE</h2>
 						</Link>
-						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
+						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`} onClick={() => this.props.addBackPath()}>
 							<img
 								height='100'
 								width='100'
@@ -102,7 +101,7 @@ class HomeScreen extends Component {
 							/>
 							<h2>Your Daily Mix</h2>
 						</Link>
-						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`}>
+						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`} onClick={() => this.props.addBackPath()}>
 							<img
 								height='100'
 								width='100'
@@ -118,7 +117,6 @@ class HomeScreen extends Component {
 }
 
 const mDTP = (dispatch) => ({
-	addPath: (path) => dispatch(addPath(path)),
-});
-
+	addBackPath: () => dispatch(addBackPath())
+})
 export default withRouter(connect(null, mDTP)(HomeScreen));

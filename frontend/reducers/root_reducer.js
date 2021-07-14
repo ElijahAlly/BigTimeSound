@@ -7,12 +7,11 @@ import session from './session_reducer';
 import errors from './errors_reducer';
 import ui from './ui_reducer';
 
-
 const persistConfig = {
 	key: 'root',
 	storage,
-	whitelist: ['entities', 'session', 'ui'] 
-}
+	whitelist: ['entities', 'session', 'ui'],
+};
 
 const rootReducer = combineReducers({
 	entities,
@@ -21,6 +20,6 @@ const rootReducer = combineReducers({
 	ui,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export default persistedReducer;

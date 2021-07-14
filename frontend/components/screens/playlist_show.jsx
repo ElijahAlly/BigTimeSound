@@ -33,7 +33,6 @@ class PlaylistShow extends Component {
 	}
 
 	componentDidMount() {
-		this.props.addPath(this.props.history.location.pathname)
 		window.scrollTo(0, 0);
 		this.selectOrCreatePlaylist();
 		handleColorShift('#833b3f')

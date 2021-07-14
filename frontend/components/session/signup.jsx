@@ -19,6 +19,7 @@ class SignUp extends Component {
 	}
 	
 	componentWillUnmount() {
+		this.props.resetPathCounts()
 		this.props.fetchAllSongs();
 		this.props.clearErrors();
 	}

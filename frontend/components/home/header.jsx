@@ -7,7 +7,7 @@ const Header = () => {
 			<h1>
 				<Link to='/' id='picture-logo'>
 					<img
-						src='https://user-images.githubusercontent.com/75961076/119849262-7b8e3f80-beda-11eb-9f78-f1b5312d08fd.png'
+						src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/output-onlinepngtools+(1).png'
 						alt='BigTimeSound Logo'
 					/>
 				</Link>
