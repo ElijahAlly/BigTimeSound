@@ -2,9 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal_actions';
 import { deleteSession } from '../../actions/session_actions';
+import { pauseSong } from '../../actions/currently_playing';
 import { Link } from 'react-router-dom';
 
-const HeaderModal = ({ logout, currentUser, closeModal }) => {
+const HeaderModal = ({ logout, currentUser, closeModal, audio, pauseSong }) => {
+	const logoutUser = () => {
+		logout().then(() => {
+			closeModal()
+			if (audio.duration) pauseSong(audio);
+		})
+	}
+
 	return (
 		<>
 			<button
@@ -16,14 +24,15 @@ const HeaderModal = ({ logout, currentUser, closeModal }) => {
 				}>
 				Profile
 			</button>
-			<button id='logout-link' onClick={() => logout().then(() => closeModal())}>Logout</button>
+			<button id='logout-link' onClick={() => logoutUser()}>Logout</button>
 		</>
 	);
 };
 
-const mSTP = (state, ownProps) => {
+const mSTP = ({entities, ui, session}, ownProps) => {
 	return {
-		currentUser: state.entities.user[state.session.currentUser],
+		currentUser: entities.user[session.currentUser],
+		audio: ui.currentlyPlaying.audio,
 	};
 };
 
@@ -31,6 +40,7 @@ const mDTP = (dispatch) => {
 	return {
 		logout: () => dispatch(deleteSession()),
 		closeModal: () => dispatch(closeModal()),
+		pauseSong: (audio) => dispatch(pauseSong(audio)),
 	};
 };
 

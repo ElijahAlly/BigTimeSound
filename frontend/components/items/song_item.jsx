@@ -5,18 +5,21 @@ import { pauseSong, playSong } from '../../actions/currently_playing';
 import { fetchAllSongs } from '../../actions/song_actions';
 import { fetchAlbums } from '../../actions/album_actions';
 import { fetchArtists } from '../../actions/artist_actions';
+import { formatTime } from '../../util/format_time';
 
 class SongItem extends Component {
 	constructor(props) {
 		super(props);
 		const song = this.props.song;
+		const audio = new Audio(song.url);
 		this.state = {
 			song,
-			audio: new Audio(song.url),
+			audio,
 		};
-		
+
 		this.state.audio.preload = 'auto';
 		this.state.audio.controls = true;
+		this.state.audio.currentTime = this.props.currentTime;
 		this.togglePlay = this.togglePlay.bind(this);
 	}
 
@@ -26,14 +29,14 @@ class SongItem extends Component {
 		// this.props.fetchAllSongs();
 	}
 
-	shouldComponentUpdate(nextProps) {
+	shouldComponentUpdate(nextProps, nextState) {
 		if (this.props.isPlaying !== nextProps.isPlaying) return true;
 		return false;
 	}
 
 	toggleLike() {
 		this.togglePlay();
-
+		console.log('liked song');
 	}
 
 	togglePlay() {
@@ -44,30 +47,19 @@ class SongItem extends Component {
 		}
 	}
 
-	formatDuration(duration) {
-		let mins = Math.floor(duration / 60);
-		if (mins < 10) {
-			mins = '0' + String(mins);
-		}
-		let secs = Math.floor(duration % 60);
-		if (secs < 10) {
-			secs = '0' + String(secs);
-		}
-
-		return mins + ':' + secs;
-	}
-
 	render() {
 		let highlighted = '';
+		const { audio, song } = this.state;
+		const duration = formatTime(`${audio.duration}`);
+
 		if (
 			this.props.currentlyPlayingSong &&
-			this.props.currentlyPlayingSong.id === this.state.song.id
+			this.props.currentlyPlayingSong.id === song.id
 		) {
 			highlighted = 'now-playing';
 		}
 		let albumCover = 'no album cover';
 		let albumName = 'no album name';
-		let duration = this.formatDuration(`${this.state.audio.duration}`);
 
 		if (this.props.album) {
 			albumCover = this.props.album.url;
@@ -77,7 +69,8 @@ class SongItem extends Component {
 		return (
 			<li onClick={this.togglePlay} className={`${highlighted}`}>
 				<h4 className='song-number'>
-					{!this.props.isPlaying || this.props.currentlyPlayingSong.id !== this.state.song.id ? (
+					{!this.props.isPlaying ||
+					this.props.currentlyPlayingSong.id !== song.id ? (
 						<div>{this.props.number}</div>
 					) : (
 						<img
@@ -90,9 +83,7 @@ class SongItem extends Component {
 					<img className='album-cover' src={albumCover} alt='album' />
 				</h4>
 				<h4>
-					<div id='song-item-title'>
-						{this.state.song.title}
-					</div>
+					<div id='song-item-title'>{song.title}</div>
 					<div id='song-item-artist'>
 						{this.props.artist ? this.props.artist.name : ''}
 					</div>
@@ -114,15 +105,16 @@ class SongItem extends Component {
 	}
 }
 
-const mSTP = (state, ownProps) => {
+const mSTP = ({ entities, ui, session }, ownProps) => {
 	return {
-		currentUser: state.entities.user[state.session.currentUser],
+		currentUser: entities.user[session.currentUser],
 		number: ownProps.number,
-		isPlaying: state.ui.currentlyPlaying.isPlaying,
-		currentlyPlayingSong: state.ui.currentlyPlaying.song,
-		currentlyPlayingAudio: state.ui.currentlyPlaying.audio,
-		album: state.entities.albums[ownProps.song.album_id],
-		artist: state.entities.artists[ownProps.song.artist_id]
+		isPlaying: ui.currentlyPlaying.isPlaying,
+		currentlyPlayingSong: ui.currentlyPlaying.song,
+		currentlyPlayingAudio: ui.currentlyPlaying.audio,
+		album: entities.albums[ownProps.song.album_id],
+		artist: entities.artists[ownProps.song.artist_id],
+		currentTime: ui.currentlyPlaying.currentTime,
 	};
 };
 

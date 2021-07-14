@@ -21,7 +21,7 @@
 	svg {
 		padding: 6px;
 		border-radius: 3px;
-		color: white;
+		color: whitesmoke;
 		background-color: #282828;
 		border: 0.3px solid $big-darkblack;
 		transition: background-color 0.3s ease;
@@ -54,7 +54,7 @@
 		&:hover {
 			cursor: not-allowed;
 			background-color: #282828;
-			color: white;
+			color: whitesmoke;
 		}	
 	}
 

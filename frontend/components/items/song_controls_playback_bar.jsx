@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pauseSong, playSong } from '../../actions/currently_playing';
-
+import ProgressBar from './progress_bar.jsx'
 
 class SongControlsPlaybackBar extends Component {
 
@@ -34,12 +34,11 @@ class SongControlsPlaybackBar extends Component {
 				</svg>
 			);
         }
-        // let currentTime = 0
-        // if (this.props.audio) {currentTime = this.props.audio.currentTime}
+
 		return (
 			<>
 				<h3 className='play-pause' onClick={() => this.togglePlay()}>{togglePlayButton}</h3>
-				{/* <h3>{currentTime}</h3> */}
+				<ProgressBar key={Math.random()}/>
 			</>
 		);
 	}

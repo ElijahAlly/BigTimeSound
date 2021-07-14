@@ -40,7 +40,8 @@
 			background-color: #282828;
 			padding: 75px;
 			transition: background-color 0.3s ease;
-
+			box-shadow: 2px 2px 15px 2px #242222;
+			
 			&:hover {
 				background-color: $big-lightgray;
 			}

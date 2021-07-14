@@ -1,4 +1,4 @@
-import { PAUSE_SONG, PLAY_SONG } from '../actions/currently_playing';
+import { PAUSE_SONG, PLAY_SONG, CURRENT_TIME } from '../actions/currently_playing';
 import {
 	COLLAPSE_ALBUM_COVER,
 	EXPAND_ALBUM_COVER,
@@ -9,6 +9,7 @@ const _InitialState = {
 	isPlaying: false,
 	audio: null,
 	albumIsCollapsed: false,
+	currentTime: 0
 };
 
 const currentlyPlayingReducer = (state = _InitialState, action) => {
@@ -44,6 +45,11 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 		case EXPAND_ALBUM_COVER:
 			newState.albumIsCollapsed = false;
 			return newState;
+		
+		case CURRENT_TIME:
+			newState.currentTime = action.currentTime;
+			return newState
+
 		default:
 			return state;
 	}
