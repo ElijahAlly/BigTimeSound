@@ -40,11 +40,17 @@ class SongItem extends Component {
 	}
 
 	togglePlay() {
-		if (this.state.audio.paused && !this.props.isPlaying) {
-			this.props.playSong(this.state.song, this.state.audio, this.props.fromWhere);
-		} else {
-			this.props.pauseSong(this.state.audio);
+		if (this.props.isPlaying) {
+			this.props.pauseSong();
+			if (this.props.currentlyPlayingSong.id !== this.state.song.id) {
+				console.log('songs dont match')
+				console.table(this.props.currentlyPlayingSong, this.state.song)
+				this.props.playSong(this.state.song, this.state.audio, this.props.fromWhere);
+			}
+			return
 		}
+
+		this.props.playSong(this.state.song, this.state.audio, this.props.fromWhere);
 	}
 
 	render() {
@@ -67,7 +73,7 @@ class SongItem extends Component {
 		}
 
 		return (
-			<li onClick={this.togglePlay} className={`${highlighted}`}>
+			<li onClick={() => this.togglePlay()} className={`${highlighted}`}>
 				<h4 className='song-number'>
 					{!this.props.isPlaying ||
 					this.props.currentlyPlayingSong.id !== song.id ? (
@@ -115,6 +121,7 @@ const mSTP = ({ entities, ui, session }, ownProps) => {
 		album: entities.albums[ownProps.song.album_id],
 		artist: entities.artists[ownProps.song.artist_id],
 		currentTime: ui.currentlyPlaying.currentTime,
+		fromWhere: ownProps.fromWhere,
 	};
 };
 
@@ -122,8 +129,8 @@ const mDTP = (dispatch) => ({
 	fetchAlbums: () => dispatch(fetchAlbums()),
 	fetchArtists: () => dispatch(fetchArtists()),
 	fetchAllSongs: () => dispatch(fetchAllSongs()),
-	playSong: (song, audio) => dispatch(playSong(song, audio)),
-	pauseSong: (audio) => dispatch(pauseSong(audio)),
+	playSong: (song, audio, fromWhere) => dispatch(playSong(song, audio, fromWhere)),
+	pauseSong: () => dispatch(pauseSong()),
 });
 
 export default withRouter(connect(mSTP, mDTP)(SongItem));

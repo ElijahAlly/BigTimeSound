@@ -14,7 +14,7 @@ class SongControlsPlaybackBar extends Component {
 		if (!this.props.isPlaying && this.props.song) {
 			this.props.playSong(this.props.song, this.props.audio, this.props.playingFrom);
 		} else if (this.props.song) {
-			this.props.pauseSong(this.props.audio);
+			this.props.pauseSong();
 		}
 	}
 
@@ -35,6 +35,7 @@ class SongControlsPlaybackBar extends Component {
 				</svg>
 			);
 		}
+
 		const {songQueueHistory, songQueue} = this.props
 		const nextSong = songQueue[0];
 		const prevSong = songQueueHistory[songQueueHistory.length-1];
@@ -84,13 +85,13 @@ const mSTP = ({ui}, ownProps) => {
 		audio: ui.currentlyPlaying.audio,
 		songQueue: ui.queue.songQueue,
 		songQueueHistory: ui.queue.songQueueHistory,
-		playingFrom: ui.queue.currentlyPlaying.playingFrom,
+		playingFrom: ui.currentlyPlaying.playingFrom,
 	};
 };
 
 const mDTP = (dispatch) => ({
 	playSong: (song, audio, playingFrom) => dispatch(playSong(song, audio, playingFrom)),
-	pauseSong: (audio) => dispatch(pauseSong(audio)),
+	pauseSong: () => dispatch(pauseSong()),
 });
 
 export default connect(mSTP, mDTP)(SongControlsPlaybackBar);

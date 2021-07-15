@@ -9,7 +9,7 @@ const HeaderModal = ({ logout, currentUser, closeModal, audio, pauseSong }) => {
 	const logoutUser = () => {
 		logout().then(() => {
 			closeModal()
-			if (audio.duration) pauseSong(audio);
+			if (audio.duration) pauseSong();
 		})
 	}
 
@@ -40,7 +40,7 @@ const mDTP = (dispatch) => {
 	return {
 		logout: () => dispatch(deleteSession()),
 		closeModal: () => dispatch(closeModal()),
-		pauseSong: (audio) => dispatch(pauseSong(audio)),
+		pauseSong: () => dispatch(pauseSong()),
 	};
 };
 

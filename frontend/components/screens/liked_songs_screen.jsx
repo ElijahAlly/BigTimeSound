@@ -6,6 +6,7 @@ import SongItem from '../items/song_item';
 import SongListHeader from '../items/song_list_header';
 import { handleColorShift } from '../../util/header_color_switch';
 import { receiveSongQueue } from '../../actions/song_queue_actions';
+import { pauseSong, playSong } from '../../actions/currently_playing';
 
 class LikedSongsScreen extends Component {
 	componentDidMount() {
@@ -17,35 +18,35 @@ class LikedSongsScreen extends Component {
 	}
 
 	togglePlay() {
-		if (this.props.playingFrom === 'liked-songs') {
-			if (this.props.isPlaying) {
-				this.props.audio.pause();
+		const {playingFrom, audio, song, isPlaying, pauseSong, playSong, likedSongs, receiveSongQueue} = this.props
+		if (playingFrom === 'liked-songs') {
+			if (isPlaying) {
+				pauseSong();
 				return
 			}
 
-			this.props.audio.play();
+			playSong(song, audio, playingFrom);
 			return
 		}
 
-		const songs = this.props.likedSongs;
+		const songs = likedSongs;
 		const playSongFirst = songs.shift();
-		const audio = new Audio(playSongFirst.url)
+		const newAudio = new Audio(playSongFirst.url)
 		
-		this.props.receiveSongQueue(songs)
-		this.props.playSong(playSongFirst, audio)
+		receiveSongQueue(songs)
+		playSong(playSongFirst, newAudio, 'liked-songs')
 	}
 	
 	render() {
 		let togglePlayButton = (
-			<svg height='16' width='16' fill='currentColor' viewBox='0 0 16 16'>
+			<svg height='16' width='16' fill='currentColor' viewBox='0 0 16 16' onClick={() => this.togglePlay()}>
 				<path d='M4.018 14L14.41 8 4.018 2z'></path>
 			</svg>
 		);
 
 		if (this.props.isPlaying) {
 			togglePlayButton = (
-				<svg height='16' width='16' viewBox='0 0 16 16'>
-					<path fill='currentColor' d='M0 0h16v16H0z'></path>
+				<svg height='16' width='16' viewBox='0 0 16 16' fill='currentColor' onClick={() => this.togglePlay()}>
 					<path d='M3 2h3v12H3zm7 0h3v12h-3z'></path>
 				</svg>
 			);
@@ -68,7 +69,7 @@ class LikedSongsScreen extends Component {
 					</div>
 				</section>
 				<section className='big-green-play-btn-container'>
-					<h3 className='big-green-play-btn' onClick={() => this.togglePlay()}>
+					<h3 className='big-green-play-btn'>
 							{togglePlayButton}
 					</h3>
 				</section>
@@ -77,7 +78,7 @@ class LikedSongsScreen extends Component {
 					<ul className='song-list'>
 						{this.props.likedSongs ? (
 							this.props.likedSongs.map((song, i) => (
-								<SongItem number={i + 1} key={song.id} song={song} fromWhere={}/>
+								<SongItem number={i + 1} key={song.id} song={song} fromWhere='liked-songs' />
 							))
 						) : (
 							<li>No Songs</li>
@@ -94,7 +95,8 @@ const mSTP = ({ entities, session, ui }, ownProps) => {
 		currentUser: entities.user[session.currentUser],
 		playlists: entities.playlists,
 		likedSongs: Object.values(entities.likedSongs),
-		playingFrom: ui.queue.currentlyPlaying.playingFrom,
+		playingFrom: ui.currentlyPlaying.playingFrom,
+		song: ui.currentlyPlaying.song,
 		isPlaying: ui.currentlyPlaying.isPlaying,
 		audio: ui.currentlyPlaying.audio,
 	};
@@ -103,6 +105,8 @@ const mSTP = ({ entities, session, ui }, ownProps) => {
 const mDTP = (dispatch) => ({
 	fetchLikedSongs: (userId) => dispatch(fetchLikedSongs(userId)),
 	receiveSongQueue: (songs) => dispatch(receiveSongQueue(songs)),
+	pauseSong: () => dispatch(pauseSong()),
+	playSong: (song, audio, playingFrom) => dispatch(playSong(song, audio, playingFrom)),
 });
 
 export default withRouter(connect(mSTP, mDTP)(LikedSongsScreen));

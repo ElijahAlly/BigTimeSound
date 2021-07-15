@@ -19,19 +19,17 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 
 	switch (action.type) {
 		case PLAY_SONG:
-			if (state.isPlaying) {
+			if (state.song.id !== action.song.id) {
+				console.log('is playing going to pause',state.audio.currentTime)
 				state.audio.currentTime = 0;
-				state.audio.pause();
-			};
+				console.log('is playing going to pause',state.audio.currentTime)
+			}
 
-			if (action.audio.controls) {
-				// true or undefined
-				newState.audio = action.audio;
+			if (state.audio.controls) { // true or undefined
+				newState.audio = state.audio;
 			} else {
-				const audio = new Audio(action.song.url);
-				audio.preload = 'auto';
-				audio.controls = 'true';
-				newState.audio = audio;
+				const newAudio = new Audio(action.song.url)
+				newState.audio = newAudio;
 			}
 
 			newState.song = action.song;
@@ -41,13 +39,25 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 			return newState;
 
 		case PAUSE_SONG:
-			newState.audio = action.audio;
+			console.log(state)
+			console.log(action)
+			if (state.audio.controls) { // true or undefined
+				state.audio.pause();
+				newState.audio = state.audio;
+			} else {
+				const newAudio = new Audio(state.song.url)
+				newState.audio = newAudio;
+			}
+			
+			newState.currentTime = newState.audio.currentTime;
 			newState.audio.pause();
 			newState.isPlaying = false;
 			return newState;
+
 		case COLLAPSE_ALBUM_COVER:
 			newState.albumIsCollapsed = true;
 			return newState;
+			
 		case EXPAND_ALBUM_COVER:
 			newState.albumIsCollapsed = false;
 			return newState;

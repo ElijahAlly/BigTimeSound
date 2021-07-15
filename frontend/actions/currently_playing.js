@@ -9,9 +9,8 @@ export const playSong = (song, audio, playingFrom) => ({
 	playingFrom
 });
 
-export const pauseSong = (audio) => ({
+export const pauseSong = () => ({
 	type: PAUSE_SONG,
-	audio
 });
 
 export const sendCurrentTime = (currentTime) => ({
