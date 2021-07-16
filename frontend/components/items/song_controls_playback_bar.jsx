@@ -11,10 +11,11 @@ class SongControlsPlaybackBar extends Component {
 	}
 
 	togglePlay() {
-		if (!this.props.isPlaying && this.props.song) {
-			this.props.playSong(this.props.song, this.props.audio, this.props.playingFrom);
-		} else if (this.props.song) {
-			this.props.pauseSong();
+		const {isPlaying, song, audio, playingFrom, currentTime, playSong, pauseSong} = this.props;
+		if (!isPlaying && song) {
+			playSong(song, audio, playingFrom, currentTime);
+		} else if (song) {
+			pauseSong();
 		}
 	}
 
@@ -86,6 +87,7 @@ const mSTP = ({ui}, ownProps) => {
 		songQueue: ui.queue.songQueue,
 		songQueueHistory: ui.queue.songQueueHistory,
 		playingFrom: ui.currentlyPlaying.playingFrom,
+		currentTime: ui.currentlyPlaying.currentTime,
 	};
 };
 

@@ -2,7 +2,7 @@
 	width: 100%;
 	z-index: 1;
 	display: grid;
-	grid-template-columns: 190px auto 190px;
+	grid-template-columns: 190px auto 230px;
 	height: 100px;
 	bottom: 0;
 	left: 0;
@@ -12,25 +12,25 @@
 		background-color: $big-lightblack;
 		border-top: 0.5px solid gray;
 		z-index: 2;
-        padding-top: 25px;
-        padding-left: 17px;
-        display: flex;
+		padding-top: 25px;
+		padding-left: 17px;
+		display: flex;
 
 		.expand-album-cover {
 			position: fixed;
 			left: 45px;
-    		bottom: 45px;
+			bottom: 45px;
 			border-radius: 20px;
 			transform: rotate(-90deg);
 			display: none;
-			opacity: .7;
+			opacity: 0.7;
 			color: $big-lightgray;
 			background-color: rgb(12, 12, 12);
 			height: 23px;
 			width: 23px;
-			
+
 			&:hover {
-				opacity: .9;
+				opacity: 0.9;
 				height: 25px;
 				width: 25px;
 			}
@@ -52,7 +52,7 @@
 			#playback-bar-song-title {
 				padding-bottom: 3px;
 			}
-	
+
 			#playback-bar-artist-name {
 				font-size: 12px;
 				color: rgb(187, 183, 183);
@@ -85,15 +85,15 @@
 				background-color: whitesmoke;
 				border-radius: 50px;
 				padding: 8px;
-				
+
 				&:hover {
 					padding: 9px;
 				}
 			}
-			
+
 			.skip-prev-btn {
 				color: rgba(228, 228, 228, 0.822);
-				
+
 				&:hover {
 					color: white;
 				}
@@ -102,7 +102,7 @@
 			.prev-track {
 				transform: rotate(180deg);
 			}
-		}	
+		}
 
 		#progress-info {
 			position: fixed;
@@ -122,7 +122,7 @@
 				border-radius: 8px;
 				transition: width 0.1s linear;
 			}
-			
+
 			#progress-bar-circle {
 				margin-right: -3px;
 				height: 15px;
@@ -132,7 +132,7 @@
 				shape-outside: circle();
 				clip-path: circle();
 			}
-			
+
 			#progress-bar-container {
 				display: flex;
 				background-color: $big-lightgray;
@@ -145,7 +145,7 @@
 				&:hover #progress-bar {
 					background-color: $spotify-green;
 				}
-				
+
 				&:hover #progress-bar-circle {
 					display: block;
 				}
@@ -156,11 +156,49 @@
 			width: 37px;
 		}
 	}
-		
-	.green {
+
+	.volume-and-queue {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 		background-color: $big-lightblack;
 		border-top: 0.5px solid gray;
 		z-index: 2;
+		padding-right: 40px;
+
+		#volume-icon {
+			color: rgb(168, 168, 168);
+
+			&:hover {
+				color: whitesmoke;
+			}
+		}
+
+		#volume-control {
+			-webkit-appearance: none;
+			height: 4px;
+			background-color: rgb(168, 168, 168);
+			border-radius: 8px;
+
+
+			&::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				border-radius: 20px;
+				height: 15px;
+				width: 15px;
+				background-color: whitesmoke;
+			}
+		}
+
+		#queue-btn {
+			background-color: transparent;
+			border: none;
+			color: rgb(168, 168, 168);
+
+			&:hover {
+				color: whitesmoke;
+			}
+		}
 	}
 
 	&:hover .expand-album-cover {

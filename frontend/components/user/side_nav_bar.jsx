@@ -6,7 +6,7 @@ import SideNavPlaylistList from '../items/side_nav_playlist_list';
 class SideNavBar extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log('nav-bar props', this.props);
+		// console.log('nav-bar props', this.props);
 		this.state = {
 			user: this.props.currentUser,
 			selected: this.props.selected,

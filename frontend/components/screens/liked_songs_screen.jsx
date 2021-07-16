@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { fetchLikedSongs } from '../../actions/song_actions';
 import SongItem from '../items/song_item';
 import SongListHeader from '../items/song_list_header';
 import { handleColorShift } from '../../util/header_color_switch';
 import { receiveSongQueue } from '../../actions/song_queue_actions';
 import { pauseSong, playSong } from '../../actions/currently_playing';
+import { fetchLikedSongs } from '../../actions/song_actions';
 
 class LikedSongsScreen extends Component {
+
 	componentDidMount() {
-		this.props.fetchLikedSongs(this.props.currentUser.id);
+		this.props.fetchLikedSongs(this.props.currentUser.id)
 		window.scrollTo(0, 0);
 		handleColorShift('#5038a0');
 		const main = document.getElementById('main');
@@ -18,7 +19,7 @@ class LikedSongsScreen extends Component {
 	}
 
 	togglePlay() {
-		const {playingFrom, audio, song, isPlaying, pauseSong, playSong, likedSongs, receiveSongQueue} = this.props
+		const {playingFrom, audio, song, isPlaying, pauseSong, currentTime, playSong, likedSongs, receiveSongQueue} = this.props
 		if (playingFrom === 'liked-songs') {
 			if (isPlaying) {
 				pauseSong();
@@ -34,7 +35,7 @@ class LikedSongsScreen extends Component {
 		const newAudio = new Audio(playSongFirst.url)
 		
 		receiveSongQueue(songs)
-		playSong(playSongFirst, newAudio, 'liked-songs')
+		playSong(playSongFirst, newAudio, 'liked-songs', currentTime)
 	}
 	
 	render() {
@@ -78,7 +79,7 @@ class LikedSongsScreen extends Component {
 					<ul className='song-list'>
 						{this.props.likedSongs ? (
 							this.props.likedSongs.map((song, i) => (
-								<SongItem number={i + 1} key={song.id} song={song} fromWhere='liked-songs' />
+								<SongItem number={i + 1} key={i} song={song} fromWhere='liked-songs' />
 							))
 						) : (
 							<li>No Songs</li>
@@ -99,6 +100,7 @@ const mSTP = ({ entities, session, ui }, ownProps) => {
 		song: ui.currentlyPlaying.song,
 		isPlaying: ui.currentlyPlaying.isPlaying,
 		audio: ui.currentlyPlaying.audio,
+		currentTime: ui.currentlyPlaying.currentTime,
 	};
 };
 
