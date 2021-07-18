@@ -5,7 +5,7 @@ import SongItem from '../items/song_item';
 import SongListHeader from '../items/song_list_header';
 import { handleColorShift } from '../../util/header_color_switch';
 import { receiveSongQueue } from '../../actions/song_queue_actions';
-import { pauseSong, playSong } from '../../actions/currently_playing';
+import { pauseSong, playSong, sendDuration } from '../../actions/currently_playing';
 import { fetchLikedSongs } from '../../actions/song_actions';
 
 class LikedSongsScreen extends Component {
@@ -19,25 +19,35 @@ class LikedSongsScreen extends Component {
 	}
 
 	togglePlay() {
-		const {playingFrom, audio, song, isPlaying, pauseSong, currentTime, playSong, likedSongs, receiveSongQueue} = this.props
+		let {playingFrom, audio, song, isPlaying, pauseSong, currentTime, playSong, likedSongs, receiveSongQueue, volume} = this.props
 		if (playingFrom === 'liked-songs') {
 			if (isPlaying) {
 				pauseSong();
 				return
 			}
+			
+			if (!song) {
+				let songs = likedSongs;
+				song = songs.shift();
+				audio = new Audio(song.url)
+			}
 
-			playSong(song, audio, playingFrom);
+			playSong(song, audio, playingFrom, currentTime, volume, audio.duration);
 			return
 		}
 
-		const songs = likedSongs;
-		const playSongFirst = songs.shift();
-		const newAudio = new Audio(playSongFirst.url)
-		
+		let songs = likedSongs;
+		let playSongFirst = songs.shift();
+		let newAudio = new Audio(playSongFirst.url)
 		receiveSongQueue(songs)
-		playSong(playSongFirst, newAudio, 'liked-songs', currentTime)
+		playSong(playSongFirst, newAudio, 'liked-songs', currentTime, volume, newAudio.duration)
 	}
-	
+
+	shouldComponentUpdate(nextProps) {
+        if (nextProps.volume !== this.props.volume || this.props.isPlaying !== nextProps.isPlaying) return true;
+        return false;
+    }
+
 	render() {
 		let togglePlayButton = (
 			<svg height='16' width='16' fill='currentColor' viewBox='0 0 16 16' onClick={() => this.togglePlay()}>
@@ -78,7 +88,7 @@ class LikedSongsScreen extends Component {
 				<section>
 					<ul className='song-list'>
 						{this.props.likedSongs ? (
-							this.props.likedSongs.map((song, i) => (
+							this.props.likedSongs.reverse().map((song, i) => (
 								<SongItem number={i + 1} key={i} song={song} fromWhere='liked-songs' />
 							))
 						) : (
@@ -101,14 +111,16 @@ const mSTP = ({ entities, session, ui }, ownProps) => {
 		isPlaying: ui.currentlyPlaying.isPlaying,
 		audio: ui.currentlyPlaying.audio,
 		currentTime: ui.currentlyPlaying.currentTime,
+		volume: ui.currentlyPlaying.volume,
 	};
 };
 
 const mDTP = (dispatch) => ({
 	fetchLikedSongs: (userId) => dispatch(fetchLikedSongs(userId)),
 	receiveSongQueue: (songs) => dispatch(receiveSongQueue(songs)),
+	sendDuration: (duration) => dispatch(sendDuration(duration)),
 	pauseSong: () => dispatch(pauseSong()),
-	playSong: (song, audio, playingFrom) => dispatch(playSong(song, audio, playingFrom)),
+	playSong: (song, audio, playingFrom, currentTime, volume, duration) => dispatch(playSong(song, audio, playingFrom, currentTime, volume, duration)),
 });
 
 export default withRouter(connect(mSTP, mDTP)(LikedSongsScreen));

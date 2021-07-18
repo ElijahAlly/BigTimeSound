@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { pauseSong, playSong } from '../../actions/currently_playing';
+import { pauseSong, playSong, sendDuration } from '../../actions/currently_playing';
 import ProgressBar from './progress_bar.jsx';
 
 class SongControlsPlaybackBar extends Component {
@@ -11,12 +11,18 @@ class SongControlsPlaybackBar extends Component {
 	}
 
 	togglePlay() {
-		const {isPlaying, song, audio, playingFrom, currentTime, playSong, pauseSong} = this.props;
+		const {isPlaying, song, audio, playingFrom, currentTime, playSong, pauseSong, volume, sendDuration} = this.props;
 		if (!isPlaying && song) {
-			playSong(song, audio, playingFrom, currentTime);
+			// console.log('play song', song, audio, playingFrom, currentTime);
+			playSong(song, audio, playingFrom, currentTime, volume, audio.duration);
 		} else if (song) {
 			pauseSong();
 		}
+	}
+
+	shouldComponentUpdate(nextProps) {
+		if (this.props.isPlaying !== nextProps.isPlaying || this.props.currentTime !== nextProps.currentTime || nextProps.volume !== this.props.volume) return true;
+		return false;
 	}
 
 	render() {
@@ -88,12 +94,14 @@ const mSTP = ({ui}, ownProps) => {
 		songQueueHistory: ui.queue.songQueueHistory,
 		playingFrom: ui.currentlyPlaying.playingFrom,
 		currentTime: ui.currentlyPlaying.currentTime,
+		volume: ui.currentlyPlaying.volume,
 	};
 };
 
 const mDTP = (dispatch) => ({
-	playSong: (song, audio, playingFrom) => dispatch(playSong(song, audio, playingFrom)),
+	playSong: (song, audio, playingFrom, currentTime, volume, duration) => dispatch(playSong(song, audio, playingFrom, currentTime, volume, duration)),
 	pauseSong: () => dispatch(pauseSong()),
+	sendDuration: (duration) => dispatch(sendDuration(duration)),
 });
 
 export default connect(mSTP, mDTP)(SongControlsPlaybackBar);

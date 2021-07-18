@@ -9,8 +9,8 @@ class UserHeader extends Component {
 		this.state = {
 			currentUser: cUser,
 		};
-		this.goBack = this.goBack.bind(this)
-		this.goForward = this.goForward.bind(this)
+		this.goBack = this.goBack.bind(this);
+		this.goForward = this.goForward.bind(this);
 	}
 
 	goBack() {
@@ -19,7 +19,7 @@ class UserHeader extends Component {
 		this.props.removeBackPath();
 		this.props.history.goBack();
 	}
-	
+
 	goForward() {
 		this.props.addBackPath();
 
@@ -36,8 +36,16 @@ class UserHeader extends Component {
 		return (
 			<div className='user-header'>
 				<div className='path-arrows'>
-					<ArrowButton classname={'path-back'} action={this.goBack} disabled={prevDisabled}/>
-					<ArrowButton classname={'path-forward'} action={this.goForward} disabled={nextDisabled}/>
+					<ArrowButton
+						classname={'path-back'}
+						action={this.goBack}
+						disabled={prevDisabled}
+					/>
+					<ArrowButton
+						classname={'path-forward'}
+						action={this.goForward}
+						disabled={nextDisabled}
+					/>
 				</div>
 				<svg
 					width='16'

@@ -24,6 +24,11 @@ class SideNavBar extends React.Component {
 		} else if (this.state.selected === 'none') {
 			this.handleClass('none');
 		}
+
+		if (!this.props.audio && this.props.isPlaying) {
+			let noAudio = true;
+			this.props.pauseSong(noAudio)
+		}
 	}
 
 	handleClass(type = 'none') {

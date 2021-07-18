@@ -5,11 +5,9 @@ import {sendVolume} from '../../actions/currently_playing'
 class VolumeControl extends Component {
 	constructor(props) {
 		super(props);
-		const volume = props.volume;
 
 		this.state = {
-			volume,
-			muted: volume === 0,
+			muted: props.volume === 0,
 		};
 
 		this.handleVolume = this.handleVolume.bind(this);
@@ -21,14 +19,13 @@ class VolumeControl extends Component {
 		const muted = e.target.value === '0' ? true : false;
 
 		this.setState({
-			volume: e.target.value,
 			muted,
 		});
 	}
 
 	toggleMute() {
 		if (this.state.muted) {
-			this.props.sendVolume(0.5);
+			this.props.sendVolume(0.7);
 		} else {
 			this.props.sendVolume(0);
 		}
@@ -40,17 +37,8 @@ class VolumeControl extends Component {
     }
 
 	render() {
-        const { volume, muted } = this.state;
-
-		if (this.props.audio && this.props.audio.controls)	this.props.audio.volume = volume;
-
-		if (volume > 0 && volume <= 0.3) {
-			volumeBtn = low;
-		} else if (volume > 0.3 && volume <= 0.7) {
-			volumeBtn = med;
-		} else if (volume > 0.6) {
-			volumeBtn = high;
-		}
+		const {volume, audio} = this.props
+		if (audio && audio.controls) audio.volume = volume;
 
 		let high = (
 			<svg
@@ -107,6 +95,14 @@ class VolumeControl extends Component {
 				<path d='M0 5v6h2.804L8 14V2L2.804 5H0zm7-1.268v8.536L3.072 10H1V6h2.072L7 3.732zm8.623 2.121l-.707-.707-2.147 2.147-2.146-2.147-.707.707L12.062 8l-2.146 2.146.707.707 2.146-2.147 2.147 2.147.707-.707L13.477 8l2.146-2.147z'></path>
 			</svg>
 		);
+
+		if (volume > 0 && volume <= 0.3) {
+			volumeBtn = low;
+		} else if (volume > 0.3 && volume <= 0.7) {
+			volumeBtn = med;
+		} else if (volume > 0.6) {
+			volumeBtn = high;
+		}
 
 		return (
 			<>

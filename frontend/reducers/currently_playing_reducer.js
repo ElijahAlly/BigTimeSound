@@ -1,9 +1,15 @@
-import { PAUSE_SONG, PLAY_SONG, CURRENT_TIME, SEND_VOLUME } from '../actions/currently_playing';
+import {
+	PAUSE_SONG,
+	PLAY_SONG,
+	CURRENT_TIME,
+	SEND_VOLUME,
+	SEND_DURATION
+} from '../actions/currently_playing';
 import {
 	COLLAPSE_ALBUM_COVER,
 	EXPAND_ALBUM_COVER,
 } from '../actions/album_actions';
-
+import { formatTime } from '../util/format_time';
 const _InitialState = {
 	song: null,
 	isPlaying: false,
@@ -12,45 +18,68 @@ const _InitialState = {
 	currentTime: 0,
 	playingFrom: null,
 	volume: 0.5,
+	duration: null,
 };
 
 const currentlyPlayingReducer = (state = _InitialState, action) => {
 	Object.freeze(state);
 	const newState = Object.assign({}, state);
-
+	
 	switch (action.type) {
 		case PLAY_SONG:
-			if (state.audio && state.audio.controls) { 
+			if (state.audio && state.audio.controls && state.song === action.song) {
 				newState.audio = state.audio;
 			} else {
-				const newAudio = new Audio(action.song.url)
+				const newAudio = new Audio(action.song.url);
 				newAudio.controls = true;
+				newAudio.preload = 'metadata';
 				newState.audio = newAudio;
+				
+				const playbackBarDuration = document.getElementsByClassName('progress-time')[1];
+				newState.audio.addEventListener('loadeddata', (e) => {
+					const duration = formatTime(e.path[0].duration);
+					playbackBarDuration.innerHTML = duration;
+				});
 			}
+			
 
-			if (action.song.id === state.song.id) {
+			newState.audio.currentTime = 0;
+			newState.currentTime = 0;
+			if (action.song && state.song && state.song.id === action.song.id) {
 				newState.audio.currentTime = action.currentTime;
-			} else {
-				newState.audio.currentTime = 0;
+				newState.currentTime = action.currentTime;
 			}
 
 			newState.song = action.song;
+			newState.audio.volume = action.volume;
+			newState.volume = action.volume;
+			newState.duration = action.duration;
 			newState.playingFrom = action.playingFrom;
 			newState.isPlaying = true;
 			newState.audio.play();
-			console.log('state',state)
-			console.log('action',action)
-			console.log('new state', newState)
 			return newState;
 
 		case PAUSE_SONG:
+			if (action.noAudio) {
+				const newAudio = new Audio(state.song.url);
+				newAudio.controls = true;
+				newAudio.preload = 'metadata';
+				newState.audio = newAudio;
+				// const playbackBarDuration = document.getElementsByClassName('progress-time')[1];
+				// newState.audio.addEventListener('loadeddata', (e) => {
+				// 	const duration = formatTime(e.path[0].duration);
+				// 	playbackBarDuration.innerHTML = duration;
+				// });
+			} else {
+				state.audio.pause();
+				newState.audio = state.audio;
+			}
+
 			newState.currentTime = newState.audio.currentTime;
-			state.audio.pause()
-			newState.audio = state.audio;
 			newState.isPlaying = false;
-			console.log('state',state)
-			console.log('action',action)
-			console.log('new state', newState)
+			console.log('state', state);
+			console.log('action', action);
+			console.log('new state', newState);
 			return newState;
 
 		case COLLAPSE_ALBUM_COVER:
@@ -60,14 +89,20 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 		case EXPAND_ALBUM_COVER:
 			newState.albumIsCollapsed = false;
 			return newState;
-		
+
 		case CURRENT_TIME:
 			newState.currentTime = action.currentTime;
-			return newState
-		
+			return newState;
+
 		case SEND_VOLUME:
 			newState.volume = action.volume;
-			return newState
+			return newState;
+
+		case SEND_DURATION:
+			console.log(action.duration);
+			newState.duration = action.duration;
+			console.log(newState.duration);
+			return newState;
 
 		default:
 			return state;

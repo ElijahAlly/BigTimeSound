@@ -7,14 +7,17 @@ import {
 } from '../../actions/playlist_actions';
 import { withRouter } from 'react-router';
 import { addBackPath } from '../../actions/path_actions';
+import {pauseSong} from '../../actions/currently_playing'
 
-const mSTP = (state, ownProps) => {
+const mSTP = ({session, ui, entities}, ownProps) => {
 	return ({
-		currentUser: state.entities.user[state.session.currentUser],
-		playlists: state.entities.playlists,
+		currentUser: entities.user[session.currentUser],
+		playlists: entities.playlists,
 		history: ownProps.history,
-		goBackCount: state.ui.path.goBackCount,
-		goForwardCount: state.ui.path.goForwardCount,
+		goBackCount: ui.path.goBackCount,
+		goForwardCount: ui.path.goForwardCount,
+		isPlaying: ui.currentlyPlaying.isPlaying,
+		audio: ui.currentlyPlaying.audio,
 	})
 };
 
@@ -22,7 +25,8 @@ const mDTP = (dispatch) => ({
 	fetchAllPlaylists: (userId) => dispatch(fetchAllPlaylists(userId)),
 	fetchPlaylist: (userId, playlistId) =>
 		dispatch(fetchPlaylist(userId, playlistId)),
-	addBackPath: () => dispatch(addBackPath())
+	addBackPath: () => dispatch(addBackPath()),
+	pauseSong: (noAudio) => dispatch(pauseSong(noAudio))
 });
 
 export default withRouter(connect(mSTP, mDTP)(SideNavBar));
