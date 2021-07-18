@@ -3,7 +3,7 @@ import {
 	PLAY_SONG,
 	CURRENT_TIME,
 	SEND_VOLUME,
-	SEND_DURATION
+	SEND_CURRENT_PROGRESS
 } from '../actions/currently_playing';
 import {
 	COLLAPSE_ALBUM_COVER,
@@ -19,6 +19,7 @@ const _InitialState = {
 	playingFrom: null,
 	volume: 0.5,
 	duration: null,
+	currentProgress: 0,
 };
 
 const currentlyPlayingReducer = (state = _InitialState, action) => {
@@ -42,7 +43,6 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 				});
 			}
 			
-
 			newState.audio.currentTime = 0;
 			newState.currentTime = 0;
 			if (action.song && state.song && state.song.id === action.song.id) {
@@ -65,11 +65,6 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 				newAudio.controls = true;
 				newAudio.preload = 'metadata';
 				newState.audio = newAudio;
-				// const playbackBarDuration = document.getElementsByClassName('progress-time')[1];
-				// newState.audio.addEventListener('loadeddata', (e) => {
-				// 	const duration = formatTime(e.path[0].duration);
-				// 	playbackBarDuration.innerHTML = duration;
-				// });
 			} else {
 				state.audio.pause();
 				newState.audio = state.audio;
@@ -98,10 +93,8 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 			newState.volume = action.volume;
 			return newState;
 
-		case SEND_DURATION:
-			console.log(action.duration);
-			newState.duration = action.duration;
-			console.log(newState.duration);
+		case SEND_CURRENT_PROGRESS:
+			newState.currentProgress = action.currentProgress;
 			return newState;
 
 		default:

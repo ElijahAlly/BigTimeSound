@@ -5,7 +5,7 @@ import SongItem from '../items/song_item';
 import SongListHeader from '../items/song_list_header';
 import { handleColorShift } from '../../util/header_color_switch';
 import { receiveSongQueue } from '../../actions/song_queue_actions';
-import { pauseSong, playSong, sendDuration } from '../../actions/currently_playing';
+import { pauseSong, playSong } from '../../actions/currently_playing';
 import { fetchLikedSongs } from '../../actions/song_actions';
 
 class LikedSongsScreen extends Component {
@@ -118,7 +118,6 @@ const mSTP = ({ entities, session, ui }, ownProps) => {
 const mDTP = (dispatch) => ({
 	fetchLikedSongs: (userId) => dispatch(fetchLikedSongs(userId)),
 	receiveSongQueue: (songs) => dispatch(receiveSongQueue(songs)),
-	sendDuration: (duration) => dispatch(sendDuration(duration)),
 	pauseSong: () => dispatch(pauseSong()),
 	playSong: (song, audio, playingFrom, currentTime, volume, duration) => dispatch(playSong(song, audio, playingFrom, currentTime, volume, duration)),
 });

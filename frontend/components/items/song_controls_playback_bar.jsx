@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { pauseSong, playSong, sendDuration } from '../../actions/currently_playing';
+import { pauseSong, playSong } from '../../actions/currently_playing';
 import ProgressBar from './progress_bar.jsx';
 
 class SongControlsPlaybackBar extends Component {
@@ -11,7 +11,7 @@ class SongControlsPlaybackBar extends Component {
 	}
 
 	togglePlay() {
-		const {isPlaying, song, audio, playingFrom, currentTime, playSong, pauseSong, volume, sendDuration} = this.props;
+		const {isPlaying, song, audio, playingFrom, currentTime, playSong, pauseSong, volume } = this.props;
 		if (!isPlaying && song) {
 			// console.log('play song', song, audio, playingFrom, currentTime);
 			playSong(song, audio, playingFrom, currentTime, volume, audio.duration);
@@ -101,7 +101,6 @@ const mSTP = ({ui}, ownProps) => {
 const mDTP = (dispatch) => ({
 	playSong: (song, audio, playingFrom, currentTime, volume, duration) => dispatch(playSong(song, audio, playingFrom, currentTime, volume, duration)),
 	pauseSong: () => dispatch(pauseSong()),
-	sendDuration: (duration) => dispatch(sendDuration(duration)),
 });
 
 export default connect(mSTP, mDTP)(SongControlsPlaybackBar);

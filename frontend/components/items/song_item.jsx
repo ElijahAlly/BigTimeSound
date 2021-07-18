@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 import {
 	pauseSong,
 	playSong,
-	sendDuration,
 } from '../../actions/currently_playing';
 import { fetchAllSongs } from '../../actions/song_actions';
 import { fetchAlbums } from '../../actions/album_actions';
@@ -152,7 +151,6 @@ const mDTP = (dispatch) => ({
 	fetchAlbums: () => dispatch(fetchAlbums()),
 	fetchArtists: () => dispatch(fetchArtists()),
 	fetchAllSongs: () => dispatch(fetchAllSongs()),
-	sendDuration: (duration) => dispatch(sendDuration(duration)),
 	playSong: (song, audio, fromWhere, currentTime, volume, duration) =>
 		dispatch(playSong(song, audio, fromWhere, currentTime, volume, duration)),
 	pauseSong: () => dispatch(pauseSong()),

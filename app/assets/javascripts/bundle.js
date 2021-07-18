@@ -280,18 +280,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "PAUSE_SONG": () => (/* binding */ PAUSE_SONG),
 /* harmony export */   "CURRENT_TIME": () => (/* binding */ CURRENT_TIME),
 /* harmony export */   "SEND_VOLUME": () => (/* binding */ SEND_VOLUME),
-/* harmony export */   "SEND_DURATION": () => (/* binding */ SEND_DURATION),
+/* harmony export */   "SEND_CURRENT_PROGRESS": () => (/* binding */ SEND_CURRENT_PROGRESS),
 /* harmony export */   "playSong": () => (/* binding */ playSong),
 /* harmony export */   "pauseSong": () => (/* binding */ pauseSong),
 /* harmony export */   "sendCurrentTime": () => (/* binding */ sendCurrentTime),
 /* harmony export */   "sendVolume": () => (/* binding */ sendVolume),
-/* harmony export */   "sendDuration": () => (/* binding */ sendDuration)
+/* harmony export */   "sendCurrentProgress": () => (/* binding */ sendCurrentProgress)
 /* harmony export */ });
 var PLAY_SONG = 'PLAY_SONG';
 var PAUSE_SONG = 'PAUSE_SONG';
 var CURRENT_TIME = 'CURRENT_TIME';
 var SEND_VOLUME = 'SEND_VOLUME';
-var SEND_DURATION = 'SEND_DURATION';
+var SEND_CURRENT_PROGRESS = 'SEND_CURRENT_PROGRESS';
 var playSong = function playSong(song, audio, playingFrom, currentTime, volume, duration) {
   return {
     type: PLAY_SONG,
@@ -322,10 +322,10 @@ var sendVolume = function sendVolume(volume) {
     volume: volume
   };
 };
-var sendDuration = function sendDuration(duration) {
+var sendCurrentProgress = function sendCurrentProgress(currentProgress) {
   return {
-    type: SEND_DURATION,
-    duration: duration
+    type: SEND_CURRENT_PROGRESS,
+    currentProgress: currentProgress
   };
 };
 
@@ -1116,14 +1116,29 @@ var ProgressBar = /*#__PURE__*/function (_Component) {
     value: function handleCurrentSongTime() {
       var _this$props = this.props,
           isPlaying = _this$props.isPlaying,
-          audio = _this$props.audio;
+          audio = _this$props.audio,
+          currentProgress = _this$props.currentProgress;
+      var progressTrack = document.getElementById('progress-control');
 
       if (isPlaying && audio.controls) {
         var currentSongTime = document.getElementsByClassName('progress-time')[0];
         audio.addEventListener('timeupdate', _.throttle(function () {
           currentSongTime.innerHTML = (0,_util_format_time__WEBPACK_IMPORTED_MODULE_3__.formatTime)(audio.currentTime);
-          console.log(currentSongTime.innerHTML);
+          var currentPercent = "".concat(audio.currentTime / audio.duration);
+          currentPercent = currentPercent.slice(0, 5);
+
+          (0,_actions_currently_playing__WEBPACK_IMPORTED_MODULE_2__.sendCurrentProgress)(currentPercent);
+
+          progressTrack.value = currentPercent;
         }, 1000));
+        audio.addEventListener('pause', function () {
+          var currentPercent = "".concat(audio.currentTime / audio.duration);
+          currentPercent = currentPercent.slice(0, 5);
+          progressTrack.value = currentPercent;
+          console.log(progressTrack.value);
+        });
+      } else {
+        progressTrack.value = currentProgress;
       }
     }
   }, {
@@ -1131,15 +1146,15 @@ var ProgressBar = /*#__PURE__*/function (_Component) {
     value: function changeTime(e) {
       var duration = this.props.audio.duration;
       var currentTime = e.currentTarget.value;
+      var currentProgress = "".concat(currentTime / duration).slice(0, 5);
       currentTime = currentTime * duration;
       this.props.audio.currentTime = currentTime;
-      console.log('change time', currentTime);
-      this.props.sendCurrentTime(currentTime);
+      this.props.sendCurrentProgress(currentProgress);
     }
   }, {
     key: "shouldComponentUpdate",
     value: function shouldComponentUpdate(nextProps) {
-      if (this.props.currentTime !== nextProps.currentTime || this.props.isPlaying !== nextProps.isPlaying || this.props.audio !== nextProps.audio || this.props.currentlyPlayingSong !== nextProps.currentlyPlayingSong || this.props.duration !== nextProps.duration) return true;
+      if (this.props.currentProgress !== nextProps.currentProgress || this.props.currentTime !== nextProps.currentTime || this.props.isPlaying !== nextProps.isPlaying || this.props.audio !== nextProps.audio || this.props.currentlyPlayingSong !== nextProps.currentlyPlayingSong || this.props.duration !== nextProps.duration) return true;
       return false;
     }
   }, {
@@ -1155,9 +1170,9 @@ var ProgressBar = /*#__PURE__*/function (_Component) {
       var _this$props2 = this.props,
           currentTime = _this$props2.currentTime,
           isPlaying = _this$props2.isPlaying,
-          audio = _this$props2.audio;
-      var progress = (currentTime / duration).toFixed(2) * 10;
-      progress *= 1;
+          audio = _this$props2.audio; // let progress = (currentTime / duration).toFixed(2) * 10;
+      // progress *= 1;
+
       if (currentTime === NaN || duration === 0) progress = 0;
       var currentSongTime = null;
       if (!isPlaying && audio) currentSongTime = (0,_util_format_time__WEBPACK_IMPORTED_MODULE_3__.formatTime)(audio.currentTime);
@@ -1167,13 +1182,13 @@ var ProgressBar = /*#__PURE__*/function (_Component) {
         className: "progress-time"
       }, currentSongTime ? currentSongTime : '00:00'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         id: "progress-control",
-        value: progress,
+        value: this.props.currentProgress,
         onChange: function onChange(e) {
           return _this2.changeTime(e);
         },
         type: "range",
         min: "0",
-        step: "0.01",
+        step: "0.001",
         max: "1",
         fill: "currentColor"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h4", {
@@ -1193,14 +1208,15 @@ var mSTP = function mSTP(_ref, ownProps) {
     isPlaying: ui.currentlyPlaying.isPlaying,
     currentTime: ui.currentlyPlaying.currentTime,
     currentlyPlayingSong: ui.currentlyPlaying.song,
-    duration: ui.currentlyPlaying.duration
+    duration: ui.currentlyPlaying.duration,
+    currentProgress: ui.currentlyPlaying.currentProgress
   };
 };
 
 var mDTP = function mDTP(dispatch) {
   return {
-    sendCurrentTime: function sendCurrentTime(currentTime) {
-      return dispatch((0,_actions_currently_playing__WEBPACK_IMPORTED_MODULE_2__.sendCurrentTime)(currentTime));
+    sendCurrentProgress: function sendCurrentProgress(currentProgress) {
+      return dispatch((0,_actions_currently_playing__WEBPACK_IMPORTED_MODULE_2__.sendCurrentProgress)(currentProgress));
     }
   };
 };
@@ -1323,8 +1339,7 @@ var SongControlsPlaybackBar = /*#__PURE__*/function (_Component) {
           currentTime = _this$props.currentTime,
           playSong = _this$props.playSong,
           pauseSong = _this$props.pauseSong,
-          volume = _this$props.volume,
-          sendDuration = _this$props.sendDuration;
+          volume = _this$props.volume;
 
       if (!isPlaying && song) {
         // console.log('play song', song, audio, playingFrom, currentTime);
@@ -1440,9 +1455,6 @@ var mDTP = function mDTP(dispatch) {
     },
     pauseSong: function pauseSong() {
       return dispatch((0,_actions_currently_playing__WEBPACK_IMPORTED_MODULE_2__.pauseSong)());
-    },
-    sendDuration: function sendDuration(duration) {
-      return dispatch((0,_actions_currently_playing__WEBPACK_IMPORTED_MODULE_2__.sendDuration)(duration));
     }
   };
 };
@@ -1789,9 +1801,6 @@ var mDTP = function mDTP(dispatch) {
     },
     fetchAllSongs: function fetchAllSongs() {
       return dispatch((0,_actions_song_actions__WEBPACK_IMPORTED_MODULE_3__.fetchAllSongs)());
-    },
-    sendDuration: function sendDuration(duration) {
-      return dispatch((0,_actions_currently_playing__WEBPACK_IMPORTED_MODULE_2__.sendDuration)(duration));
     },
     playSong: function playSong(song, audio, fromWhere, currentTime, volume, duration) {
       return dispatch((0,_actions_currently_playing__WEBPACK_IMPORTED_MODULE_2__.playSong)(song, audio, fromWhere, currentTime, volume, duration));
@@ -2942,9 +2951,6 @@ var mDTP = function mDTP(dispatch) {
     },
     receiveSongQueue: function receiveSongQueue(songs) {
       return dispatch((0,_actions_song_queue_actions__WEBPACK_IMPORTED_MODULE_5__.receiveSongQueue)(songs));
-    },
-    sendDuration: function sendDuration(duration) {
-      return dispatch((0,_actions_currently_playing__WEBPACK_IMPORTED_MODULE_6__.sendDuration)(duration));
     },
     pauseSong: function pauseSong() {
       return dispatch((0,_actions_currently_playing__WEBPACK_IMPORTED_MODULE_6__.pauseSong)());
@@ -4699,7 +4705,8 @@ var _InitialState = {
   currentTime: 0,
   playingFrom: null,
   volume: 0.5,
-  duration: null
+  duration: null,
+  currentProgress: 0
 };
 
 var currentlyPlayingReducer = function currentlyPlayingReducer() {
@@ -4747,11 +4754,7 @@ var currentlyPlayingReducer = function currentlyPlayingReducer() {
 
         _newAudio.controls = true;
         _newAudio.preload = 'metadata';
-        newState.audio = _newAudio; // const playbackBarDuration = document.getElementsByClassName('progress-time')[1];
-        // newState.audio.addEventListener('loadeddata', (e) => {
-        // 	const duration = formatTime(e.path[0].duration);
-        // 	playbackBarDuration.innerHTML = duration;
-        // });
+        newState.audio = _newAudio;
       } else {
         state.audio.pause();
         newState.audio = state.audio;
@@ -4780,10 +4783,8 @@ var currentlyPlayingReducer = function currentlyPlayingReducer() {
       newState.volume = action.volume;
       return newState;
 
-    case _actions_currently_playing__WEBPACK_IMPORTED_MODULE_0__.SEND_DURATION:
-      console.log(action.duration);
-      newState.duration = action.duration;
-      console.log(newState.duration);
+    case _actions_currently_playing__WEBPACK_IMPORTED_MODULE_0__.SEND_CURRENT_PROGRESS:
+      newState.currentProgress = action.currentProgress;
       return newState;
 
     default:
