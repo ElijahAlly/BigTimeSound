@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { sendCurrentTime, sendCurrentProgress } from '../../actions/currently_playing';
+import {
+	sendCurrentTime,
+	sendCurrentProgress,
+} from '../../actions/currently_playing';
 import { setDuration, formatTime } from '../../util/format_time';
 var _ = require('lodash');
 
@@ -27,20 +30,20 @@ class ProgressBar extends Component {
 				_.throttle(() => {
 					currentSongTime.innerHTML = formatTime(audio.currentTime);
 					let currentPercent = `${audio.currentTime / audio.duration}`;
-					currentPercent = currentPercent.slice(0, 5)
-					sendCurrentProgress(currentPercent)
+					currentPercent = currentPercent.slice(0, 5);
+					sendCurrentProgress(currentPercent);
 					progressTrack.value = currentPercent;
 				}, 1000)
 			);
 
 			audio.addEventListener('pause', () => {
 				let currentPercent = `${audio.currentTime / audio.duration}`;
-				currentPercent = currentPercent.slice(0, 5)
+				currentPercent = currentPercent.slice(0, 5);
 				progressTrack.value = currentPercent;
 				console.log(progressTrack.value);
-			})
+			});
 		} else {
-			progressTrack.value = currentProgress
+			progressTrack.value = currentProgress;
 		}
 	}
 
@@ -54,30 +57,22 @@ class ProgressBar extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		if (
-			this.props.currentProgress !== nextProps.currentProgress ||
-			this.props.currentTime !== nextProps.currentTime ||
-			this.props.isPlaying !== nextProps.isPlaying ||
-			this.props.audio !== nextProps.audio ||
-			this.props.currentlyPlayingSong !== nextProps.currentlyPlayingSong ||
-			this.props.duration !== nextProps.duration
-		)
-			return true;
+		if (this.props !== nextProps) return true;
 		return false;
 	}
 
-	componentDidUpdate() {}
+	componentDidUpdate() {
+		this.handleCurrentSongTime();
+	}
 
 	render() {
 		let duration = 0;
 		if (this.props.duration) duration = this.props.duration;
 
-		const { currentTime, isPlaying, audio } = this.props;
-		// let progress = (currentTime / duration).toFixed(2) * 10;
-		// progress *= 1;
+		let { currentTime, isPlaying, audio, currentProgress } = this.props;
 
-		if (currentTime === NaN || duration === 0) progress = 0;
-
+		if (currentTime === NaN || duration === 0) currentProgress = 0;
+		console.log(currentProgress);
 		let currentSongTime = null;
 		if (!isPlaying && audio) currentSongTime = formatTime(audio.currentTime);
 
@@ -88,7 +83,7 @@ class ProgressBar extends Component {
 				</h4>
 				<input
 					id='progress-control'
-					value={this.props.currentProgress}
+					value={currentProgress}
 					onChange={(e) => this.changeTime(e)}
 					type='range'
 					min='0'
@@ -107,13 +102,13 @@ const mSTP = ({ ui }, ownProps) => ({
 	song: ui.currentlyPlaying.song,
 	isPlaying: ui.currentlyPlaying.isPlaying,
 	currentTime: ui.currentlyPlaying.currentTime,
-	currentlyPlayingSong: ui.currentlyPlaying.song,
 	duration: ui.currentlyPlaying.duration,
 	currentProgress: ui.currentlyPlaying.currentProgress,
 });
 
 const mDTP = (dispatch) => ({
-	sendCurrentProgress: (currentProgress) => dispatch(sendCurrentProgress(currentProgress)),
+	sendCurrentProgress: (currentProgress) =>
+		dispatch(sendCurrentProgress(currentProgress)),
 });
 
 export default connect(mSTP, mDTP)(ProgressBar);

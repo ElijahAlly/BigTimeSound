@@ -8,7 +8,7 @@ export const receiveSongQueue = (songs) => ({
 });
 
 export const addSongToQueue = (song) => ({
-	type: RECEIVE_SONG_QUEUE,
+	type: ADD_SONG_TO_QUEUE,
 	song,
 });
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {handleColorShift} from '../../util/header_color_switch'
+import { handleColorShift } from '../../util/header_color_switch';
 
 class PlaylistShow extends Component {
 	constructor(props) {
@@ -35,8 +35,8 @@ class PlaylistShow extends Component {
 	componentDidMount() {
 		window.scrollTo(0, 0);
 		this.selectOrCreatePlaylist();
-		handleColorShift('#833b3f')
-		const main = document.getElementById('main')
+		handleColorShift('#833b3f');
+		const main = document.getElementById('main');
 		main.style.background = '#833b3f';
 	}
 
@@ -132,7 +132,8 @@ class PlaylistShow extends Component {
 	}
 
 	render() {
-		console.log(this.state.playlist);
+		// console.log(this.state.playlist);
+		
 		return (
 			<div className='screen playlist-show-screen'>
 				<section className='header'>

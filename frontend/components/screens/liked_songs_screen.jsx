@@ -9,55 +9,77 @@ import { pauseSong, playSong } from '../../actions/currently_playing';
 import { fetchLikedSongs } from '../../actions/song_actions';
 
 class LikedSongsScreen extends Component {
-
 	componentDidMount() {
-		this.props.fetchLikedSongs(this.props.currentUser.id)
+		this.props.fetchLikedSongs(this.props.currentUser.id);
 		window.scrollTo(0, 0);
 		handleColorShift('#5038a0');
 		const main = document.getElementById('main');
-		main.style.background = 'linear-gradient(360deg, #121213 65%, rgb(80, 56, 160) 77%)';
+		main.style.background =
+			'linear-gradient(360deg, #121213 65%, rgb(80, 56, 160) 77%)';
 	}
 
 	togglePlay() {
-		let {playingFrom, audio, song, isPlaying, pauseSong, currentTime, playSong, likedSongs, receiveSongQueue, volume} = this.props
+		let {
+			playingFrom,
+			audio,
+			song,
+			isPlaying,
+			pauseSong,
+			currentTime,
+			playSong,
+			likedSongs,
+			receiveSongQueue,
+			volume,
+		} = this.props;
 		if (playingFrom === 'liked-songs') {
 			if (isPlaying) {
 				pauseSong();
-				return
+				return;
 			}
-			
+
 			if (!song) {
 				let songs = likedSongs;
 				song = songs.shift();
-				audio = new Audio(song.url)
+				audio = new Audio(song.url);
 			}
 
 			playSong(song, audio, playingFrom, currentTime, volume, audio.duration);
-			return
+			return;
 		}
 
 		let songs = likedSongs;
 		let playSongFirst = songs.shift();
-		let newAudio = new Audio(playSongFirst.url)
-		receiveSongQueue(songs)
-		playSong(playSongFirst, newAudio, 'liked-songs', currentTime, volume, newAudio.duration)
+		let newAudio = new Audio(playSongFirst.url);
+		receiveSongQueue(songs);
+		playSong(
+			playSongFirst,
+			newAudio,
+			'liked-songs',
+			currentTime,
+			volume,
+			newAudio.duration
+		);
 	}
 
 	shouldComponentUpdate(nextProps) {
-        if (nextProps.volume !== this.props.volume || this.props.isPlaying !== nextProps.isPlaying) return true;
-        return false;
-    }
+		if (
+			nextProps.volume !== this.props.volume ||
+			this.props.isPlaying !== nextProps.isPlaying
+		)
+			return true;
+		return false;
+	}
 
 	render() {
 		let togglePlayButton = (
-			<svg height='16' width='16' fill='currentColor' viewBox='0 0 16 16' onClick={() => this.togglePlay()}>
+			<svg height='16' width='16' fill='currentColor' viewBox='0 0 16 16'>
 				<path d='M4.018 14L14.41 8 4.018 2z'></path>
 			</svg>
 		);
 
 		if (this.props.isPlaying) {
 			togglePlayButton = (
-				<svg height='16' width='16' viewBox='0 0 16 16' fill='currentColor' onClick={() => this.togglePlay()}>
+				<svg height='16' width='16' viewBox='0 0 16 16' fill='currentColor'>
 					<path d='M3 2h3v12H3zm7 0h3v12h-3z'></path>
 				</svg>
 			);
@@ -80,17 +102,24 @@ class LikedSongsScreen extends Component {
 					</div>
 				</section>
 				<section className='big-green-play-btn-container'>
-					<h3 className='big-green-play-btn'>
-							{togglePlayButton}
+					<h3 className='big-green-play-btn' onClick={() => this.togglePlay()}>
+						{togglePlayButton}
 					</h3>
 				</section>
 				<SongListHeader />
 				<section>
 					<ul className='song-list'>
 						{this.props.likedSongs ? (
-							this.props.likedSongs.reverse().map((song, i) => (
-								<SongItem number={i + 1} key={i} song={song} fromWhere='liked-songs' />
-							))
+							this.props.likedSongs
+								.map((song, i) => (
+									<SongItem
+										number={i + 1}
+										key={i}
+										song={song}
+										songList={this.props.likedSongs}
+										fromWhere='liked-songs'
+									/>
+								))
 						) : (
 							<li>No Songs</li>
 						)}
@@ -119,7 +148,8 @@ const mDTP = (dispatch) => ({
 	fetchLikedSongs: (userId) => dispatch(fetchLikedSongs(userId)),
 	receiveSongQueue: (songs) => dispatch(receiveSongQueue(songs)),
 	pauseSong: () => dispatch(pauseSong()),
-	playSong: (song, audio, playingFrom, currentTime, volume, duration) => dispatch(playSong(song, audio, playingFrom, currentTime, volume, duration)),
+	playSong: (song, audio, playingFrom, currentTime, volume, duration) =>
+		dispatch(playSong(song, audio, playingFrom, currentTime, volume, duration)),
 });
 
 export default withRouter(connect(mSTP, mDTP)(LikedSongsScreen));

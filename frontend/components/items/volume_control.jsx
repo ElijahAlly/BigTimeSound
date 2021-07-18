@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {sendVolume} from '../../actions/currently_playing'
+import { withRouter } from 'react-router-dom';
+import { sendVolume } from '../../actions/currently_playing';
+import { addForwardPath, removeBackPath } from '../../actions/path_actions';
 
 class VolumeControl extends Component {
 	constructor(props) {
@@ -12,10 +14,42 @@ class VolumeControl extends Component {
 
 		this.handleVolume = this.handleVolume.bind(this);
 		this.toggleMute = this.toggleMute.bind(this);
+		this.handleQueueClick = this.handleQueueClick.bind(this);
+	}
+
+	componentDidMount() {
+		const queue = document.getElementsByClassName('queue-btn')[0];
+		window.addEventListener('hashchange', () => {
+			if (
+				Array.from(queue.classList).includes('active-green') &&
+				this.props.history.location.pathname !==
+					`/users/${this.props.userId}/queue`
+			) {
+				queue.classList.remove('active-green');
+			}
+		});
+	}
+
+	handleQueueClick() {
+		const queue = document.getElementsByClassName('queue-btn')[0];
+
+		if (
+			this.props.history.location.pathname ===
+			`/users/${this.props.userId}/queue`
+		) {
+			queue.classList.remove('active-green');
+			this.props.addForwardPath();
+			this.props.removeBackPath();
+			this.props.history.goBack();
+			return;
+		}
+
+		queue.classList.add('active-green');
+		this.props.history.push(`/users/${this.props.userId}/queue`);
 	}
 
 	handleVolume(e) {
-        this.props.sendVolume(e.target.value)
+		this.props.sendVolume(e.target.value);
 		const muted = e.target.value === '0' ? true : false;
 
 		this.setState({
@@ -31,13 +65,18 @@ class VolumeControl extends Component {
 		}
 	}
 
-    shouldComponentUpdate(nextProps) {
-        if (nextProps.volume !== this.props.volume) return true;
-        return false;
-    }
+	shouldComponentUpdate(nextProps) {
+		if (
+			nextProps.volume !== this.props.volume ||
+			this.props.history.location.pathname !==
+				nextProps.history.location.pathname
+		)
+			return true;
+		return false;
+	}
 
 	render() {
-		const {volume, audio} = this.props
+		const { volume, audio } = this.props;
 		if (audio && audio.controls) audio.volume = volume;
 
 		let high = (
@@ -106,7 +145,9 @@ class VolumeControl extends Component {
 
 		return (
 			<>
-				<i id='queue-btn' className="fas fa-stream"></i>
+				<i
+					className='fas fa-stream queue-btn'
+					onClick={() => this.handleQueueClick()}></i>
 				{volumeBtn}
 				<input
 					id='volume-control'
@@ -123,13 +164,16 @@ class VolumeControl extends Component {
 	}
 }
 
-const mSTP = ({ ui }, ownProps) => ({
+const mSTP = ({ ui, session }, ownProps) => ({
+	userId: session.currentUser,
 	audio: ui.currentlyPlaying.audio,
-    volume: ui.currentlyPlaying.volume,
+	volume: ui.currentlyPlaying.volume,
 });
 
 const mDTP = (dispatch) => ({
-    sendVolume: (volume) => dispatch(sendVolume(volume))
+	sendVolume: (volume) => dispatch(sendVolume(volume)),
+	removeBackPath: () => dispatch(removeBackPath()),
+	addForwardPath: () => dispatch(addForwardPath()),
 });
 
-export default connect(mSTP, mDTP)(VolumeControl);
+export default withRouter(connect(mSTP, mDTP)(VolumeControl));

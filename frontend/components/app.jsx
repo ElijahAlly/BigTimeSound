@@ -17,6 +17,7 @@ const App = () => (
 			<ProtectedRoute path='/users/:id/liked-songs' component={SwitchScreen} />
 			<ProtectedRoute path='/users/:id/library' component={SwitchScreen} />
 			<ProtectedRoute path='/users/:id/search' component={SwitchScreen} />
+			<ProtectedRoute path='/users/:id/queue' component={SwitchScreen} />
 			<ProtectedRoute path='/users/:id' component={SwitchScreen} />
 			<AuthRoute path='/login' component={LoginContainer} />
 			<AuthRoute path='/signup' component={SignupContainer} />

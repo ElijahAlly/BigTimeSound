@@ -11,6 +11,7 @@ import LibraryScreen from '../screens/library_screen';
 import LikedSongsScreen from '../screens/liked_songs_screen';
 import PlaylistShowContainer from '../screens/playlist_show_container';
 import ProfileScreen from '../screens/profile_screen'
+import QueueScreen from '../screens/queue_screen'
 
 const MainShowPage = (props) => {
 	let component;
@@ -38,6 +39,10 @@ const MainShowPage = (props) => {
 
 	} else if (props.path === '/users/:id/profile') {
 		component = <ProfileScreen props={props} />
+		selected = 'none'
+
+	} else if (props.path === '/users/:id/queue') {
+		component = <QueueScreen props={props} />
 		selected = 'none'
 
 	} else {

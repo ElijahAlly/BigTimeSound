@@ -3,7 +3,7 @@ import {
 	PLAY_SONG,
 	CURRENT_TIME,
 	SEND_VOLUME,
-	SEND_CURRENT_PROGRESS
+	SEND_CURRENT_PROGRESS,
 } from '../actions/currently_playing';
 import {
 	COLLAPSE_ALBUM_COVER,
@@ -25,7 +25,7 @@ const _InitialState = {
 const currentlyPlayingReducer = (state = _InitialState, action) => {
 	Object.freeze(state);
 	const newState = Object.assign({}, state);
-	
+
 	switch (action.type) {
 		case PLAY_SONG:
 			if (state.audio && state.audio.controls && state.song === action.song) {
@@ -35,14 +35,15 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 				newAudio.controls = true;
 				newAudio.preload = 'metadata';
 				newState.audio = newAudio;
-				
-				const playbackBarDuration = document.getElementsByClassName('progress-time')[1];
+
+				const playbackBarDuration =
+					document.getElementsByClassName('progress-time')[1];
 				newState.audio.addEventListener('loadeddata', (e) => {
 					const duration = formatTime(e.path[0].duration);
 					playbackBarDuration.innerHTML = duration;
 				});
 			}
-			
+
 			newState.audio.currentTime = 0;
 			newState.currentTime = 0;
 			if (action.song && state.song && state.song.id === action.song.id) {
@@ -66,7 +67,7 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 				newAudio.preload = 'metadata';
 				newState.audio = newAudio;
 			} else {
-				state.audio.pause();
+				state.audio.controls ? state.audio.pause() : null;
 				newState.audio = state.audio;
 			}
 

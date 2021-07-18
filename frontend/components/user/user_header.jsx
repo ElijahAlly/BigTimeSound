@@ -11,20 +11,35 @@ class UserHeader extends Component {
 		};
 		this.goBack = this.goBack.bind(this);
 		this.goForward = this.goForward.bind(this);
+		this.handleQueue = this.handleQueue.bind(this);
 	}
 
 	goBack() {
 		this.props.addForwardPath();
-
+		
 		this.props.removeBackPath();
 		this.props.history.goBack();
+		this.handleQueue();
 	}
 
 	goForward() {
 		this.props.addBackPath();
-
+		
 		this.props.removeForwardPath();
 		this.props.history.goForward();
+		this.handleQueue();
+	}
+
+	handleQueue() {
+		const queue = document.getElementsByClassName('queue-btn')[0];
+		if (
+			queue &&
+			!Array.from(queue.classList).includes('active-green') &&
+			this.props.history.location.pathname ===
+				`/users/${this.props.userId}/queue`
+		) {
+			queue.classList.add('active-green');
+		}
 	}
 
 	render() {

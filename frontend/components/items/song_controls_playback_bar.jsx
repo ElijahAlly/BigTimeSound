@@ -11,7 +11,16 @@ class SongControlsPlaybackBar extends Component {
 	}
 
 	togglePlay() {
-		const {isPlaying, song, audio, playingFrom, currentTime, playSong, pauseSong, volume } = this.props;
+		const {
+			isPlaying,
+			song,
+			audio,
+			playingFrom,
+			currentTime,
+			playSong,
+			pauseSong,
+			volume,
+		} = this.props;
 		if (!isPlaying && song) {
 			// console.log('play song', song, audio, playingFrom, currentTime);
 			playSong(song, audio, playingFrom, currentTime, volume, audio.duration);
@@ -21,12 +30,17 @@ class SongControlsPlaybackBar extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		if (this.props.isPlaying !== nextProps.isPlaying || this.props.currentTime !== nextProps.currentTime || nextProps.volume !== this.props.volume) return true;
+		if (
+			this.props.isPlaying !== nextProps.isPlaying ||
+			this.props.currentTime !== nextProps.currentTime ||
+			nextProps.volume !== this.props.volume
+		)
+			return true;
 		return false;
 	}
 
 	render() {
-		const {isPlaying} = this.props;
+		const { isPlaying } = this.props;
 
 		let togglePlayButton = (
 			<svg height='16' width='16' viewBox='0 0 16 16'>
@@ -43,14 +57,9 @@ class SongControlsPlaybackBar extends Component {
 			);
 		}
 
-		const {songQueueHistory, songQueue} = this.props
+		const { songQueueHistory, songQueue } = this.props;
 		const nextSong = songQueue[0];
-		const prevSong = songQueueHistory[songQueueHistory.length-1];
-
-		const nextOrPrevSong = {
-			isPlaying,
-			song: null
-		}
+		const prevSong = songQueueHistory[songQueueHistory.length - 1];
 
 		return (
 			<>
@@ -62,7 +71,9 @@ class SongControlsPlaybackBar extends Component {
 						width='16'
 						viewBox='0 0 16 16'
 						className='skip-prev-btn prev-track'
-						onClick={() => this.props.skipTrack({...nextOrPrevSong, song: nextSong})}>
+						onClick={() =>
+							this.props.prevTrack(isPlaying, prevSong)
+						}>
 						<path d='M11 3v4.119L3 2.5v11l8-4.619V13h2V3z'></path>
 					</svg>
 					<h3 className='play-pause' onClick={() => this.togglePlay()}>
@@ -75,7 +86,9 @@ class SongControlsPlaybackBar extends Component {
 						width='16'
 						viewBox='0 0 16 16'
 						className='skip-prev-btn skip-track'
-						onClick={() => this.props.prevTrack({...nextOrPrevSong, song: prevSong})}>
+						onClick={() =>
+							this.props.skipTrack(isPlaying, nextSong)
+						}>
 						<path d='M11 3v4.119L3 2.5v11l8-4.619V13h2V3z'></path>
 					</svg>
 				</div>
@@ -85,7 +98,7 @@ class SongControlsPlaybackBar extends Component {
 	}
 }
 
-const mSTP = ({ui}, ownProps) => {
+const mSTP = ({ ui }, ownProps) => {
 	return {
 		isPlaying: ui.currentlyPlaying.isPlaying,
 		song: ui.currentlyPlaying.song,
@@ -99,8 +112,11 @@ const mSTP = ({ui}, ownProps) => {
 };
 
 const mDTP = (dispatch) => ({
-	playSong: (song, audio, playingFrom, currentTime, volume, duration) => dispatch(playSong(song, audio, playingFrom, currentTime, volume, duration)),
+	playSong: (song, audio, playingFrom, currentTime, volume, duration) =>
+		dispatch(playSong(song, audio, playingFrom, currentTime, volume, duration)),
 	pauseSong: () => dispatch(pauseSong()),
+	prevTrack: (isPlaying, prevSong) => dispatch(prevTrack(isPlaying, prevSong)),
+	skipTrack: (isPlaying, nextSong) => dispatch(skipTrack(isPlaying, nextSong)),
 });
 
 export default connect(mSTP, mDTP)(SongControlsPlaybackBar);

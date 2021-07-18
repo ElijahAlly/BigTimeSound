@@ -9,6 +9,7 @@ import { fetchAllSongs } from '../../actions/song_actions';
 import { fetchAlbums } from '../../actions/album_actions';
 import { fetchArtists } from '../../actions/artist_actions';
 import { setDuration } from '../../util/format_time';
+import { receiveSongQueue } from '../../actions/song_queue_actions';
 
 class SongItem extends Component {
 	constructor(props) {
@@ -57,20 +58,33 @@ class SongItem extends Component {
 			playSong,
 			currentTime,
 			volume,
+			songList,
+			receiveSongQueue
 		} = this.props;
-		const { song, audio } = this.state;
 
+		const { song, audio } = this.state;
+		
 		if (isPlaying) {
 			pauseSong();
+
 			if (currentlyPlayingSong.id !== song.id) {
-				// console.log('songs dont match')
-				// console.table(currentlyPlayingSong, song)
 				playSong(song, audio, fromWhere, currentTime, volume, audio.duration);
 			}
-			return;
+			
+		} else {
+			playSong(song, audio, fromWhere, currentTime, volume, audio.duration);
 		}
 
-		playSong(song, audio, fromWhere, currentTime, volume, audio.duration);
+		// if (shuffledOn) // later check for shuffleOn -> if true shuffle songList
+		let queueToSend = [];
+
+		songList.forEach((el) => {
+			if (queueToSend[0] || el.id === song.id) {
+				queueToSend.push(el)
+			}
+		})
+		queueToSend.shift()
+		receiveSongQueue(queueToSend)
 	}
 
 	render() {
@@ -151,6 +165,7 @@ const mDTP = (dispatch) => ({
 	fetchAlbums: () => dispatch(fetchAlbums()),
 	fetchArtists: () => dispatch(fetchArtists()),
 	fetchAllSongs: () => dispatch(fetchAllSongs()),
+	receiveSongQueue: (queue) => dispatch(receiveSongQueue(queue)),
 	playSong: (song, audio, fromWhere, currentTime, volume, duration) =>
 		dispatch(playSong(song, audio, fromWhere, currentTime, volume, duration)),
 	pauseSong: () => dispatch(pauseSong()),

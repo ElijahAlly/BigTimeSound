@@ -201,13 +201,22 @@
 			}
 		}
 
-		#queue-btn {
+		
+		.queue-btn {
 			background-color: transparent;
 			border: none;
 			color: rgb(168, 168, 168);
-
+			
 			&:hover {
 				color: whitesmoke;
+			}
+		}
+
+		.active-green {
+			color: #1db954;
+
+			&:hover {
+				color: #00852e;
 			}
 		}
 	}
