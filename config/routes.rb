@@ -7,12 +7,11 @@ Rails.application.routes.draw do
       resources :likes, only: [:index, :create, :destroy,]
     end
 
+    resources :search, only: :index
     resources :albums, only: :index
     resources :artists, only: :index
     resources :songs, only: [:show, :index]
-    resource :session, only: [:create], as: 'new_session'
-    resource :session, only: [:destroy]
-
+    resource :session, only: [:create, :destroy]
   end
 
   root to: 'static_pages#root'

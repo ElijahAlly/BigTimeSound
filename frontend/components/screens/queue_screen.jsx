@@ -5,20 +5,25 @@ import SongItem from '../items/song_item';
 
 class QueueScreen extends Component {
 	componentDidMount() {
-        window.scrollTo(0, 0);
+		window.scrollTo(0, 0);
 		handleColorShift('#1a1818');
 		const main = document.getElementById('main');
 		main.style.background = '#1a1818';
-    }
+	}
 
 	shouldComponentUpdate(nextProps) {
-		if (this.props.queue[0] !== nextProps.queue[0]) return true;
+		if (
+			this.props.queue !== nextProps.queue ||
+			this.props.shuffledIsOn !== nextProps.shuffledIsOn
+		)
+			return true;
 		return false;
 	}
 
 	render() {
 		const { queue, currentlyPlaying, playingFrom } = this.props;
-
+		console.log(currentlyPlaying);
+		console.log(queue);
 		return (
 			<div className='screen queue-screen'>
 				<section id='queue-container'>
@@ -52,6 +57,7 @@ class QueueScreen extends Component {
 const mSTP = ({ ui, entities }, ownProps) => ({
 	queue: ui.queue.songQueue,
 	currentlyPlaying: ui.currentlyPlaying.song,
+	shuffledIsOn: ui.currentlyPlaying.shuffledIsOn,
 	playingFrom: ui.currentlyPlaying.playingFrom,
 });
 

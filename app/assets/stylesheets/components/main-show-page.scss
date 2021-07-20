@@ -7,23 +7,24 @@
 	padding-bottom: 100px;
 	color: whitesmoke;
 	position: relative;
-	padding-left: 175px;
+	padding-left: 195px;
 
 	// home screen
 	.home-screen {
-		padding-top: 150px;
+		padding-top: 80px;
+		height: 1500px;
 		background: linear-gradient(
 			360deg,
 			$big-lightblack 80%,
 			$big-darkpurple 96%
 		);
-		height: 1500px;
 
-		h1 {
+		.section-header {
+			margin-top: 40px;
 			margin-left: 40px;
 			padding-bottom: 25px;
 			font-weight: 600;
-			font-size: 28px;
+			font-size: 25px;
 		}
 
 		.suggested {
@@ -50,7 +51,7 @@
 					border-radius: 5px;
 					display: flex;
 					align-items: center;
-					transition-duration: 0.5s;
+					transition-duration: 0.3s;
 					box-shadow: inset 84px 0px 20px 0px $big-darkgray;
 
 					&:hover {
@@ -73,15 +74,38 @@
 
 	// search screen
 	.search-screen {
-		padding-top: 150px;
-		background: linear-gradient(360deg, $big-lightblack 80%, $big-blue 96%);
-		height: 1500px;
+		padding-top: 50px;
+		padding-bottom: 100px;
+		background: $big-lightblack;
+		height: fit-content;
+		display: flex;
+		flex-direction: column;
 
-		h1 {
-			position: fixed;
-			top: 19px;
-			padding-left: 19px;
-			font-weight: 500;
+		.search-error-container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding-bottom: 230px;
+			padding-top: 150px;
+			margin-right: 80px;
+		
+			h1 {
+				font-weight: 600;
+				font-size: 25px;
+				padding-bottom: 20px;
+			}
+
+			h3 {
+				font-weight: 400;
+				font-size: 15px;
+			}
+		}
+
+		.suggested-header {
+			margin-top: 40px;
+			margin-left: 40px;
+			padding-bottom: 25px;
+			font-weight: 600;
 			font-size: 25px;
 		}
 

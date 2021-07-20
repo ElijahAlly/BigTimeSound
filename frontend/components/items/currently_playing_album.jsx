@@ -4,26 +4,31 @@ import { fetchAlbums, collapseAlbumCover } from '../../actions/album_actions';
 import ArrowButton from './arrow_button';
 
 class CurrentlyPlayingAlbum extends Component {
-	componentDidUpdate() {
-		if (!this.props.album) {
-			this.props.fetchAlbums();
-		}
-	}
-
+	// componentDidUpdate() {
+	// 	if (!this.props.album) {
+	// 		this.props.fetchAlbums();
+	// 	}
+	// }
+ 
 	render() {
+		const { album, albumIsCollapsed, collapseAlbumCover } = this.props;
 		let albumCover = 'http://tny.im/no-cover-art';
-		if (this.props.album) albumCover = this.props.album.url;
+		if (album) albumCover = album.url;
+
 		return (
-			<section className='side-nav-album-cover'>
-				{this.props.albumIsCollapsed ? (
+			<>
+				{albumIsCollapsed ? (
 					<></>
 				) : (
-					<>
-						<ArrowButton classname={'collapse-album-cover'} action={this.props.collapseAlbumCover}/>
+					<section className='side-nav-album-cover'>
+						<ArrowButton
+							classname={'collapse-album-cover'}
+							action={collapseAlbumCover}
+						/>
 						<img src={albumCover} />
-						</>
-						)}
-			</section>
+					</section>
+				)}
+			</>
 		);
 	}
 }
@@ -42,7 +47,7 @@ const mSTP = (state, ownProps) => {
 
 const mDTP = (dispatch) => ({
 	fetchAlbums: () => dispatch(fetchAlbums()),
-    collapseAlbumCover: () => dispatch(collapseAlbumCover())
+	collapseAlbumCover: () => dispatch(collapseAlbumCover()),
 });
 
 export default connect(mSTP, mDTP)(CurrentlyPlayingAlbum);

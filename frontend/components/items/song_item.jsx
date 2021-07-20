@@ -5,18 +5,15 @@ import {
 	pauseSong,
 	playSong,
 } from '../../actions/currently_playing';
-import { fetchAllSongs } from '../../actions/song_actions';
-import { fetchAlbums } from '../../actions/album_actions';
-import { fetchArtists } from '../../actions/artist_actions';
 import { setDuration } from '../../util/format_time';
 import { receiveSongQueue } from '../../actions/song_queue_actions';
+import {shuffleArray} from '../../util/shuffle_array'
 
 class SongItem extends Component {
 	constructor(props) {
 		super(props);
 		const song = this.props.song;
 		const audio = new Audio(song.url);
-		console.log(audio);
 		audio.preload = 'metadata';
 		audio.controls = true;
 		audio.currentTime = this.props.currentTime || 0;
@@ -30,15 +27,16 @@ class SongItem extends Component {
 
 	componentDidMount() {
 		setDuration(this.state.audio, this.state.song.id);
-		this.props.fetchAlbums();
-		this.props.fetchArtists();
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
 		if (
 			this.props.isPlaying !== nextProps.isPlaying ||
-			nextProps.volume !== this.props.volume ||
-			this.props.currentlyPlayingSong !== nextProps.currentlyPlayingSong
+			this.state.song !== nextState.song ||
+			this.props.songList !== nextProps.songList ||
+			this.props.volume !== nextProps.volume ||
+			this.props.currentlyPlayingSong !== nextProps.currentlyPlayingSong ||
+			this.props.shuffleIsOn !== nextProps.shuffleIsOn 
 		)
 			return true;
 		return false;
@@ -49,7 +47,7 @@ class SongItem extends Component {
 		console.log('liked song');
 	}
 
-	togglePlay() {
+	togglePlay(songList) {
 		const {
 			isPlaying,
 			pauseSong,
@@ -58,8 +56,8 @@ class SongItem extends Component {
 			playSong,
 			currentTime,
 			volume,
-			songList,
-			receiveSongQueue
+			receiveSongQueue,
+			shuffleIsOn
 		} = this.props;
 
 		const { song, audio } = this.state;
@@ -75,15 +73,16 @@ class SongItem extends Component {
 			playSong(song, audio, fromWhere, currentTime, volume, audio.duration);
 		}
 
-		// if (shuffledOn) // later check for shuffleOn -> if true shuffle songList
-		let queueToSend = [];
-
+		let shuffledQueue = [];
+		let queue = [];
 		songList.forEach((el) => {
-			if (queueToSend[0] || el.id === song.id) {
-				queueToSend.push(el)
-			}
+			if (el.id !== song.id) shuffledQueue.push(el);
+			if (!shuffleIsOn && (el.id === song.id || queue[0])) queue.push(el)
 		})
-		queueToSend.shift()
+		
+		queue.shift();
+		let queueToSend = queue;
+		if (shuffleIsOn) queueToSend = shuffledQueue;
 		receiveSongQueue(queueToSend)
 	}
 
@@ -105,8 +104,11 @@ class SongItem extends Component {
 			albumName = this.props.album.name;
 		}
 
+		let {songList, shuffleIsOn} = this.props;
+		if (shuffleIsOn && songList) songList = shuffleArray(songList);
+
 		return (
-			<li onClick={() => this.togglePlay()} className={`${highlighted}`}>
+			<li onClick={() => this.togglePlay(songList)} className={`${highlighted}`}>
 				<h4 className='song-number'>
 					{!this.props.isPlaying ||
 					this.props.currentlyPlayingSong.id !== song.id ? (
@@ -157,14 +159,12 @@ const mSTP = ({ entities, ui, session }, ownProps) => {
 		artist: entities.artists[ownProps.song.artist_id],
 		currentTime: ui.currentlyPlaying.currentTime,
 		volume: ui.currentlyPlaying.volume,
+		shuffleIsOn: ui.currentlyPlaying.shuffleIsOn,
 		fromWhere: ownProps.fromWhere,
 	};
 };
 
 const mDTP = (dispatch) => ({
-	fetchAlbums: () => dispatch(fetchAlbums()),
-	fetchArtists: () => dispatch(fetchArtists()),
-	fetchAllSongs: () => dispatch(fetchAllSongs()),
 	receiveSongQueue: (queue) => dispatch(receiveSongQueue(queue)),
 	playSong: (song, audio, fromWhere, currentTime, volume, duration) =>
 		dispatch(playSong(song, audio, fromWhere, currentTime, volume, duration)),

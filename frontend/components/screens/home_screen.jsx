@@ -2,13 +2,35 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { addBackPath } from '../../actions/path_actions';
-import {handleColorShift} from '../../util/header_color_switch'
+import { fetchAlbums } from '../../actions/album_actions';
+import { fetchArtists } from '../../actions/artist_actions';
+import { fetchAllSongs } from '../../actions/song_actions';
+import { handleColorShift } from '../../util/header_color_switch';
+import UserSuggestedLinks from '../items/user_suggested_links';
+import ListWithPicture from '../items/list_with_picture';
+import { assignArtistsToAlbums, assignImages } from '../../util/assign_functions';
+import { shuffleArray } from '../../util/shuffle_array';
 
 class HomeScreen extends Component {
 	constructor(props) {
 		super(props);
 		const greet = this.greeting();
 		this.state = { greet };
+	}
+
+	shouldComponentUpdate(nextProps) {
+		if (this.props !== nextProps) return true;
+		return false;
+	}
+
+	componentDidMount() {
+		window.scrollTo(0, 0);
+		handleColorShift('#3f2657');
+		const main = document.getElementById('main');
+		main.style.background = '#3f2657';
+		this.props.fetchAlbums();
+		this.props.fetchArtists();
+		this.props.fetchAllSongs();
 	}
 
 	greeting() {
@@ -27,96 +49,38 @@ class HomeScreen extends Component {
 		return greet;
 	}
 
-	componentDidMount() {
-		window.scrollTo(0, 0);
-		handleColorShift('#3f2657');
-		const main = document.getElementById('main')
-		main.style.background = '#3f2657';
-	}
-
-
 	render() {
+		const { currentUser, addBackPath, albums, artists } = this.props;
 		return (
 			<div className='screen home-screen'>
-				<h1>
-					Good {this.state.greet}, {this.props.props.currentUser.username}
+				<h1 className='section-header'>
+					Good {this.state.greet}, {currentUser.username}
 				</h1>
-				<section className='suggested'>
-					<div className='outer-div'>
-						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`} onClick={() => this.props.addBackPath()}>
-							<img
-								height='100'
-								width='100'
-								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
-							/>
-							<h2>Liked Songs</h2>
-						</Link>
-						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`} onClick={() => this.props.addBackPath()}>
-							<img
-								height='100'
-								width='100'
-								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
-							/>
-							<h2>Chill</h2>
-						</Link>
-						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`} onClick={() => this.props.addBackPath()}>
-							<img
-								height='100'
-								width='100'
-								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
-							/>
-							<h2>Dance</h2>
-						</Link>
-						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`} onClick={() => this.props.addBackPath()}>
-							<img
-								height='100'
-								width='100'
-								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
-							/>
-							<h2>Grooves</h2>
-						</Link>
-					</div>
-					<div className='outer-div'>
-						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`} onClick={() => this.props.addBackPath()}>
-							<img
-								height='100'
-								width='100'
-								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
-							/>
-							<h2>Sleep</h2>
-						</Link>
-						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`} onClick={() => this.props.addBackPath()}>
-							<img
-								height='100'
-								width='100'
-								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
-							/>
-							<h2>HYPE</h2>
-						</Link>
-						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`} onClick={() => this.props.addBackPath()}>
-							<img
-								height='100'
-								width='100'
-								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
-							/>
-							<h2>Your Daily Mix</h2>
-						</Link>
-						<Link to={`/users/${this.props.props.currentUser.id}/liked-songs`} onClick={() => this.props.addBackPath()}>
-							<img
-								height='100'
-								width='100'
-								src='https://misc.scdn.co/liked-songs/liked-songs-640.png'
-							/>
-							<h2>The Hits</h2>
-						</Link>
-					</div>
-				</section>
+				<UserSuggestedLinks
+					currentUser={currentUser}
+					addBackPath={addBackPath}
+				/>
+				<h1 className='section-header'>Popular Albums</h1>
+				<ListWithPicture albums={albums} shouldSlice={true}/>
+				<h1 className='section-header'>Popular Artists</h1>
+				<ListWithPicture artists={artists} shouldSlice={true}/>
 			</div>
 		);
 	}
 }
 
+const mSTP = ({ entities, session, ui }) => ({
+	currentUser: entities.user[session.currentUser],
+	artists: shuffleArray(assignImages(entities.artists, entities.albums)),
+	albums: shuffleArray(assignArtistsToAlbums(entities.artists, entities.albums)),
+	playlists: Object.values(entities.playlists),
+});
+
 const mDTP = (dispatch) => ({
-	addBackPath: () => dispatch(addBackPath())
-})
-export default withRouter(connect(null, mDTP)(HomeScreen));
+	addBackPath: () => dispatch(addBackPath()),
+	fetchAlbums: () => dispatch(fetchAlbums()),
+	fetchArtists: () => dispatch(fetchArtists()),
+	fetchAllSongs: () => dispatch(fetchAllSongs()),
+});
+
+export default withRouter(connect(mSTP, mDTP)(HomeScreen));

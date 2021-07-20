@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal_actions';
 import { deleteSession } from '../../actions/session_actions';
 import { pauseSong } from '../../actions/currently_playing';
+import { clearQueueHistory } from '../../actions/song_queue_actions';
 import { Link } from 'react-router-dom';
 
-const HeaderModal = ({ logout, currentUser, closeModal, audio, pauseSong }) => {
+const HeaderModal = ({ logout, currentUser, closeModal, audio, pauseSong, isPlaying, clearQueueHistory }) => {
 	const logoutUser = () => {
 		logout().then(() => {
 			closeModal()
-			if (audio.duration) pauseSong();
+			if (isPlaying || audio.duration) pauseSong();
+			clearQueueHistory();
 		})
 	}
 
@@ -33,6 +35,7 @@ const mSTP = ({entities, ui, session}, ownProps) => {
 	return {
 		currentUser: entities.user[session.currentUser],
 		audio: ui.currentlyPlaying.audio,
+		isPlaying: ui.currentlyPlaying.isPlaying,
 	};
 };
 
@@ -41,6 +44,7 @@ const mDTP = (dispatch) => {
 		logout: () => dispatch(deleteSession()),
 		closeModal: () => dispatch(closeModal()),
 		pauseSong: () => dispatch(pauseSong()),
+		clearQueueHistory: () => dispatch(clearQueueHistory()),
 	};
 };
 

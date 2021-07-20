@@ -2,7 +2,7 @@
 	width: 100%;
 	z-index: 1;
 	display: grid;
-	grid-template-columns: 190px auto 230px;
+	grid-template-columns: 250px auto 230px;
 	height: 100px;
 	bottom: 0;
 	left: 0;
@@ -77,10 +77,26 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			width: 89px;
+			width: 120px;
 			height: 40px;
 			position: fixed;
 			bottom: 45px;
+
+			.shuffle-btn {
+				color: rgba(228, 228, 228, 0.822);
+
+				&:hover {
+					color: white;
+				}
+			}
+
+			.shuffle-on {
+				color: #1db954;
+
+				&:hover {
+					color: #00852e;
+				}
+			}
 
 			.play-pause {
 				display: flex;
@@ -97,7 +113,7 @@
 
 			.skip-prev-btn {
 				color: rgba(228, 228, 228, 0.822);
-
+				
 				&:hover {
 					color: white;
 				}
@@ -201,12 +217,11 @@
 			}
 		}
 
-		
 		.queue-btn {
 			background-color: transparent;
 			border: none;
 			color: rgb(168, 168, 168);
-			
+
 			&:hover {
 				color: whitesmoke;
 			}

@@ -1,6 +1,6 @@
 class Api::SessionsController < ApplicationController
     before_action :require_login, only: [:destroy]
-    
+
     def create
         if params[:user][:username] === ''
             search_by = params[:user][:email]

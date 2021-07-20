@@ -72,9 +72,9 @@ class ProgressBar extends Component {
 		let { currentTime, isPlaying, audio, currentProgress } = this.props;
 
 		if (currentTime === NaN || duration === 0) currentProgress = 0;
-		console.log(currentProgress);
+
 		let currentSongTime = null;
-		if (!isPlaying && audio) currentSongTime = formatTime(audio.currentTime);
+		if (isPlaying && audio) currentSongTime = formatTime(audio.currentTime);
 
 		return (
 			<section id='progress-info'>

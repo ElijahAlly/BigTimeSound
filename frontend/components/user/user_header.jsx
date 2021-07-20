@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ArrowButton from '../items/arrow_button';
+import SearchBar from '../items/search_bar';
 
 class UserHeader extends Component {
 	constructor(props) {
@@ -16,7 +17,7 @@ class UserHeader extends Component {
 
 	goBack() {
 		this.props.addForwardPath();
-		
+
 		this.props.removeBackPath();
 		this.props.history.goBack();
 		this.handleQueue();
@@ -24,7 +25,7 @@ class UserHeader extends Component {
 
 	goForward() {
 		this.props.addBackPath();
-		
+
 		this.props.removeForwardPath();
 		this.props.history.goForward();
 		this.handleQueue();
@@ -36,7 +37,7 @@ class UserHeader extends Component {
 			queue &&
 			!Array.from(queue.classList).includes('active-green') &&
 			this.props.history.location.pathname ===
-				`/users/${this.props.userId}/queue`
+				`/users/${this.props.currentUser.id}/queue`
 		) {
 			queue.classList.add('active-green');
 		}
@@ -47,6 +48,12 @@ class UserHeader extends Component {
 		let nextDisabled = false;
 		if (this.props.goBackCount === 0) prevDisabled = true;
 		if (this.props.goForwardCount === 0) nextDisabled = true;
+		let showSearchBar = false;
+		if (
+			this.props.history.location.pathname ===
+			`/users/${this.props.currentUser.id}/search`
+		)
+			showSearchBar = true;
 
 		return (
 			<div className='user-header'>
@@ -61,6 +68,7 @@ class UserHeader extends Component {
 						action={this.goForward}
 						disabled={nextDisabled}
 					/>
+					{showSearchBar ? <SearchBar /> : <></>}
 				</div>
 				<svg
 					width='16'

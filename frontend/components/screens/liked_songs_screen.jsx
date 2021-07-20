@@ -85,6 +85,7 @@ class LikedSongsScreen extends Component {
 			);
 		}
 
+		console.log(this.props.likedSongs);
 		return (
 			<div className='screen liked-songs-screen'>
 				<section className='liked-songs-header'>

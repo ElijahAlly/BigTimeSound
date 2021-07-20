@@ -59,8 +59,10 @@ class VolumeControl extends Component {
 
 	toggleMute() {
 		if (this.state.muted) {
+			this.setState({muted: false})
 			this.props.sendVolume(0.7);
 		} else {
+			this.setState({muted: true})
 			this.props.sendVolume(0);
 		}
 	}

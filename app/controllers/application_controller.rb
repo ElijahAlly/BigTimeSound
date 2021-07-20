@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
     helper_method :current_user, :logged_in?
-    skip_before_action :verify_authenticity_token
+    # skip_before_action :verify_authenticity_token
 
     def current_user
         return nil unless session[:session_token]
@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     end
 
     def require_login
-        redirect_to api_new_session_url unless logged_in?
+        redirect_to api_session_url unless logged_in?
     end
 
     def logged_in?

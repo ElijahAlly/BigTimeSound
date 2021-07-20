@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import ArrowButton from '../items/arrow_button';
 
 class SongInfoPlaybackBar extends Component {
-	componentDidUpdate() {
-		if (!this.props.album) {
-			this.props.fetchAlbums();
-		}
-	}
+	// componentDidUpdate() {
+	// 	if (!this.props.album) {
+	// 		this.props.fetchAlbums();
+	// 	}
+	// }
 
 	render() {
         let albumCover = 'http://tny.im/no-cover-art';

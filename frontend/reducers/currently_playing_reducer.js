@@ -4,12 +4,17 @@ import {
 	CURRENT_TIME,
 	SEND_VOLUME,
 	SEND_CURRENT_PROGRESS,
+	SHUFFLE_ON,
+	SHUFFLE_OFF
 } from '../actions/currently_playing';
+
 import {
 	COLLAPSE_ALBUM_COVER,
 	EXPAND_ALBUM_COVER,
 } from '../actions/album_actions';
+
 import { formatTime } from '../util/format_time';
+
 const _InitialState = {
 	song: null,
 	isPlaying: false,
@@ -20,6 +25,7 @@ const _InitialState = {
 	volume: 0.5,
 	duration: null,
 	currentProgress: 0,
+	shuffleIsOn: false
 };
 
 const currentlyPlayingReducer = (state = _InitialState, action) => {
@@ -38,6 +44,7 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 
 				const playbackBarDuration =
 					document.getElementsByClassName('progress-time')[1];
+					
 				newState.audio.addEventListener('loadeddata', (e) => {
 					const duration = formatTime(e.path[0].duration);
 					playbackBarDuration.innerHTML = duration;
@@ -96,6 +103,14 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 
 		case SEND_CURRENT_PROGRESS:
 			newState.currentProgress = action.currentProgress;
+			return newState;
+
+		case SHUFFLE_ON:
+			newState.shuffleIsOn = true;
+			return newState;
+
+		case SHUFFLE_OFF:
+			newState.shuffleIsOn = false;
 			return newState;
 
 		default:

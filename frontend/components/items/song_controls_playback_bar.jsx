@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { pauseSong, playSong } from '../../actions/currently_playing';
+import {
+	pauseSong,
+	playSong,
+	turnShuffleOn,
+	turnShuffleOff,
+} from '../../actions/currently_playing';
+import {
+	removeNextFromQueue,
+	addSongToQueueHistory,
+	removeLastFromQueueHistory,
+	addSongToFrontQueue,
+} from '../../actions/song_queue_actions';
 import ProgressBar from './progress_bar.jsx';
 
 class SongControlsPlaybackBar extends Component {
@@ -8,6 +19,29 @@ class SongControlsPlaybackBar extends Component {
 		super(props);
 
 		this.togglePlay = this.togglePlay.bind(this);
+		this.skipTrack = this.skipTrack.bind(this);
+		this.prevTrack = this.prevTrack.bind(this);
+		this.toggleShuffle = this.toggleShuffle.bind(this);
+	}
+
+	shouldComponentUpdate(nextProps) {
+		if (
+			this.props.isPlaying !== nextProps.isPlaying ||
+			this.props.currentTime !== nextProps.currentTime ||
+			this.props.volume !== nextProps.volume ||
+			this.props.shuffleIsOn !== nextProps.shuffleIsOn
+		)
+			return true;
+		return false;
+	}
+
+	toggleShuffle() {
+		const {shuffleIsOn, turnShuffleOff, turnShuffleOn} = this.props
+		if (shuffleIsOn) {
+			turnShuffleOff();
+			return;
+		}
+		turnShuffleOn();
 	}
 
 	togglePlay() {
@@ -18,8 +52,8 @@ class SongControlsPlaybackBar extends Component {
 			playingFrom,
 			currentTime,
 			playSong,
-			pauseSong,
 			volume,
+			pauseSong,
 		} = this.props;
 		if (!isPlaying && song) {
 			// console.log('play song', song, audio, playingFrom, currentTime);
@@ -29,18 +63,44 @@ class SongControlsPlaybackBar extends Component {
 		}
 	}
 
-	shouldComponentUpdate(nextProps) {
-		if (
-			this.props.isPlaying !== nextProps.isPlaying ||
-			this.props.currentTime !== nextProps.currentTime ||
-			nextProps.volume !== this.props.volume
-		)
-			return true;
-		return false;
+	skipTrack(nextSong) {
+		const {
+			playingFrom,
+			volume,
+			pauseSong,
+			isPlaying,
+			song,
+			playSong,
+			addSongToQueueHistory,
+			removeNextFromQueue,
+		} = this.props;
+
+		if (isPlaying) pauseSong();
+		addSongToQueueHistory(song);
+		playSong(nextSong, null, playingFrom, null, volume, null);
+		removeNextFromQueue();
+	}
+
+	prevTrack(prevSong) {
+		const {
+			playingFrom,
+			volume,
+			pauseSong,
+			isPlaying,
+			playSong,
+			removeLastFromQueueHistory,
+			addSongToFrontQueue,
+			song,
+		} = this.props;
+
+		if (isPlaying) pauseSong();
+		removeLastFromQueueHistory();
+		addSongToFrontQueue(song);
+		playSong(prevSong, null, playingFrom, null, volume, null);
 	}
 
 	render() {
-		const { isPlaying } = this.props;
+		const { songQueueHistory, songQueue, isPlaying, shuffleIsOn } = this.props;
 
 		let togglePlayButton = (
 			<svg height='16' width='16' viewBox='0 0 16 16'>
@@ -57,13 +117,25 @@ class SongControlsPlaybackBar extends Component {
 			);
 		}
 
-		const { songQueueHistory, songQueue } = this.props;
 		const nextSong = songQueue[0];
 		const prevSong = songQueueHistory[songQueueHistory.length - 1];
+
+		let shuffle = '';
+		if (shuffleIsOn) shuffle = 'shuffle-on';
 
 		return (
 			<>
 				<div className='controls-btns'>
+					<svg
+						role='img'
+						height='16'
+						width='16'
+						viewBox='0 0 16 16'
+						className={`shuffle-btn ${shuffle}`}
+						onClick={() => this.toggleShuffle()}
+						fill='currentColor'>
+						<path d='M4.5 6.8l.7-.8C4.1 4.7 2.5 4 .9 4v1c1.3 0 2.6.6 3.5 1.6l.1.2zm7.5 4.7c-1.2 0-2.3-.5-3.2-1.3l-.6.8c1 1 2.4 1.5 3.8 1.5V14l3.5-2-3.5-2v1.5zm0-6V7l3.5-2L12 3v1.5c-1.6 0-3.2.7-4.2 2l-3.4 3.9c-.9 1-2.2 1.6-3.5 1.6v1c1.6 0 3.2-.7 4.2-2l3.4-3.9c.9-1 2.2-1.6 3.5-1.6z'></path>
+					</svg>
 					<svg
 						fill='currentColor'
 						role='img'
@@ -71,9 +143,7 @@ class SongControlsPlaybackBar extends Component {
 						width='16'
 						viewBox='0 0 16 16'
 						className='skip-prev-btn prev-track'
-						onClick={() =>
-							this.props.prevTrack(isPlaying, prevSong)
-						}>
+						onClick={() => this.prevTrack(prevSong)}>
 						<path d='M11 3v4.119L3 2.5v11l8-4.619V13h2V3z'></path>
 					</svg>
 					<h3 className='play-pause' onClick={() => this.togglePlay()}>
@@ -86,9 +156,7 @@ class SongControlsPlaybackBar extends Component {
 						width='16'
 						viewBox='0 0 16 16'
 						className='skip-prev-btn skip-track'
-						onClick={() =>
-							this.props.skipTrack(isPlaying, nextSong)
-						}>
+						onClick={() => this.skipTrack(nextSong)}>
 						<path d='M11 3v4.119L3 2.5v11l8-4.619V13h2V3z'></path>
 					</svg>
 				</div>
@@ -107,6 +175,7 @@ const mSTP = ({ ui }, ownProps) => {
 		songQueueHistory: ui.queue.songQueueHistory,
 		playingFrom: ui.currentlyPlaying.playingFrom,
 		currentTime: ui.currentlyPlaying.currentTime,
+		shuffleIsOn: ui.currentlyPlaying.shuffleIsOn,
 		volume: ui.currentlyPlaying.volume,
 	};
 };
@@ -115,8 +184,12 @@ const mDTP = (dispatch) => ({
 	playSong: (song, audio, playingFrom, currentTime, volume, duration) =>
 		dispatch(playSong(song, audio, playingFrom, currentTime, volume, duration)),
 	pauseSong: () => dispatch(pauseSong()),
-	prevTrack: (isPlaying, prevSong) => dispatch(prevTrack(isPlaying, prevSong)),
-	skipTrack: (isPlaying, nextSong) => dispatch(skipTrack(isPlaying, nextSong)),
+	addSongToQueueHistory: (song) => dispatch(addSongToQueueHistory(song)),
+	removeLastFromQueueHistory: () => dispatch(removeLastFromQueueHistory()),
+	addSongToFrontQueue: (song) => dispatch(addSongToFrontQueue(song)),
+	removeNextFromQueue: () => dispatch(removeNextFromQueue()),
+	turnShuffleOn: () => dispatch(turnShuffleOn()),
+	turnShuffleOff: () => dispatch(turnShuffleOff()),
 });
 
 export default connect(mSTP, mDTP)(SongControlsPlaybackBar);
