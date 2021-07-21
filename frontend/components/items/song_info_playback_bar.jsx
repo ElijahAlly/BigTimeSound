@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { expandAlbumCover, fetchAlbums } from '../../actions/album_actions';
 import { connect } from 'react-redux';
 import ArrowButton from '../items/arrow_button';
+import { formatName } from '../../util/format_name';
 
 class SongInfoPlaybackBar extends Component {
 	// componentDidUpdate() {
@@ -32,8 +33,8 @@ class SongInfoPlaybackBar extends Component {
 					</>
 				)}
                 <div>
-    				<h3 id='playback-bar-song-title'>{songTitle}</h3>
-	    			<h5 id='playback-bar-artist-name'>{artistName}</h5>
+    				<h3 id='playback-bar-song-title'>{formatName(songTitle, 22)}</h3>
+	    			<h5 id='playback-bar-artist-name'>{formatName(artistName, 22)}</h5>
                 </div>
 			</>
 		);

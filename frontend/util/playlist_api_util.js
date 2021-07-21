@@ -34,3 +34,11 @@ export const updatePlaylist = (userId, playlist) => {
 		data: { playlist },
 	});
 };
+
+export const addSongToPlaylist = (songId, playlistId) => {
+	return $.ajax({
+		url: `/api/users/${userId}/playlists/${playlist.id}`,
+		method: 'PATCH',
+		data: { playlist },
+	});
+};

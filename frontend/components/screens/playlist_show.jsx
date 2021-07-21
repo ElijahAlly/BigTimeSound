@@ -154,7 +154,7 @@ class PlaylistShow extends Component {
 	}
 
 	render() {
-		const {searchedSongs, openModal, deletePlaylist, likedSongs} = this.props;
+		const {searchedSongs, openModal, likedSongs, addSongToPlaylist} = this.props;
 
 		return (
 			<div className='screen playlist-show-screen'>
@@ -197,15 +197,16 @@ class PlaylistShow extends Component {
 						</button>
 						<button
 							id='delete-playlist-btn'
-							onClick={() => deletePlaylist()}>
+							onClick={() => this.deletePlaylist()}>
 							Delete Playlist
 						</button>
 					</div>
 				</section>
 
+				{/* <PlaylistSongs /> */}
+
 				<section className='search'>
 					<h1>Let's find something for your playlist</h1>
-					{/* conditionally render search if no songs in playlist */}
 					<div className='playlist-search'>
 						<SearchBar placeholder={'Search for songs'} />
 					</div>
@@ -216,6 +217,8 @@ class PlaylistShow extends Component {
 								shouldSlice={false}
 								likedSongs={likedSongs}
 								inPlaylist={true}
+								playlistId={this.state.playlist.id}
+								addSongToPlaylist={addSongToPlaylist}
 							/>
 						</section>
 					) : (

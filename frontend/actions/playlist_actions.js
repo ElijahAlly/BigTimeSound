@@ -61,3 +61,8 @@ export const fetchAllPlaylists = (userId) => (dispatch) =>
 	PlaylistApiUtil.fetchAllPlaylists(userId).then((playlists) =>
 		dispatch(receiveAllPlaylists(playlists))
 	);
+
+export const addSongToPlaylist = (songId, playlistId) => (dispatch) =>
+	PlaylistApiUtil.addSongToPlaylist(songId, playlistId).then((playlists) =>
+		dispatch(receiveAllPlaylists(playlists))
+	);

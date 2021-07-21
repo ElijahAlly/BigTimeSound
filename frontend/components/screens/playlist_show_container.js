@@ -7,6 +7,7 @@ import {
 	updatePlaylist,
 	createPlaylist,
 	deletePlaylist,
+	addSongToPlaylist,
 } from '../../actions/playlist_actions';
 import {clearSearch} from '../../actions/search_actions';
 import PlaylistShow from './playlist_show';
@@ -38,6 +39,7 @@ const mDTP = (dispatch) => ({
 	createPlaylist: (playlist) => dispatch(createPlaylist(playlist)),
 	openModal: (modal, props) => dispatch(openModal(modal, props)),
 	clearSearch: () => dispatch(clearSearch()),
+	addSongToPlaylist: (songId, playlistId) => dispatch(addSongToPlaylist(songId, playlistId)),
 });
 
 export default withRouter(connect(mSTP, mDTP)(PlaylistShow));

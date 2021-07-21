@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { formatName } from '../../util/format_name';
 
 const ListWithPicture = (props) => {
-	let { albums, artists, list, shouldSlice, songs, likedSongs, inPlaylist } = props;
+	let { albums, artists, list, shouldSlice, songs, likedSongs, inPlaylist, playlistId, addSongToPlaylist } = props;
 
 	if (!list) list = albums;
 	if (!list) list = artists;
@@ -50,9 +50,9 @@ const ListWithPicture = (props) => {
 								)}
 								{inPlaylist ? (
 									<div className='add-song'>
-										<h2>ADD</h2>
+										<h2 onClick={() => addSongToPlaylist(songId, playlistId)}>ADD</h2>
 									</div>
-								) : (<></>)}
+								) : (<></>)} {/* if on search page add three menu dots to add to playlist or add to queue or go to artist/album page */}
 							</div>
 						</li>
 					))}

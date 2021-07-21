@@ -2,7 +2,7 @@
 	width: 100%;
 	z-index: 1;
 	display: grid;
-	grid-template-columns: 250px auto 230px;
+	grid-template-columns: 285px auto 250px;
 	height: 100px;
 	bottom: 0;
 	left: 0;
@@ -15,6 +15,7 @@
 		padding-top: 25px;
 		padding-left: 17px;
 		display: flex;
+		width: 100%;
 
 		.expand-album-cover {
 			position: fixed;
@@ -48,6 +49,7 @@
 			justify-content: center;
 			padding-left: 15px;
 			padding-bottom: 15px;
+			width: 100%;
 
 			#playback-bar-song-title {
 				padding-bottom: 3px;
@@ -148,6 +150,10 @@
 					height: 15px;
 					width: 15px;
 					background-color: whitesmoke;
+				}
+
+				&:hover {
+					background-color: $blue-heart;
 				}
 			}
 
