@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { handleColorShift } from '../../util/header_color_switch';
+import ListWithPicture from '../items/list_with_picture';
+import SearchBar from '../items/search_bar';
 
 class PlaylistShow extends Component {
 	constructor(props) {
@@ -16,23 +18,27 @@ class PlaylistShow extends Component {
 
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.selectOrCreatePlaylist = this.selectOrCreatePlaylist.bind(this);
+		this.handleMoreInfoToggle = this.handleMoreInfoToggle.bind(this);
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		console.log('in should update: this props', this.props);
-		console.log('nextprops', nextProps);
 		if (
 			this.state.playlist !== nextState.playlist ||
-			this.props.location !== nextProps.location
+			this.props.searchInput !== nextProps.searchInput ||
+			this.props.location !== nextProps.location ||
+			this.props.searchedSongs !== nextProps.searchedSongs
 		) {
-			console.log('in true');
 			return true;
 		}
-		console.log('returned false');
 		return false;
 	}
 
+	componentWillUnmount() {
+		this.props.clearSearch();
+	}
+
 	componentDidMount() {
+		this.handleMoreInfoToggle();
 		window.scrollTo(0, 0);
 		this.selectOrCreatePlaylist();
 		handleColorShift('#833b3f');
@@ -55,7 +61,6 @@ class PlaylistShow extends Component {
 				let length = playlists.length;
 				playlists.forEach((playlist, i) => {
 					console.log('playlist id: ', playlist.id);
-					// console.log(parseInt(location));
 					if (playlist.id === parseInt(location)) {
 						isInPlaylists = true;
 						selectPlaylist = playlist;
@@ -120,8 +125,6 @@ class PlaylistShow extends Component {
 	}
 
 	deletePlaylist() {
-		console.log(this.props.currentUser);
-		console.log(this.state.playlist);
 		const homeButton = document.getElementsByClassName('home')[0];
 		homeButton.classList.add('checked');
 		this.props
@@ -131,9 +134,28 @@ class PlaylistShow extends Component {
 			});
 	}
 
+	handleMoreInfoToggle() {
+		const moreInfoPopout =
+			document.getElementsByClassName('more-info-popout')[0];
+		const moreInfoBtn = document.getElementById('more-info-btn');
+
+		document.body.addEventListener('click', (e) => {
+			if (
+				(moreInfoPopout.style.display === 'none' ||
+					moreInfoPopout.style.display === '') &&
+				e.path[0] === moreInfoBtn
+			) {
+				moreInfoPopout.style.display = 'flex';
+				return;
+			}
+
+			moreInfoPopout.style.display = 'none';
+		});
+	}
+
 	render() {
-		// console.log(this.state.playlist);
-		
+		const {searchedSongs, openModal, deletePlaylist, likedSongs} = this.props;
+
 		return (
 			<div className='screen playlist-show-screen'>
 				<section className='header'>
@@ -145,7 +167,7 @@ class PlaylistShow extends Component {
 							viewBox='0 0 48 48'
 							className='svg-pencil'
 							onClick={() =>
-								this.props.openModal('edit-playlist-modal', {
+								openModal('edit-playlist-modal', {
 									...this.props,
 									playlist: this.state.playlist,
 								})
@@ -161,10 +183,44 @@ class PlaylistShow extends Component {
 				</section>
 
 				<section className='more-info'>
-					<button onClick={() => this.deletePlaylist()}>Delete Playlist</button>
+					<i className='fas fa-ellipsis-h' id='more-info-btn'></i>
+					<div className='more-info-popout'>
+						<button
+							id='edit-playlist-btn'
+							onClick={() =>
+								openModal('edit-playlist-modal', {
+									...this.props,
+									playlist: this.state.playlist,
+								})
+							}>
+							Edit Details
+						</button>
+						<button
+							id='delete-playlist-btn'
+							onClick={() => deletePlaylist()}>
+							Delete Playlist
+						</button>
+					</div>
 				</section>
+
 				<section className='search'>
 					<h1>Let's find something for your playlist</h1>
+					{/* conditionally render search if no songs in playlist */}
+					<div className='playlist-search'>
+						<SearchBar placeholder={'Search for songs'} />
+					</div>
+					{searchedSongs.length > 0 ? (
+						<section className='songs-container'>
+							<ListWithPicture
+								songs={searchedSongs}
+								shouldSlice={false}
+								likedSongs={likedSongs}
+								inPlaylist={true}
+							/>
+						</section>
+					) : (
+						<></>
+					)}
 				</section>
 			</div>
 		);

@@ -115,9 +115,9 @@ class SongItem extends Component {
 						<div>{this.props.number}</div>
 					) : (
 						<img
-							width='14'
-							height='14'
-							src='https://open.scdn.co/cdn/images/equaliser-animated-green.73b73928.gif'></img>
+							width='14px'
+							height='14px'
+							src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/ezgif.com-gif-maker+(2).gif'></img>
 					)}
 				</h4>
 				<h4>

@@ -6,19 +6,27 @@ import { pauseSong } from '../../actions/currently_playing';
 import { clearQueueHistory } from '../../actions/song_queue_actions';
 import { Link } from 'react-router-dom';
 
-const HeaderModal = ({ logout, currentUser, closeModal, audio, pauseSong, isPlaying, clearQueueHistory }) => {
+const HeaderModal = ({
+	logout,
+	currentUser,
+	closeModal,
+	audio,
+	pauseSong,
+	isPlaying,
+	clearQueueHistory,
+}) => {
 	const logoutUser = () => {
 		logout().then(() => {
-			closeModal()
+			closeModal();
 			if (isPlaying || audio.duration) pauseSong();
 			clearQueueHistory();
-		})
-	}
+		});
+	};
 
 	return (
 		<>
 			<button
-			id='profile-link'
+				id='profile-link'
 				onClick={() =>
 					(<Link to={`/users/${currentUser.id}/profile`} />).then(() =>
 						closeModal()
@@ -26,12 +34,14 @@ const HeaderModal = ({ logout, currentUser, closeModal, audio, pauseSong, isPlay
 				}>
 				Profile
 			</button>
-			<button id='logout-link' onClick={() => logoutUser()}>Logout</button>
+			<button id='logout-link' onClick={() => logoutUser()}>
+				Logout
+			</button>
 		</>
 	);
 };
 
-const mSTP = ({entities, ui, session}, ownProps) => {
+const mSTP = ({ entities, ui, session }, ownProps) => {
 	return {
 		currentUser: entities.user[session.currentUser],
 		audio: ui.currentlyPlaying.audio,

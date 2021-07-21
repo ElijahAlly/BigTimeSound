@@ -35,7 +35,7 @@
 	}
 
     .now-playing {
-        color: green;
+        color: $blue-heart;
 		border-radius: 3px;
 
 		&:hover {
@@ -100,7 +100,7 @@
 			font-size: 12px;
 			right: 170px;
 			position: absolute;
-			fill: rgb(50, 143, 38);
+			fill: $blue-heart;
 		}
 
 

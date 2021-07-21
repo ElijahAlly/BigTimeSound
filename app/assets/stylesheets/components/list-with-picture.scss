@@ -3,6 +3,80 @@
 	width: 100%;
 	padding: 0 40px;
 
+	.searched-songs-list {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		width: 100%;
+
+		.searched-song {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			height: 50px;
+			width: 100%;
+			margin-bottom: 5px;
+			border-radius: 3px;
+			
+			&:hover {
+				background-color: #e9e9e936;
+				cursor: pointer;
+			}
+
+			.song-img {
+				height: 40px;
+				width: 40px;
+				margin-left: 10px;
+				margin-right: 10px;
+			}
+
+			.song-info {
+				width: 90%;
+				margin-top: 0px;
+				display: flex;
+				flex-direction: column;
+
+				.title {
+					font-size: 14px;
+					font-weight: 600;
+				}
+				
+				.artist {
+					margin-top: 5px;
+					font-size: 12px;
+					font-weight: 400;	
+				}
+			}
+
+			.like-btn-container {
+				width: 10%;
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+				margin-top: 0px;
+
+				.like-song-btn {
+					margin-right: 40px;
+				}
+				
+				#liked {
+					color: $blue-heart;
+					height: 50px;
+				}
+
+				#not-liked {
+					stroke: whitesmoke;
+					display: none;
+				}
+
+			}
+
+			&:hover #not-liked {
+				display: block;
+			}
+		}
+	}
+
 	.list-ul {
 		height: 100%;
 		width: 100%;

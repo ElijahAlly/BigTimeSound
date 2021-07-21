@@ -68,7 +68,7 @@ class UserHeader extends Component {
 						action={this.goForward}
 						disabled={nextDisabled}
 					/>
-					{showSearchBar ? <SearchBar /> : <></>}
+					{showSearchBar ? <SearchBar placeholder={'Artists, songs, or playlists'} /> : <></>}
 				</div>
 				<svg
 					width='16'

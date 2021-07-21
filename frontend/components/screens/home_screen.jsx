@@ -9,18 +9,12 @@ import { handleColorShift } from '../../util/header_color_switch';
 import UserSuggestedLinks from '../items/user_suggested_links';
 import ListWithPicture from '../items/list_with_picture';
 import { assignArtistsToAlbums, assignImages } from '../../util/assign_functions';
-import { shuffleArray } from '../../util/shuffle_array';
 
 class HomeScreen extends Component {
 	constructor(props) {
 		super(props);
 		const greet = this.greeting();
 		this.state = { greet };
-	}
-
-	shouldComponentUpdate(nextProps) {
-		if (this.props !== nextProps) return true;
-		return false;
 	}
 
 	componentDidMount() {
@@ -49,6 +43,11 @@ class HomeScreen extends Component {
 		return greet;
 	}
 
+	shouldComponentUpdate(nextProps) {
+		if (this.props.albums !== nextProps.albums) return true;
+		return false;
+	}
+
 	render() {
 		const { currentUser, addBackPath, albums, artists } = this.props;
 		return (
@@ -71,8 +70,8 @@ class HomeScreen extends Component {
 
 const mSTP = ({ entities, session, ui }) => ({
 	currentUser: entities.user[session.currentUser],
-	artists: shuffleArray(assignImages(entities.artists, entities.albums)),
-	albums: shuffleArray(assignArtistsToAlbums(entities.artists, entities.albums)),
+	artists: assignImages(entities.artists, entities.albums),
+	albums: assignArtistsToAlbums(entities.artists, entities.albums),
 	playlists: Object.values(entities.playlists),
 });
 

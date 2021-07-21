@@ -1,9 +1,9 @@
 .playlist-show-screen {
 	padding-top: 150px;
 	padding-left: 40px;
-    height: 1000px;
-    width: 100%;
-    display: flex;
+	height: 1000px;
+	width: 100%;
+	display: flex;
 	flex-direction: column;
 	position: absolute;
 	background: linear-gradient(360deg, #1a1818 62%, $big-darkred 94%);
@@ -41,7 +41,7 @@
 			padding: 75px;
 			transition: background-color 0.3s ease;
 			box-shadow: 2px 2px 15px 2px #242222;
-			
+
 			&:hover {
 				background-color: $big-lightgray;
 			}
@@ -52,6 +52,60 @@
 		margin-top: 25px;
 		font-size: large;
 		font-weight: bold;
+
+		.playlist-search {
+			margin-top: 20px;
+			display: flex;
+			align-items: center;
+			background-color: #323232;
+			width: 335px;
+			height: 40px;
+			padding-left: 10px;
+			border-radius: 5px;
+
+			.search-input {
+				background-color: transparent;
+				color: whitesmoke;
+				outline: none;
+				border: none;
+				height: 100%;
+				width: 100%;
+			}
+		}
+
+		.songs-container {
+			margin-top: 20px;
+			height: fit-content;
+			width: 100%;
+
+			.list-with-picture {
+				padding: 0px;
+				width: 85%;
+
+				.like-btn-container {
+					width: 25%;
+					
+					.add-song {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						height: 40px;
+						width: 100px;
+						border-radius: 20px;
+						border: 1px solid #323232;
+						margin-right: 35px;
+						font-size: 12px;
+						
+						&:hover {
+							cursor: pointer;
+							border-color: whitesmoke;
+							font-size: 14px;
+							height: 42px;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	.more-info {
@@ -64,6 +118,48 @@
 				color: whitesmoke;
 			}
 		}
+
+		#more-info-btn {
+			font-size: 23px;
+
+			&:hover {
+				color: whitesmoke;
+				cursor: pointer;
+			}
+		}
+
+		.more-info-popout {
+			display: none;
+			flex-direction: column;
+			justify-content: space-between;
+			width: 200px;
+			height: 80px;
+			background-color: #323232;
+			border-radius: 4px;
+
+
+			#delete-playlist-btn, #edit-playlist-btn {
+				background-color: #323232;
+				color: whitesmoke;
+				padding: 7px;
+				height: 35px;
+				border-radius: 4px;
+				margin: 5px 5px 5px 5px;
+
+				&:hover {
+					color: whitesmoke;
+					cursor: pointer;
+					background-color: rgba(151, 150, 150, 0.767);
+				}
+			}
+
+			#edit-playlist-btn {
+				margin-bottom: 0px;
+			}
+
+			#delete-playlist-btn {
+				margin-top: 0px;
+			}
+		}
 	}
 }
-

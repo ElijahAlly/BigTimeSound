@@ -24,6 +24,7 @@ class SearchBar extends Component {
 	}
 
 	render() {
+		const {placeholder} = this.props;
 		return (
 			<>
 				<svg
@@ -44,7 +45,7 @@ class SearchBar extends Component {
 					autoComplete='off'
 					autoCapitalize='off'
 					spellCheck='false'
-					placeholder='Artists, songs, or playlists'
+					placeholder={placeholder}
 					value={this.state.value}
 					onChange={this.handleInput}></input>
 			</>

@@ -12,6 +12,7 @@ import ListWithPicture from '../items/list_with_picture';
 import TopSearchResult from '../items/top_search_result';
 import { clearSearch } from '../../actions/search_actions';
 import { findBestMatch } from 'string-similarity';
+import { fetchLikedSongs } from '../../actions/song_actions';
 
 class SearchScreen extends Component {
 	componentDidMount() {
@@ -19,6 +20,7 @@ class SearchScreen extends Component {
 		handleColorShift('#1a1818');
 		const main = document.getElementById('main');
 		main.style.background = '#1a1818';
+		this.props.fetchLikedSongs(this.props.userId);
 	}
 
 	shouldComponentUpdate(nextProps) {
@@ -70,10 +72,11 @@ class SearchScreen extends Component {
 		const {
 			albums,
 			artists,
+			likedSongs,
 			searchInput,
+			searchedSongs,
 			searchedAlbums,
 			searchedArtists,
-			searchedSongs,
 			searchedPlaylists,
 		} = this.props;
 
@@ -116,32 +119,24 @@ class SearchScreen extends Component {
 							</div>
 						) : (
 							<>
-								<section>
-									<h1 className='suggested-header'>Top Result</h1>
-									<TopSearchResult item={bestMatchResult} />
-									{searchedAlbums.length > 0 ? (
-										<>
+								<section className='search-top-results-songs'>
+									<section className='top-result-container'>
+										<h1 className='suggested-header'>Top Result</h1>
+										<TopSearchResult item={bestMatchResult} />
+									</section>
+									{searchedSongs.length > 0 ? (
+										<section className='songs-container'>
 											<h1 className='suggested-header'>Songs</h1>
 											<ListWithPicture
 												songs={searchedSongs}
 												shouldSlice={false}
+												likedSongs={likedSongs}
 											/>
-										</>
+										</section>
 									) : (
-										<section></section>
+										<section className='songs-container'></section>
 									)}
 								</section>
-								{searchedAlbums.length > 0 ? (
-									<>
-										<h1 className='suggested-header'>Albums</h1>
-										<ListWithPicture
-											albums={searchedAlbums}
-											shouldSlice={false}
-										/>
-									</>
-								) : (
-									<></>
-								)}
 								{searchedArtists.length > 0 ? (
 									<>
 										<h1 className='suggested-header'>Artists</h1>
@@ -153,6 +148,17 @@ class SearchScreen extends Component {
 								) : (
 									<></>
 								)}
+								{searchedAlbums.length > 0 ? (
+									<>
+										<h1 className='suggested-header'>Albums</h1>
+										<ListWithPicture
+											albums={searchedAlbums}
+											shouldSlice={false}
+										/>
+									</>
+								) : (
+									<div className='no-results'></div>
+								)}
 							</>
 						)}
 					</>
@@ -162,7 +168,7 @@ class SearchScreen extends Component {
 	}
 }
 
-const mSTP = ({ entities, ui }) => ({
+const mSTP = ({ entities, ui, session }) => ({
 	albums: assignArtistsToAlbums(entities.artists, entities.albums),
 	artists: assignImages(entities.artists, entities.albums),
 	searchInput: ui.search.input,
@@ -173,10 +179,13 @@ const mSTP = ({ entities, ui }) => ({
 	searchedArtists: assignImages(ui.search.results.artists, entities.albums),
 	searchedSongs: assignImagesToSongs(ui.search.results.songs, entities.albums),
 	searchedPlaylists: ui.search.results.playlists,
+	userId: session.currentUser,
+	likedSongs: Object.values(entities.likedSongs),
 });
 
 const mDTP = (dispatch) => ({
 	clearSearch: () => dispatch(clearSearch()),
+	fetchLikedSongs: (userId) => dispatch(fetchLikedSongs(userId)),
 });
 
 export default withRouter(connect(mSTP, mDTP)(SearchScreen));
