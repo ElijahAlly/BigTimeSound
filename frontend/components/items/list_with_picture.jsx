@@ -23,7 +23,6 @@ const ListWithPicture = (props) => {
 	likedSongs ? likedSongs.map((song) => likedSongsIds.push(song.id)) : null;
 
 	if (inLikedSongs) {
-		console.log(likedSongs);
 		let removeAlreadyLikedSongs = [];
 		for (let i = 0; i < songs.length; i++) {
 			let songInLiked = false;

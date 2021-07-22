@@ -48,15 +48,15 @@
 				}
 			}
 
+			&:hover #not-liked {
+				display: block;
+			}
+
 		}
 	}
 
 	#like-btn-container-margin-top {
 		margin-top: 0px;
-	}
-
-	&:hover #not-liked {
-		display: block;
 	}
 
 	.list-ul {

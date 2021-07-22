@@ -2,6 +2,7 @@ import {
 	SEND_SEARCH,
 	CLEAR_SEARCH,
 	SEND_SEARCH_RESULTS,
+	CLEAR_SEARCH_RESULTS
 } from '../actions/search_actions';
 
 const _initialState = {
@@ -30,9 +31,8 @@ const playlistReducer = (state = _initialState, action) => {
 			newState.input = action.input;
 			return newState;
 
-		case CLEAR_SEARCH:
-			newState.input = '';
-			return newState;
+		case CLEAR_SEARCH_RESULTS:
+			return _initialState;
 
 		default:
 			return state;

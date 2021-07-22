@@ -35,8 +35,7 @@ class PlaylistShow extends Component {
 	}
 
 	componentWillUnmount() {
-		this.props.clearSearch();
-		// this.props.clearSearchResults(); // clear from playlist show and liked songs **not search screen
+		this.props.clearSearchResults(); // clear from playlist show and liked songs **not search screen
 	}
 
 	componentDidMount() {
@@ -44,6 +43,7 @@ class PlaylistShow extends Component {
 			this.createNewPlaylist();
 			return;
 		}
+		this.props.clearSearchResults();
 		handleMoreInfoToggle();
 		window.scrollTo(0, 0);
 		handleColorShift('#833b3f');
@@ -87,7 +87,6 @@ class PlaylistShow extends Component {
 				user_id: this.state.playlist.user_id,
 			})
 			.then((playlist) => {
-				console.log(playlist);
 				this.props.history.push(
 					`/users/${playlist.user_id}/playlist/${playlist.id}`
 				);

@@ -226,6 +226,10 @@
 				height: 15px;
 				width: 15px;
 				background-color: whitesmoke;
+
+				&:hover {
+					background-color: $blue-heart-solid;
+				}
 			}
 		}
 

@@ -9,7 +9,6 @@ const TopSearchResult = ({ item }) => {
     if (user_id) type = 'PLAYLIST';
 
     if (!imgUrl && !url) imgUrl = 'http://tny.im/no-cover-art'
-    console.log(item);
 	return (
 		<section className='top-result-background'>
 			<img

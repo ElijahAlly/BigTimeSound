@@ -6,6 +6,7 @@ import SongListHeader from '../items/song_list_header';
 import { handleColorShift } from '../../util/header_color_switch';
 import { assignImagesToSongs } from '../../util/assign_functions';
 import { receiveSongQueue } from '../../actions/song_queue_actions';
+import { clearSearchResults } from '../../actions/search_actions';
 import { pauseSong, playSong } from '../../actions/currently_playing';
 import { fetchLikedSongs } from '../../actions/song_actions';
 import SearchBar from '../items/search_bar';
@@ -30,6 +31,10 @@ class LikedSongsScreen extends Component {
 		)
 			return true;
 		return false;
+	}
+
+	componentWillUnmount() {
+		this.props.clearSearchResults(); // clear from playlist show and liked songs **not search screen
 	}
 
 	togglePlay() {
@@ -186,6 +191,7 @@ const mDTP = (dispatch) => ({
 	receiveSongQueue: (songs) => dispatch(receiveSongQueue(songs)),
 	likeSong: (userId, songId) => dispatch(likeSong(userId, songId)),
 	pauseSong: () => dispatch(pauseSong()),
+	clearSearchResults: () => dispatch(clearSearchResults()),
 	playSong: (song, audio, playingFrom, currentTime, volume, duration) =>
 		dispatch(playSong(song, audio, playingFrom, currentTime, volume, duration)),
 });

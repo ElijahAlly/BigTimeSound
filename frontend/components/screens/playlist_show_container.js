@@ -9,7 +9,7 @@ import {
 	deletePlaylist,
 	addSongToPlaylist,
 } from '../../actions/playlist_actions';
-import { clearSearch } from '../../actions/search_actions';
+import { clearSearchResults } from '../../actions/search_actions';
 import PlaylistShow from './playlist_show';
 import { assignImagesToSongs } from '../../util/assign_functions';
 
@@ -38,7 +38,7 @@ const mDTP = (dispatch) => ({
 		dispatch(deletePlaylist(userId, playlistId)),
 	createPlaylist: (playlist) => dispatch(createPlaylist(playlist)),
 	openModal: (modal, props) => dispatch(openModal(modal, props)),
-	clearSearch: () => dispatch(clearSearch()),
+	clearSearchResults: () => dispatch(clearSearchResults()),
 	addSongToPlaylist: (songId, playlistId) =>
 		dispatch(addSongToPlaylist(songId, playlistId)),
 });

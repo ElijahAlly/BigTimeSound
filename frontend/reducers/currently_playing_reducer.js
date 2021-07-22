@@ -80,9 +80,6 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 
 			newState.currentTime = newState.audio.currentTime;
 			newState.isPlaying = false;
-			console.log('state', state);
-			console.log('action', action);
-			console.log('new state', newState);
 			return newState;
 
 		case COLLAPSE_ALBUM_COVER:

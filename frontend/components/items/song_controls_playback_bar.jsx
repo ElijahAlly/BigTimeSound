@@ -56,7 +56,6 @@ class SongControlsPlaybackBar extends Component {
 			pauseSong,
 		} = this.props;
 		if (!isPlaying && song) {
-			// console.log('play song', song, audio, playingFrom, currentTime);
 			playSong(song, audio, playingFrom, currentTime, volume, audio.duration);
 		} else if (song) {
 			pauseSong();

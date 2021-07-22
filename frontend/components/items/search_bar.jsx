@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {
 	sendSearch,
 	fetchSearchResults,
-	clearSearch,
+	clearSearchResults,
 } from '../../actions/search_actions';
 
 class SearchBar extends Component {
@@ -21,6 +21,10 @@ class SearchBar extends Component {
 			.fetchSearchResults(value)
 			.then(() => this.props.sendSearch(value));
 		this.setState({ value });
+	}
+
+	componentWillUnmount() {
+		this.props.clearSearchResults()
 	}
 
 	render() {
@@ -55,7 +59,7 @@ class SearchBar extends Component {
 
 const mDTP = (dispatch) => ({
 	sendSearch: (input) => dispatch(sendSearch(input)),
-	clearSearch: () => dispatch(clearSearch()),
+	clearSearchResults: () => dispatch(clearSearchResults()),
 	fetchSearchResults: (input) => dispatch(fetchSearchResults(input)),
 });
 

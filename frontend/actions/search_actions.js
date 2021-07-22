@@ -1,7 +1,7 @@
 import * as SearchApiUtil from '../util/search_api_util';
 
 export const SEND_SEARCH = 'SEND_SEARCH';
-export const CLEAR_SEARCH = 'CLEAR_SEARCH';
+export const CLEAR_SEARCH_RESULTS = 'CLEAR_SEARCH_RESULTS';
 export const SEND_SEARCH_RESULTS = 'SEND_SEARCH_RESULTS';
 
 export const sendSearch = (input) => ({
@@ -9,8 +9,8 @@ export const sendSearch = (input) => ({
 	input,
 });
 
-export const clearSearch = () => ({
-	type: CLEAR_SEARCH,
+export const clearSearchResults = () => ({
+	type: CLEAR_SEARCH_RESULTS,
 });
 
 const sendSearchResults = (results) => {

@@ -10,12 +10,13 @@ import {
 } from '../../util/assign_functions';
 import ListWithPicture from '../items/list_with_picture';
 import TopSearchResult from '../items/top_search_result';
-import { clearSearch } from '../../actions/search_actions';
+import { clearSearchResults } from '../../actions/search_actions';
 import { findBestMatch } from 'string-similarity';
 import { fetchLikedSongs } from '../../actions/song_actions';
 
 class SearchScreen extends Component {
 	componentDidMount() {
+		this.props.clearSearchResults();
 		window.scrollTo(0, 0);
 		handleColorShift('#1a1818');
 		const main = document.getElementById('main');
@@ -36,7 +37,7 @@ class SearchScreen extends Component {
 	}
 
 	componentWillUnmount() {
-		this.props.clearSearch();
+		this.props.clearSearchResults();
 	}
 
 	getStringsFromObjects(arr) {
@@ -187,7 +188,7 @@ const mSTP = ({ entities, ui, session }) => ({
 });
 
 const mDTP = (dispatch) => ({
-	clearSearch: () => dispatch(clearSearch()),
+	clearSearchResults: () => dispatch(clearSearchResults()),
 	fetchLikedSongs: (userId) => dispatch(fetchLikedSongs(userId)),
 });
 
