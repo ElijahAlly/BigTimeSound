@@ -11,13 +11,14 @@ import {pauseSong} from '../../actions/currently_playing'
 
 const mSTP = ({session, ui, entities}, ownProps) => {
 	return ({
-		currentUser: entities.user[session.currentUser],
+		userId: session.currentUser,
 		playlists: entities.playlists,
 		history: ownProps.history,
 		goBackCount: ui.path.goBackCount,
 		goForwardCount: ui.path.goForwardCount,
 		isPlaying: ui.currentlyPlaying.isPlaying,
 		audio: ui.currentlyPlaying.audio,
+		path: ownProps.match.path
 	})
 };
 

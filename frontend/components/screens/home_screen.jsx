@@ -4,7 +4,8 @@ import { withRouter, Link } from 'react-router-dom';
 import { addBackPath } from '../../actions/path_actions';
 import { fetchAlbums } from '../../actions/album_actions';
 import { fetchArtists } from '../../actions/artist_actions';
-import { fetchAllSongs } from '../../actions/song_actions';
+import { fetchAllPlaylistIds } from '../../actions/playlist_actions';
+import { fetchAllSongs, fetchLikedSongs } from '../../actions/song_actions';
 import { handleColorShift } from '../../util/header_color_switch';
 import UserSuggestedLinks from '../items/user_suggested_links';
 import ListWithPicture from '../items/list_with_picture';
@@ -25,6 +26,8 @@ class HomeScreen extends Component {
 		this.props.fetchAlbums();
 		this.props.fetchArtists();
 		this.props.fetchAllSongs();
+		this.props.fetchLikedSongs(this.props.currentUser.id);
+		this.props.fetchAllPlaylistIds(this.props.currentUser.id)
 	}
 
 	greeting() {
@@ -80,6 +83,8 @@ const mDTP = (dispatch) => ({
 	fetchAlbums: () => dispatch(fetchAlbums()),
 	fetchArtists: () => dispatch(fetchArtists()),
 	fetchAllSongs: () => dispatch(fetchAllSongs()),
+	fetchLikedSongs: (userId) => dispatch(fetchLikedSongs(userId)),
+	fetchAllPlaylistIds: (userId) => dispatch(fetchAllPlaylistIds(userId)),
 });
 
 export default withRouter(connect(mSTP, mDTP)(HomeScreen));

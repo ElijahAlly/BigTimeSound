@@ -35,6 +35,13 @@ export const updatePlaylist = (userId, playlist) => {
 	});
 };
 
+export const fetchAllPlaylistIds = (userId) => {
+	return $.ajax({
+		url: `/api/users/${userId}/playlist_inclusions`,
+		method: 'GET',
+	});
+};
+
 export const addSongToPlaylist = (songId, playlistId) => {
 	return $.ajax({
 		url: `/api/users/${userId}/playlists/${playlist.id}`,

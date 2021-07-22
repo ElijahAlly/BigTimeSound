@@ -17,7 +17,7 @@
 			width: 100%;
 			margin-bottom: 5px;
 			border-radius: 3px;
-			
+
 			&:hover {
 				background-color: #e9e9e936;
 				cursor: pointer;
@@ -40,41 +40,23 @@
 					font-size: 14px;
 					font-weight: 600;
 				}
-				
+
 				.artist {
 					margin-top: 5px;
 					font-size: 12px;
-					font-weight: 400;	
+					font-weight: 400;
 				}
 			}
 
-			.like-btn-container {
-				width: 10%;
-				display: flex;
-				align-items: center;
-				justify-content: flex-end;
-				margin-top: 0px;
-
-				.like-song-btn {
-					margin-right: 40px;
-				}
-				
-				#liked {
-					color: $blue-heart;
-					height: 50px;
-				}
-
-				#not-liked {
-					stroke: whitesmoke;
-					display: none;
-				}
-
-			}
-
-			&:hover #not-liked {
-				display: block;
-			}
 		}
+	}
+
+	#like-btn-container-margin-top {
+		margin-top: 0px;
+	}
+
+	&:hover #not-liked {
+		display: block;
 	}
 
 	.list-ul {
@@ -107,10 +89,10 @@
 				transition: 0.3s;
 			}
 
-            .artist-img {
-                border-radius: 100px;
-                margin-bottom: 10px;
-            }
+			.artist-img {
+				border-radius: 100px;
+				margin-bottom: 10px;
+			}
 
 			.song-img {
 				height: 20px;
@@ -140,5 +122,26 @@
 				box-shadow: 3px 1px 14px 8px #0000004d;
 			}
 		}
+	}
+}
+
+.like-btn-container {
+	width: 15%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+
+	.like-song-btn {
+		margin-right: 40px;
+	}
+
+	#liked {
+		color: $blue-heart;
+		height: 50px;
+	}
+
+	#not-liked {
+		stroke: whitesmoke;
+		display: none;
 	}
 }

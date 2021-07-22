@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 import UserHeaderContainer from './user_header_container';
 import SideNavBarContainer from './side_nav_bar_container'
 import SongPlaybackBar from './song_playback_bar'

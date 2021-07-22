@@ -6,15 +6,14 @@ import SideNavPlaylistList from '../items/side_nav_playlist_list';
 class SideNavBar extends React.Component {
 	constructor(props) {
 		super(props);
-		// console.log('nav-bar props', this.props);
 		this.state = {
-			user: this.props.currentUser,
 			selected: this.props.selected,
 		};
+
+		this.handleCreatePlaylist = this.handleCreatePlaylist.bind(this)
 	}
 
 	componentDidMount() {
-		this.props.fetchAllPlaylists(this.state.user.id);
 		if (this.state.selected === 'search') {
 			this.handleClass('search');
 		} else if (this.state.selected === 'library') {
@@ -31,26 +30,11 @@ class SideNavBar extends React.Component {
 		}
 	}
 
-	handleClass(type = 'none') {
-		if (type === 'none') {
-			type = 'no-element-has-this';
-		}
-
-		const element = document.getElementsByClassName(type)[0];
-		const oldChecked = document.getElementsByClassName('checked')[0];
-		if (oldChecked) {
-			oldChecked.classList.remove('checked');
-		}
-		if (element) element.classList.add('checked');
-
-		if (oldChecked === element) return false;
-		return true;
-	}
-
 	shouldComponentUpdate(nextProps, nextState) {
 		if (
+			this.state !== nextState ||
 			this.props !== nextProps ||
-			this.props.match.params.id != nextProps.match.params.id || this.state !== nextState
+			this.props.match.params.id != nextProps.match.params.id
 		) {
 			return true;
 		} else {
@@ -58,14 +42,33 @@ class SideNavBar extends React.Component {
 		}
 	}
 
+	handleClass(type = 'none') {
+		if (type === 'none') type = 'no-element-has-this';
+
+		const element = document.getElementsByClassName(type)[0];
+		const oldChecked = document.getElementsByClassName('checked')[0];
+		if (oldChecked) oldChecked.classList.remove('checked');
+
+		if (element) element.classList.add('checked');
+
+		if (oldChecked === element) return false;
+		return true;
+	}
+
+	handleCreatePlaylist() {
+		const {history, userId, addBackPath, path} = this.props;
+		this.handleClass() ? addBackPath() : null;
+		if (path === `/users/:id/playlist/:id`) {
+			history.push(`/users/${userId}`)
+		}
+		history.push(`/users/${userId}/playlist/${null}`)
+	}
+
 	render() {
-		const { user, selected } = this.state;
-		const { username, email, id } = user;
-		let playlists;
-		let playlistsLength;
-		if (this.props.playlists) {
-			playlists = Object.values(this.props.playlists);
-			playlistsLength = playlists.length + 1;
+		const { userId, addBackPath, playlists } = this.props;
+		let newPlaylists;
+		if (playlists) {
+			newPlaylists = Object.values(playlists);
 		}
 
 		return (
@@ -84,9 +87,9 @@ class SideNavBar extends React.Component {
 					<section className='side-navigation-buttons'>
 						<Link
 							className='side home'
-							to={`/users/${id}`}
+							to={`/users/${userId}`}
 							onClick={() => {
-								this.handleClass('home') ? this.props.addBackPath() : null;
+								this.handleClass('home') ? addBackPath() : null;
 							}}>
 							<svg viewBox='0 0 512 512' width='24' height='24'>
 								<path
@@ -97,9 +100,10 @@ class SideNavBar extends React.Component {
 						</Link>
 						<Link
 							className='side search'
-							to={`/users/${id}/search`}
+							id='side-search'
+							to={`/users/${userId}/search`}
 							onClick={() => {
-								this.handleClass('search') ? this.props.addBackPath() : null;
+								this.handleClass('search') ? addBackPath() : null;
 							}}>
 							<svg viewBox='0 0 512 512' width='22' height='22'>
 								<path
@@ -110,9 +114,9 @@ class SideNavBar extends React.Component {
 						</Link>
 						<Link
 							className='side library'
-							to={`/users/${id}/library`}
+							to={`/users/${userId}/library`}
 							onClick={() => {
-								this.handleClass('library') ? this.props.addBackPath() : null;
+								this.handleClass('library') ? addBackPath() : null;
 							}}>
 							<svg viewBox='0 0 512 512' width='22' height='22'>
 								<path
@@ -121,23 +125,20 @@ class SideNavBar extends React.Component {
 							</svg>
 							<div>Your Library</div>
 						</Link>
-						<Link
+						<h2
 							className='side create-playlist'
-							to={`/users/${id}/playlist/${playlistsLength}`}
-							onClick={() => {
-								this.handleClass() ? this.props.addBackPath() : null;
-							}}>
+							onClick={() => this.handleCreatePlaylist()}>
 							<svg viewBox='0 0 16 16' fill='currentColor'>
 								<path d='M14 7H9V2H7v5H2v2h5v5h2V9h5z'></path>
 								<path fill='none' d='M0 0h16v16H0z'></path>
 							</svg>
 							<div>Create Playlist</div>
-						</Link>
+						</h2>
 						<Link
 							className='side liked-songs'
-							to={`/users/${id}/liked-songs`}
+							to={`/users/${userId}/liked-songs`}
 							onClick={() => {
-								this.handleClass() ? this.props.addBackPath() : null;
+								this.handleClass() ? addBackPath() : null;
 							}}>
 							<img
 								fill='currentColor'
@@ -149,9 +150,10 @@ class SideNavBar extends React.Component {
 					<div id='side-line-break'></div>
 				</div>
 				<SideNavPlaylistList
-					playlists={playlists}
+					playlists={newPlaylists}
 					handleClass={(type) => this.handleClass(type)}
-					addBackPath={this.props.addBackPath}
+					addBackPath={addBackPath}
+					userId={userId}
 				/>
 				<CurrentlyPlayingAlbum />
 			</section>

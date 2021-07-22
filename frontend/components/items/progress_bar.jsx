@@ -17,6 +17,15 @@ class ProgressBar extends Component {
 	componentDidMount() {
 		this.handleCurrentSongTime();
 	}
+	
+	shouldComponentUpdate(nextProps) {
+		if (this.props !== nextProps) return true;
+		return false;
+	}
+
+	componentDidUpdate() {
+		this.handleCurrentSongTime();
+	}
 
 	handleCurrentSongTime() {
 		const { isPlaying, audio, currentProgress } = this.props;
@@ -40,7 +49,6 @@ class ProgressBar extends Component {
 				let currentPercent = `${audio.currentTime / audio.duration}`;
 				currentPercent = currentPercent.slice(0, 5);
 				progressTrack.value = currentPercent;
-				console.log(progressTrack.value);
 			});
 		} else {
 			progressTrack.value = currentProgress;
@@ -54,15 +62,6 @@ class ProgressBar extends Component {
 		currentTime = currentTime * duration;
 		this.props.audio.currentTime = currentTime;
 		this.props.sendCurrentProgress(currentProgress);
-	}
-
-	shouldComponentUpdate(nextProps) {
-		if (this.props !== nextProps) return true;
-		return false;
-	}
-
-	componentDidUpdate() {
-		this.handleCurrentSongTime();
 	}
 
 	render() {

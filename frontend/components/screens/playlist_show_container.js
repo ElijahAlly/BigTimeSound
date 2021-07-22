@@ -9,18 +9,18 @@ import {
 	deletePlaylist,
 	addSongToPlaylist,
 } from '../../actions/playlist_actions';
-import {clearSearch} from '../../actions/search_actions';
+import { clearSearch } from '../../actions/search_actions';
 import PlaylistShow from './playlist_show';
-import {assignImagesToSongs} from '../../util/assign_functions';
+import { assignImagesToSongs } from '../../util/assign_functions';
 
 const mSTP = (
-	{ entities: { user, playlists, playlist, likedSongs, albums }, session, ui },
+	{ entities: { user, playlists, likedSongs, albums, songs }, session, ui },
 	ownProps
 ) => {
 	return {
 		currentUser: user[session.currentUser],
 		playlists,
-		playlist,
+		playlist: playlists[ownProps.match.params.id],
 		location: ownProps.match.params.id,
 		likedSongs: Object.values(likedSongs),
 		searchedSongs: assignImagesToSongs(ui.search.results.songs, albums),
@@ -39,7 +39,8 @@ const mDTP = (dispatch) => ({
 	createPlaylist: (playlist) => dispatch(createPlaylist(playlist)),
 	openModal: (modal, props) => dispatch(openModal(modal, props)),
 	clearSearch: () => dispatch(clearSearch()),
-	addSongToPlaylist: (songId, playlistId) => dispatch(addSongToPlaylist(songId, playlistId)),
+	addSongToPlaylist: (songId, playlistId) =>
+		dispatch(addSongToPlaylist(songId, playlistId)),
 });
 
 export default withRouter(connect(mSTP, mDTP)(PlaylistShow));

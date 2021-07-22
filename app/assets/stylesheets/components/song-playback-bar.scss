@@ -93,10 +93,18 @@
 			}
 
 			.shuffle-on {
-				color: #1db954;
+				color: $blue-heart;
 
 				&:hover {
-					color: #00852e;
+					color: $blue-heart-hover;
+				}
+			}
+
+			.skip-prev-btn {
+				color: rgba(228, 228, 228, 0.822);
+				
+				&:hover {
+					color: white;
 				}
 			}
 
@@ -107,18 +115,15 @@
 				background-color: whitesmoke;
 				border-radius: 50px;
 				padding: 8px;
+				margin-left: 1px;
+				margin-right: 1px;
 
 				&:hover {
 					padding: 9px;
+					margin-left: 0px;
+					margin-right: 0px;
 				}
-			}
-
-			.skip-prev-btn {
-				color: rgba(228, 228, 228, 0.822);
 				
-				&:hover {
-					color: white;
-				}
 			}
 
 			.prev-track {
@@ -150,10 +155,10 @@
 					height: 15px;
 					width: 15px;
 					background-color: whitesmoke;
-				}
 
-				&:hover {
-					background-color: $blue-heart;
+					&:hover {
+						background-color: $blue-heart-solid;
+					}
 				}
 			}
 
@@ -209,6 +214,7 @@
 		}
 
 		#volume-control {
+			outline: none;
 			-webkit-appearance: none;
 			height: 4px;
 			background-color: rgb(168, 168, 168);
@@ -234,10 +240,10 @@
 		}
 
 		.active-green {
-			color: #1db954;
+			color: $blue-heart;
 
 			&:hover {
-				color: #00852e;
+				color: $blue-heart-hover;
 			}
 		}
 	}

@@ -22,8 +22,7 @@ class QueueScreen extends Component {
 
 	render() {
 		const { queue, currentlyPlaying, playingFrom } = this.props;
-		console.log(currentlyPlaying);
-		console.log(queue);
+		
 		return (
 			<div className='screen queue-screen'>
 				<section id='queue-container'>

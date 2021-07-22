@@ -6,6 +6,7 @@ export const DELETE_PLAYLIST = 'DELETE_PLAYLIST';
 export const LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER';
 export const RECEIVE_PLAYLIST_ERRORS = 'RECEIVE_PLAYLIST_ERRORS';
 export const CLEAR_PLAYLIST_ERRORS = 'CLEAR_PLAYLIST_ERRORS';
+export const PLAYLIST_SONG_IDS = 'PLAYLIST_SONG_IDS';
 
 const receivePlaylistErrors = (errors) => {
 	errors = errors || null;
@@ -34,6 +35,12 @@ const removePlaylist = (playlistId) => ({
 	playlistId,
 });
 
+const receiveAllPlaylistsSongIds = (playlistIds) => {
+	return {
+	type: PLAYLIST_SONG_IDS,
+	playlistIds,
+}};
+
 export const createPlaylist = (playlist) => (dispatch) =>
 	PlaylistApiUtil.createPlaylist(playlist).then(
 		(playlist) => dispatch(receivePlaylist(playlist)),
@@ -60,6 +67,11 @@ export const fetchPlaylist = (userId, playlistId) => (dispatch) =>
 export const fetchAllPlaylists = (userId) => (dispatch) =>
 	PlaylistApiUtil.fetchAllPlaylists(userId).then((playlists) =>
 		dispatch(receiveAllPlaylists(playlists))
+	);
+
+export const fetchAllPlaylistIds = (userId) => (dispatch) =>
+	PlaylistApiUtil.fetchAllPlaylistIds(userId).then((playlistIds) =>
+		dispatch(receiveAllPlaylistsSongIds(playlistIds))
 	);
 
 export const addSongToPlaylist = (songId, playlistId) => (dispatch) =>

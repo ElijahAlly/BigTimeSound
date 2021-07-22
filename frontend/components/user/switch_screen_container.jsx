@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { deleteSession } from '../../actions/session_actions';
 import MainShowPageContainer from './main_show_page_container';
 
 const SwitchScreen = (props) => {
-
 	return (
 		<div id='main'>
 			<MainShowPageContainer path={props.match.path} />

@@ -1,0 +1,60 @@
+.search {
+    margin-top: 25px;
+    font-size: large;
+    font-weight: bold;
+
+    .playlist-search {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        background-color: #323232;
+        width: 335px;
+        height: 40px;
+        padding-left: 10px;
+        border-radius: 5px;
+
+        .search-input {
+            background-color: transparent;
+            color: whitesmoke;
+            outline: none;
+            border: none;
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    .songs-container {
+        margin-top: 20px;
+        padding-bottom: -50px;
+        height: fit-content;
+        width: 100%;
+
+        .list-with-picture {
+            padding: 0px;
+            width: 85%;
+
+            .like-btn-container {
+                width: 25%;
+
+                .add-song {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 40px;
+                    width: 100px;
+                    border-radius: 20px;
+                    border: 1px solid #323232;
+                    margin-right: 35px;
+                    font-size: 12px;
+
+                    &:hover {
+                        cursor: pointer;
+                        border-color: whitesmoke;
+                        font-size: 14px;
+                        height: 42px;
+                    }
+                }
+            }
+        }
+    }
+}

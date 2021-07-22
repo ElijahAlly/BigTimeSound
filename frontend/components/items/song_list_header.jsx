@@ -3,7 +3,7 @@ import React from 'react';
 const SongListHeader = () => {
 	return (
 		<section className='song-list-header'>
-			<div id='song-list-title'># TITLE</div>
+			<div id='song-list-title'># &nbsp;&nbsp;TITLE</div>
 			<div id='song-list-album'>ALBUM</div>
 			<svg
 				id='song-list-duration'

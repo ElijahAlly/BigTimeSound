@@ -5,10 +5,12 @@ class Api::LikesController < ApplicationController
         @likes = Like.all
         @songs = [];
         @likes.each do |like|
-            song = Song.find_by(id: like.song_id)
-            @songs << song
+            if like.user_id.to_s == params[:user_id]
+                song = Song.find_by(id: like.song_id)
+                @songs << song
+            end
         end
-        
+
         render :index
     end
 

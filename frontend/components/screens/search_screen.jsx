@@ -69,7 +69,7 @@ class SearchScreen extends Component {
 	}
 
 	render() {
-		const {
+		let {
 			albums,
 			artists,
 			likedSongs,
@@ -80,9 +80,10 @@ class SearchScreen extends Component {
 			searchedPlaylists,
 		} = this.props;
 
-		let list = [...albums, ...artists];
-		list = shuffleArray(list);
-		if (list.length > 20) list = list.slice(0, 20);
+		albums = shuffleArray(albums);
+		artists = shuffleArray(artists);
+		if (albums.length > 10) albums = albums.slice(0, 10);
+		if (artists.length > 10) artists = artists.slice(0, 10);
 
 		const arrOfObjects = [
 			...searchedAlbums,
@@ -101,8 +102,10 @@ class SearchScreen extends Component {
 			<div className='screen search-screen'>
 				{searchInput === '' ? (
 					<>
-						<h1 className='suggested-header'>Suggested Artists and Albums</h1>
-						<ListWithPicture list={list} shouldSlice={false} />
+						<h1 className='suggested-header'>Suggested Artists</h1>
+						<ListWithPicture list={artists} shouldSlice={false} />
+						<h1 className='suggested-header'>Suggested Albums</h1>
+						<ListWithPicture list={albums} shouldSlice={false} />
 					</>
 				) : (
 					<>

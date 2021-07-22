@@ -2,7 +2,19 @@ import React, { Component } from 'react';
 import { formatName } from '../../util/format_name';
 
 const ListWithPicture = (props) => {
-	let { albums, artists, list, shouldSlice, songs, likedSongs, inPlaylist, playlistId, addSongToPlaylist } = props;
+	let {
+		albums,
+		artists,
+		list,
+		shouldSlice,
+		songs,
+		likedSongs,
+		inPlaylist,
+		playlistId,
+		addSongToPlaylist,
+		likeSong,
+		inLikedSongs,
+	} = props;
 
 	if (!list) list = albums;
 	if (!list) list = artists;
@@ -10,18 +22,41 @@ const ListWithPicture = (props) => {
 	let likedSongsIds = [];
 	likedSongs ? likedSongs.map((song) => likedSongsIds.push(song.id)) : null;
 
+	if (inLikedSongs) {
+		console.log(likedSongs);
+		let removeAlreadyLikedSongs = [];
+		for (let i = 0; i < songs.length; i++) {
+			let songInLiked = false;
+
+			for (let j = 0; j < likedSongs.length; j++) {
+				if (likedSongs[j].id === songs[i].id) {
+					songInLiked = true;
+				}
+			}
+
+			if (!songInLiked) removeAlreadyLikedSongs.push(songs[i])
+		}
+
+		songs = removeAlreadyLikedSongs;
+	}
+
 	return (
 		<section className='list-with-picture'>
 			{songs ? (
 				<ul className='searched-songs-list'>
 					{songs.map((song, i) => (
-						<li key={i} className={`searched-song ${inPlaylist ? 'playlist-song' : ''}`}>
-							<img src={song.imgUrl} className={`song-img ${inPlaylist ? 'playlist-img' : ''}`} />
+						<li
+							key={i}
+							className={`searched-song ${inPlaylist ? 'playlist-song' : ''}`}>
+							<img
+								src={song.imgUrl}
+								className={`song-img ${inPlaylist ? 'playlist-img' : ''}`}
+							/>
 							<div className={`song-info ${inPlaylist ? 'playlist-info' : ''}`}>
 								<h1 className='title'>{song.title}</h1>
 								<h2 className='artist'>{song.artistName}</h2>
 							</div>
-							<div className='like-btn-container'>
+							<div className='like-btn-container' id='like-btn-container-margin-top'>
 								{likedSongsIds.includes(song.id) ? (
 									<svg
 										role='img'
@@ -50,9 +85,14 @@ const ListWithPicture = (props) => {
 								)}
 								{inPlaylist ? (
 									<div className='add-song'>
-										<h2 onClick={() => addSongToPlaylist(songId, playlistId)}>ADD</h2>
+										<h2 onClick={() => addSongToPlaylist(songId, playlistId)}>
+											ADD
+										</h2>
 									</div>
-								) : (<></>)} {/* if on search page add three menu dots to add to playlist or add to queue or go to artist/album page */}
+								) : (
+									<></>
+								)}{' '}
+								{/* if on search page add three menu dots to add to playlist or add to queue or go to artist/album page */}
 							</div>
 						</li>
 					))}

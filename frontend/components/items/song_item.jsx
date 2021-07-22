@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import {
-	pauseSong,
-	playSong,
-} from '../../actions/currently_playing';
+import { pauseSong, playSong } from '../../actions/currently_playing';
 import { setDuration } from '../../util/format_time';
 import { receiveSongQueue } from '../../actions/song_queue_actions';
-import {shuffleArray} from '../../util/shuffle_array'
+import { shuffleArray } from '../../util/shuffle_array';
 
 class SongItem extends Component {
 	constructor(props) {
@@ -36,7 +33,7 @@ class SongItem extends Component {
 			this.props.songList !== nextProps.songList ||
 			this.props.volume !== nextProps.volume ||
 			this.props.currentlyPlayingSong !== nextProps.currentlyPlayingSong ||
-			this.props.shuffleIsOn !== nextProps.shuffleIsOn 
+			this.props.shuffleIsOn !== nextProps.shuffleIsOn
 		)
 			return true;
 		return false;
@@ -57,18 +54,17 @@ class SongItem extends Component {
 			currentTime,
 			volume,
 			receiveSongQueue,
-			shuffleIsOn
+			shuffleIsOn,
 		} = this.props;
 
 		const { song, audio } = this.state;
-		
+
 		if (isPlaying) {
 			pauseSong();
 
 			if (currentlyPlayingSong.id !== song.id) {
 				playSong(song, audio, fromWhere, currentTime, volume, audio.duration);
 			}
-			
 		} else {
 			playSong(song, audio, fromWhere, currentTime, volume, audio.duration);
 		}
@@ -77,38 +73,44 @@ class SongItem extends Component {
 		let queue = [];
 		songList.forEach((el) => {
 			if (el.id !== song.id) shuffledQueue.push(el);
-			if (!shuffleIsOn && (el.id === song.id || queue[0])) queue.push(el)
-		})
-		
+			if (!shuffleIsOn && (el.id === song.id || queue[0])) queue.push(el);
+		});
+
 		queue.shift();
 		let queueToSend = queue;
 		if (shuffleIsOn) queueToSend = shuffledQueue;
-		receiveSongQueue(queueToSend)
+		receiveSongQueue(queueToSend);
 	}
 
 	render() {
 		let highlighted = '';
 		const { audio, song } = this.state;
+		let { currentlyPlayingSong, album, likedSongs, songList, shuffleIsOn } =
+			this.props;
 
-		if (
-			this.props.currentlyPlayingSong &&
-			this.props.currentlyPlayingSong.id === song.id
-		) {
+		if (currentlyPlayingSong && currentlyPlayingSong.id === song.id) {
 			highlighted = 'now-playing';
 		}
+
 		let albumCover = 'no album cover';
 		let albumName = 'no album name';
 
-		if (this.props.album) {
-			albumCover = this.props.album.url;
-			albumName = this.props.album.name;
+		if (album) {
+			albumCover = album.url;
+			albumName = album.name;
 		}
 
-		let {songList, shuffleIsOn} = this.props;
 		if (shuffleIsOn && songList) songList = shuffleArray(songList);
 
+		let likedSongsIds = [];
+		likedSongs && likedSongs.length > 0
+			? likedSongs.map((likedSong) => likedSongsIds.push(likedSong.id))
+			: null;
+
 		return (
-			<li onClick={() => this.togglePlay(songList)} className={`${highlighted}`}>
+			<li
+				onClick={() => this.togglePlay(songList)}
+				className={`${highlighted}`}>
 				<h4 className='song-number'>
 					{!this.props.isPlaying ||
 					this.props.currentlyPlayingSong.id !== song.id ? (
@@ -130,16 +132,34 @@ class SongItem extends Component {
 					</div>
 				</h4>
 				<h4 className='album-name'>{albumName}</h4>
-				<svg
-					role='img'
-					height='16'
-					width='16'
-					viewBox='0 0 16 16'
-					className='like-song-btn'
-					onClick={() => this.toggleLike()}>
-					<path fill='none' d='M0 0h16v16H0z'></path>
-					<path d='M13.797 2.727a4.057 4.057 0 00-5.488-.253.558.558 0 01-.31.112.531.531 0 01-.311-.112 4.054 4.054 0 00-5.487.253c-.77.77-1.194 1.794-1.194 2.883s.424 2.113 1.168 2.855l4.462 5.223a1.791 1.791 0 002.726 0l4.435-5.195a4.052 4.052 0 001.195-2.883 4.057 4.057 0 00-1.196-2.883z'></path>
-				</svg>
+				<div className='like-btn-container'>
+					{likedSongsIds.includes(song.id) ? (
+						<svg
+							role='img'
+							height='16'
+							width='16'
+							viewBox='0 0 16 16'
+							className='like-song-btn'
+							fill='currentColor'
+							id='liked'>
+							<path fill='none' d='M0 0h16v16H0z'></path>
+							<path d='M13.797 2.727a4.057 4.057 0 00-5.488-.253.558.558 0 01-.31.112.531.531 0 01-.311-.112 4.054 4.054 0 00-5.487.253c-.77.77-1.194 1.794-1.194 2.883s.424 2.113 1.168 2.855l4.462 5.223a1.791 1.791 0 002.726 0l4.435-5.195a4.052 4.052 0 001.195-2.883 4.057 4.057 0 00-1.196-2.883z'></path>
+						</svg>
+					) : (
+						<svg
+							role='img'
+							height='16'
+							width='16'
+							viewBox='0 0 16 16'
+							className='like-song-btn'
+							fill='none'>
+							<path fill='none' d='M0 0h16v16H0z'></path>
+							<path
+								id='not-liked'
+								d='M13.797 2.727a4.057 4.057 0 00-5.488-.253.558.558 0 01-.31.112.531.531 0 01-.311-.112 4.054 4.054 0 00-5.487.253c-.77.77-1.194 1.794-1.194 2.883s.424 2.113 1.168 2.855l4.462 5.223a1.791 1.791 0 002.726 0l4.435-5.195a4.052 4.052 0 001.195-2.883 4.057 4.057 0 00-1.196-2.883z'></path>
+						</svg>
+					)}
+				</div>
 				<h4 className='duration' id={`${song.id}`}>
 					00:00
 				</h4>
@@ -156,6 +176,7 @@ const mSTP = ({ entities, ui, session }, ownProps) => {
 		currentlyPlayingSong: ui.currentlyPlaying.song,
 		currentlyPlayingAudio: ui.currentlyPlaying.audio,
 		album: entities.albums[ownProps.song.album_id],
+		likedSongs: Object.values(entities.likedSongs),
 		artist: entities.artists[ownProps.song.artist_id],
 		currentTime: ui.currentlyPlaying.currentTime,
 		volume: ui.currentlyPlaying.volume,

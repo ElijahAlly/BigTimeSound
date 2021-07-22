@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     resources :users, only: [:create, :show] do 
       resources :playlists, only: [:create, :destroy, :update, :show, :index]
+      resources :playlist_inclusions, only: [:index]
       resources :likes, only: [:index, :create, :destroy,]
     end
 

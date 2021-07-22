@@ -32,7 +32,7 @@
 		padding-bottom: 10px;
 		width: 100%;
 		transition: background-color 0.3s ease;
-
+		
 		div {
 			font-size: 13px;
 			font-weight: 500;
@@ -46,6 +46,19 @@
 			color: rgb(153, 153, 153);
 
 			&:hover {
+				color: whitesmoke;
+			}
+		}
+
+		h2 {
+			margin-left: 7px;
+			margin-right: 7px;
+			padding: 10px 0 10px 10px;
+			border-radius: 7px;
+			color: rgb(153, 153, 153);
+
+			&:hover {
+				cursor: pointer;
 				color: whitesmoke;
 			}
 		}
@@ -76,6 +89,10 @@
 		}
 	}
 
+	#side-search {
+		margin-top: 0px;
+	}
+
 	.collapse-album-cover {
 		position: fixed;
 		left: 160px;
@@ -99,7 +116,7 @@
 	.side-nav-album-cover {
 		height: 195px;
 		width: 195px;
-		animation: slideUp .3s;
+		animation: slideUp .4s;
 
 		img {
 			height: inherit;
@@ -114,7 +131,7 @@
 	@keyframes slideUp {
 		from {
 			position: fixed;
-			bottom: 0px;
+			bottom: -100px;
 		}
 
 		to {
