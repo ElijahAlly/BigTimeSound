@@ -7,7 +7,7 @@ import {
 } from '../../actions/playlist_actions';
 import { withRouter } from 'react-router';
 import { addBackPath } from '../../actions/path_actions';
-import {pauseSong} from '../../actions/currently_playing'
+import {pauseSong} from '../../actions/song/currently_playing'
 
 const mSTP = ({session, ui, entities}, ownProps) => {
 	return ({

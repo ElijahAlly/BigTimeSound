@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createUser, clearErrors } from '../../actions/user_actions';
 import { createSession } from '../../actions/session_actions';
-import { fetchAllSongs } from '../../actions/song_actions';
+import { fetchAllSongs } from '../../actions/song/song_actions';
 import SignUp from './signup';
 import { resetPathCounts } from '../../actions/path_actions';
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import SongInfoPlaybackBar from '../items/song_info_playback_bar'
-import SongControlsPlaybackBar from '../items/song_controls_playback_bar'
-import VolumeControl from '../items/volume_control'
+import SongInfoPlaybackBar from '../items/playback_bar/song_info_playback_bar'
+import SongControlsPlaybackBar from '../items/playback_bar/song_controls_playback_bar'
+import VolumeControl from '../items/playback_bar/volume_control'
 
 class SongPlaybackBar extends Component {
 

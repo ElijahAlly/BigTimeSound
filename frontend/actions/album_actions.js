@@ -1,4 +1,4 @@
-import * as AlbumApiUtil from '../util/album_api_util';
+import * as AlbumApiUtil from '../util/backend/album_api_util';
 
 export const RECEIVE_ALBUMS = 'RECEIVE_ALBUMS';
 export const COLLAPSE_ALBUM_COVER = 'COLLAPSE_ALBUM_COVER';

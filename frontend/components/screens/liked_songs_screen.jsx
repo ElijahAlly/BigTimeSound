@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import SongItem from '../items/song_item';
+import SongItem from '../items/song_items/song_item';
 import SongListHeader from '../items/song_list_header';
-import { handleColorShift } from '../../util/header_color_switch';
-import { assignImagesToSongs } from '../../util/assign_functions';
-import { receiveSongQueue } from '../../actions/song_queue_actions';
+import { handleColorShift } from '../../util/general_functions/header_color_switch';
+import { assignImagesToSongs } from '../../util/general_functions/assign_functions';
+import { receiveSongQueue } from '../../actions/song/song_queue_actions';
 import { clearSearchResults } from '../../actions/search_actions';
-import { pauseSong, playSong } from '../../actions/currently_playing';
-import { fetchLikedSongs } from '../../actions/song_actions';
-import SearchBar from '../items/search_bar';
-import ListWithPicture from '../items/list_with_picture';
+import { pauseSong, playSong } from '../../actions/song/currently_playing';
+import { fetchLikedSongs } from '../../actions/song/song_actions';
+import SearchBar from '../items/search_items/search_bar';
+import ListWithPicture from '../items/song_items/list_with_picture';
 import PlaylistPlayButton from '../items/playlist_play_button';
 
 class LikedSongsScreen extends Component {

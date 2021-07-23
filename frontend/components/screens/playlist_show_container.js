@@ -12,10 +12,10 @@ import {
 } from '../../actions/playlist_actions';
 import PlaylistShow from './playlist_show';
 import { clearSearchResults } from '../../actions/search_actions';
-import { assignImagesToSongs } from '../../util/assign_functions';
-import { pauseSong, playSong } from '../../actions/currently_playing';
-import { receiveSongQueue } from '../../actions/song_queue_actions';
-import { selectSongsForPlaylist } from '../../util/select_songs_for_playlist';
+import { assignImagesToSongs } from '../../util/general_functions/assign_functions';
+import { pauseSong, playSong } from '../../actions/song/currently_playing';
+import { receiveSongQueue } from '../../actions/song/song_queue_actions';
+import { selectSongsForPlaylist } from '../../util/general_functions/select_songs_for_playlist';
 
 const mSTP = (
 	{

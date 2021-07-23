@@ -1,4 +1,4 @@
-import * as SessionApiUtil from '../util/session_api_util';
+import * as SessionApiUtil from '../util/backend/session_api_util';
 
 export const RECEIVE_SINGLE_USER = 'RECEIVE_SINGLE_USER';
 export const LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER';

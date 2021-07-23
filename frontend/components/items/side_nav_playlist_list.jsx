@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import {formatName} from '../../util/format_name'
+import {formatName} from '../../util/general_functions/format_name'
 
 const SideNavPlaylistList = (props) => {
 	const { userId, history, playlists, addBackPath, handleClass, playingFrom, isPlaying } = props;

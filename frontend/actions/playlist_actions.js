@@ -1,4 +1,4 @@
-import * as PlaylistApiUtil from '../util/playlist_api_util';
+import * as PlaylistApiUtil from '../util/backend/playlist_api_util';
 
 export const DELETE_PLAYLIST = 'DELETE_PLAYLIST';
 export const RECEIVE_PLAYLIST = 'RECEIVE_PLAYLIST';

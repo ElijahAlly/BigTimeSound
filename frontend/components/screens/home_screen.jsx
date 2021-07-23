@@ -5,11 +5,11 @@ import { addBackPath } from '../../actions/path_actions';
 import { fetchAlbums } from '../../actions/album_actions';
 import { fetchArtists } from '../../actions/artist_actions';
 import { fetchAllPlaylistIds } from '../../actions/playlist_actions';
-import { fetchAllSongs, fetchLikedSongs } from '../../actions/song_actions';
-import { handleColorShift } from '../../util/header_color_switch';
+import { fetchAllSongs, fetchLikedSongs } from '../../actions/song/song_actions';
+import { handleColorShift } from '../../util/general_functions/header_color_switch';
 import UserSuggestedLinks from '../items/user_suggested_links';
-import ListWithPicture from '../items/list_with_picture';
-import { assignArtistsToAlbums, assignImages } from '../../util/assign_functions';
+import ListWithPicture from '../items/song_items/list_with_picture';
+import { assignArtistsToAlbums, assignImages } from '../../util/general_functions/assign_functions';
 
 class HomeScreen extends Component {
 	constructor(props) {

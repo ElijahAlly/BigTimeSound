@@ -1,4 +1,4 @@
-import * as ArtistApiUtil from '../util/artist_api_util';
+import * as ArtistApiUtil from '../util/backend/artist_api_util';
 
 export const RECEIVE_ARTISTS = 'RECEIVE_ARTISTS';
 

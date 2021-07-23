@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { handleColorShift } from '../../util/header_color_switch';
-import { shuffleArray } from '../../util/shuffle_array';
+import { handleColorShift } from '../../util/general_functions/header_color_switch';
+import { shuffleArray } from '../../util/general_functions/shuffle_array';
 import {
 	assignArtistsToAlbums,
 	assignImages,
 	assignImagesToSongs,
-} from '../../util/assign_functions';
-import ListWithPicture from '../items/list_with_picture';
-import TopSearchResult from '../items/top_search_result';
+} from '../../util/general_functions/assign_functions';
+import ListWithPicture from '../items/song_items/list_with_picture';
+import TopSearchResult from '../items/search_items/top_search_result';
 import { clearSearchResults } from '../../actions/search_actions';
 import { findBestMatch } from 'string-similarity';
-import { fetchLikedSongs } from '../../actions/song_actions';
+import { fetchLikedSongs } from '../../actions/song/song_actions';
 
 class SearchScreen extends Component {
 	componentDidMount() {

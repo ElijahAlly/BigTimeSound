@@ -1,4 +1,4 @@
-import * as SearchApiUtil from '../util/search_api_util';
+import * as SearchApiUtil from '../util/backend/search_api_util';
 
 export const SEND_SEARCH = 'SEND_SEARCH';
 export const CLEAR_SEARCH_RESULTS = 'CLEAR_SEARCH_RESULTS';

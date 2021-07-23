@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { handleColorShift } from '../../util/header_color_switch';
-import { handleMoreInfoToggle } from '../../util/handle_more_info_btn';
-import ListWithPicture from '../items/list_with_picture';
-import PlaylistSongsList from '../items/playlist_songs_list';
-import SearchBar from '../items/search_bar';
+import { handleColorShift } from '../../util/general_functions/header_color_switch';
+import { handleMoreInfoToggle } from '../../util/general_functions/handle_more_info_btn';
+import ListWithPicture from '../items/song_items/list_with_picture';
+import PlaylistSongsList from '../items/song_items/playlist_songs_list';
+import SearchBar from '../items/search_items/search_bar';
 import PlaylistPlayButton from '../items/playlist_play_button';
 import SongListHeader from '../items/song_list_header';
-import { shuffleArray } from '../../util/shuffle_array';
-import { formatName } from '../../util/format_name';
+import { shuffleArray } from '../../util/general_functions/shuffle_array';
+import { formatName } from '../../util/general_functions/format_name';
 
 class PlaylistShow extends Component {
 	constructor(props) {

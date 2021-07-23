@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ArrowButton from '../items/arrow_button';
-import SearchBar from '../items/search_bar';
+import SearchBar from '../items/search_items/search_bar';
 
 class UserHeader extends Component {
 	constructor(props) {

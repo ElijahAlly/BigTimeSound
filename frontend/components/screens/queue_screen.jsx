@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { handleColorShift } from '../../util/header_color_switch';
-import SongItem from '../items/song_item';
+import { handleColorShift } from '../../util/general_functions/header_color_switch';
+import SongItem from '../items/song_items/song_item';
 
 class QueueScreen extends Component {
 	componentDidMount() {

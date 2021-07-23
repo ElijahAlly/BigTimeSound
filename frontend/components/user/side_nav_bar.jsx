@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CurrentlyPlayingAlbum from '../items/currently_playing_album';
+import CurrentlyPlayingAlbum from '../items/playback_bar/currently_playing_album';
 import SideNavPlaylistList from '../items/side_nav_playlist_list';
 
 class SideNavBar extends React.Component {

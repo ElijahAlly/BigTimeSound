@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { resetPathCounts } from '../../actions/path_actions';
 import { createSession, clearErrors } from '../../actions/session_actions';
-import { fetchAllSongs } from '../../actions/song_actions';
+import { fetchAllSongs } from '../../actions/song/song_actions';
 import Login from './login';
 
 const mSTP = (state) => ({

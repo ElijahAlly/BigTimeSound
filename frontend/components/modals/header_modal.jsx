@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { closeModal } from '../../actions/modal_actions';
 import { deleteSession } from '../../actions/session_actions';
-import { pauseSong } from '../../actions/currently_playing';
-import { clearQueueHistory } from '../../actions/song_queue_actions';
+import { pauseSong } from '../../actions/song/currently_playing';
+import { clearQueueHistory } from '../../actions/song/song_queue_actions';
 import { Link } from 'react-router-dom';
 
 const HeaderModal = ({

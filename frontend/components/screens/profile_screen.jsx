@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import { withRouter } from 'react-router-dom';
-import {handleColorShift} from '../../util/header_color_switch'
+import {handleColorShift} from '../../util/general_functions/header_color_switch'
 
 class ProfileScreen extends Component {
 	componentDidMount() {
