@@ -11,8 +11,14 @@ import { pauseSong, playSong } from '../../actions/currently_playing';
 import { fetchLikedSongs } from '../../actions/song_actions';
 import SearchBar from '../items/search_bar';
 import ListWithPicture from '../items/list_with_picture';
+import PlaylistPlayButton from '../items/playlist_play_button';
 
 class LikedSongsScreen extends Component {
+	constructor(props) {
+		super(props)
+		this.togglePlay = this.togglePlay.bind(this)
+	}
+	
 	componentDidMount() {
 		this.props.fetchLikedSongs(this.props.currentUser.id);
 		window.scrollTo(0, 0);
@@ -50,6 +56,7 @@ class LikedSongsScreen extends Component {
 			receiveSongQueue,
 			volume,
 		} = this.props;
+
 		if (playingFrom === 'liked-songs') {
 			if (isPlaying) {
 				pauseSong();
@@ -83,19 +90,6 @@ class LikedSongsScreen extends Component {
 	render() {
 		const { isPlaying, currentUser, likedSongs, searchedSongs, likeSong } =
 			this.props;
-		let togglePlayButton = (
-			<svg height='16' width='16' fill='currentColor' viewBox='0 0 16 16'>
-				<path d='M4.018 14L14.41 8 4.018 2z'></path>
-			</svg>
-		);
-
-		if (isPlaying) {
-			togglePlayButton = (
-				<svg height='16' width='16' viewBox='0 0 16 16' fill='currentColor'>
-					<path d='M3 2h3v12H3zm7 0h3v12h-3z'></path>
-				</svg>
-			);
-		}
 
 		return (
 			<div className='screen liked-songs-screen'>
@@ -111,21 +105,9 @@ class LikedSongsScreen extends Component {
 						<h3 className='liked-songs-users-name'>{currentUser.username}</h3>
 					</div>
 				</section>
-				{likedSongs.length > 0 ? (
-					<>
-						<section className='big-green-play-btn-container'>
-							<h3
-								className='big-green-play-btn'
-								onClick={() => this.togglePlay()}>
-								{togglePlayButton}
-							</h3>
-						</section>
-						<SongListHeader />
-					</>
-				) : (
-					<></>
-				)}
-
+				
+				<PlaylistPlayButton togglePlay={this.togglePlay} fromWhere={'liked-songs'}/>
+				<SongListHeader />
 				<section>
 					<ul className='song-list'>
 						{likedSongs ? (

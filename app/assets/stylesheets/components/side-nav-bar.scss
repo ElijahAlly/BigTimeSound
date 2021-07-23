@@ -76,6 +76,7 @@
 	.side {
 		display: flex;
 		padding-left: 21px;
+		align-items: center;
 
 		svg {
 			padding-right: 15px;
@@ -86,6 +87,11 @@
 			margin-right: 15px;
 			height: 22px;
 			width: 22px;
+		}
+
+		.playing-liked-songs-svg {
+			margin-right: 0px;
+			margin-left: 13px;
 		}
 	}
 
@@ -131,11 +137,13 @@
 	@keyframes slideUp {
 		from {
 			position: fixed;
+			opacity: 0;
 			bottom: -100px;
 		}
 
 		to {
 			position: fixed;
+			opacity: 1;
 			bottom: 100px;
 		}
 	}
@@ -189,9 +197,16 @@
 			border-radius: 7px;
 			color: rgb(153, 153, 153);
 			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 
 			&:hover {
 				color: whitesmoke;
+			}
+
+			svg {
+				margin-right: 22px;
 			}
 		}
 	}

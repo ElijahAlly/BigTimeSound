@@ -14,7 +14,23 @@ const ListWithPicture = (props) => {
 		addSongToPlaylist,
 		likeSong,
 		inLikedSongs,
+		fetchAllPlaylistIds,
+		userId,
+		history,
 	} = props;
+
+	const addSong = (songId) => {
+		addSongToPlaylist(userId, songId, playlistId).then(
+			() => {
+				fetchAllPlaylistIds(userId).then(() => {
+					history.push(`/users/${userId}`);
+					history.push(
+						`/users/${userId}/playlist/${playlistId}`
+					);
+				});
+			}
+		)
+	}
 
 	if (!list) list = albums;
 	if (!list) list = artists;
@@ -33,7 +49,7 @@ const ListWithPicture = (props) => {
 				}
 			}
 
-			if (!songInLiked) removeAlreadyLikedSongs.push(songs[i])
+			if (!songInLiked) removeAlreadyLikedSongs.push(songs[i]);
 		}
 
 		songs = removeAlreadyLikedSongs;
@@ -55,7 +71,9 @@ const ListWithPicture = (props) => {
 								<h1 className='title'>{song.title}</h1>
 								<h2 className='artist'>{song.artistName}</h2>
 							</div>
-							<div className='like-btn-container' id='like-btn-container-margin-top'>
+							<div
+								className='like-btn-container'
+								id='like-btn-container-margin-top'>
 								{likedSongsIds.includes(song.id) ? (
 									<svg
 										role='img'
@@ -83,14 +101,15 @@ const ListWithPicture = (props) => {
 									</svg>
 								)}
 								{inPlaylist ? (
-									<div className='add-song'>
-										<h2 onClick={() => addSongToPlaylist(songId, playlistId)}>
+									<div className='add-song'
+									onClick={() => addSong(song.id)}>
+										<h2>
 											ADD
 										</h2>
 									</div>
 								) : (
 									<></>
-								)}{' '}
+								)}
 								{/* if on search page add three menu dots to add to playlist or add to queue or go to artist/album page */}
 							</div>
 						</li>

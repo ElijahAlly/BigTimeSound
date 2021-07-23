@@ -7,6 +7,7 @@ import HeaderModal from './header_modal';
 const Modal = ({ modal, closeModal, props }) => {
 	if (!modal) return null;
 
+	let classnamesToDarken = ['edit-playlist-modal'] // add classname to darken modal background
 	let component;
 	let classname;
 	switch (modal) {
@@ -24,7 +25,7 @@ const Modal = ({ modal, closeModal, props }) => {
 	}
 
 	return (
-		<div className='modal-background' onClick={() => closeModal()}>
+		<div className='modal-background' id={classnamesToDarken.includes(classname) ? 'darken-background' : ''} onClick={() => closeModal()}>
 			<div className={classname} onClick={(e) => e.stopPropagation()}>
 				{component}
 			</div>

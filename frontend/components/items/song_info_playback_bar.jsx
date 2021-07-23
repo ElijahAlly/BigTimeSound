@@ -12,20 +12,21 @@ class SongInfoPlaybackBar extends Component {
 	// }
 
 	render() {
+		let {album, isPlaying, albumIsCollapsed, song, artist, expandAlbumCover} = this.props;
         let albumCover = 'http://tny.im/no-cover-art';
-		if (this.props.album) albumCover = this.props.album.url;
+		if (album) albumCover = album.url;
 
 		let artistName = 'no artist name';
-		if (this.props.artist) artistName = this.props.artist.name;
+		if (artist) artistName = artist.name;
 
 		let songTitle = 'no song playing';
-		if (this.props.isPlaying || this.props.song)
-			songTitle = this.props.song.title;
+		if (isPlaying || song)
+			songTitle = song.title;
 		return (
 			<>
-				{this.props.albumIsCollapsed ? (
+				{albumIsCollapsed ? (
 					<>
-						<ArrowButton classname={'expand-album-cover'} action={this.props.expandAlbumCover}/>
+						<ArrowButton classname={'expand-album-cover'} action={expandAlbumCover}/>
 						<img id='playback-bar-album-cover' src={albumCover} />
 						</>
 						) : (
@@ -33,8 +34,8 @@ class SongInfoPlaybackBar extends Component {
 					</>
 				)}
                 <div>
-    				<h3 id='playback-bar-song-title'>{formatName(songTitle, 22)}</h3>
-	    			<h5 id='playback-bar-artist-name'>{formatName(artistName, 22)}</h5>
+    				<h3 id='playback-bar-song-title'>{albumIsCollapsed ? formatName(songTitle, 22) : formatName(songTitle, 28)}</h3>
+	    			<h5 id='playback-bar-artist-name'>{albumIsCollapsed ? formatName(artistName, 22) : formatName(artistName, 28)}</h5>
                 </div>
 			</>
 		);

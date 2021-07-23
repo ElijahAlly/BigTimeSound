@@ -5,7 +5,7 @@ import {
 	SEND_VOLUME,
 	SEND_CURRENT_PROGRESS,
 	SHUFFLE_ON,
-	SHUFFLE_OFF
+	SHUFFLE_OFF,
 } from '../actions/currently_playing';
 
 import {
@@ -25,7 +25,7 @@ const _InitialState = {
 	volume: 0.5,
 	duration: null,
 	currentProgress: 0,
-	shuffleIsOn: false
+	shuffleIsOn: false,
 };
 
 const currentlyPlayingReducer = (state = _InitialState, action) => {
@@ -44,7 +44,7 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 
 				const playbackBarDuration =
 					document.getElementsByClassName('progress-time')[1];
-					
+
 				newState.audio.addEventListener('loadeddata', (e) => {
 					const duration = formatTime(e.path[0].duration);
 					playbackBarDuration.innerHTML = duration;
@@ -61,8 +61,10 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 			newState.song = action.song;
 			newState.audio.volume = action.volume;
 			newState.volume = action.volume;
+
 			newState.duration = action.duration;
 			newState.playingFrom = action.playingFrom;
+			
 			newState.isPlaying = true;
 			newState.audio.play();
 			return newState;

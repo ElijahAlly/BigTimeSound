@@ -42,10 +42,10 @@ export const fetchAllPlaylistIds = (userId) => {
 	});
 };
 
-export const addSongToPlaylist = (songId, playlistId) => {
+export const addSongToPlaylist = (userId, songId, playlistId) => {
 	return $.ajax({
-		url: `/api/users/${userId}/playlists/${playlist.id}`,
-		method: 'PATCH',
-		data: { playlist },
+		url: `/api/users/${userId}/playlist_inclusions/`,
+		method: 'POST',
+		data: { songId, playlistId },
 	});
 };

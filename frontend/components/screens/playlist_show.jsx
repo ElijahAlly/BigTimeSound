@@ -4,7 +4,10 @@ import { handleMoreInfoToggle } from '../../util/handle_more_info_btn';
 import ListWithPicture from '../items/list_with_picture';
 import PlaylistSongsList from '../items/playlist_songs_list';
 import SearchBar from '../items/search_bar';
+import PlaylistPlayButton from '../items/playlist_play_button';
 import SongListHeader from '../items/song_list_header';
+import { shuffleArray } from '../../util/shuffle_array';
+import { formatName } from '../../util/format_name';
 
 class PlaylistShow extends Component {
 	constructor(props) {
@@ -18,10 +21,10 @@ class PlaylistShow extends Component {
 				playlist,
 			};
 
-			this.handleSubmit = this.handleSubmit.bind(this);
 		}
 
 		this.createNewPlaylist = this.createNewPlaylist.bind(this);
+		this.togglePlay = this.togglePlay.bind(this);
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
@@ -30,7 +33,8 @@ class PlaylistShow extends Component {
 			this.props.searchInput !== nextProps.searchInput ||
 			this.props.location !== nextProps.location ||
 			this.props.searchedSongs !== nextProps.searchedSongs
-		) return true;
+		)
+			return true;
 		return false;
 	}
 
@@ -49,6 +53,54 @@ class PlaylistShow extends Component {
 		handleColorShift('#833b3f');
 		const main = document.getElementById('main');
 		main.style.background = '#833b3f';
+	}
+
+	togglePlay() {
+		let {
+			playingFrom,
+			audio,
+			song,
+			isPlaying,
+			pauseSong,
+			currentTime,
+			playSong,
+			playlistSongs,
+			receiveSongQueue,
+			volume,
+			playlist,
+			shuffleIsOn
+		} = this.props;
+
+		if (isPlaying) {
+			pauseSong()
+
+			if (playingFrom === playlist.name) {
+				return;
+			}
+
+			if (!song) {
+				let songs = playlistSongs;
+				if (shuffleIsOn) songs = shuffleArray(songs);
+				song = songs.shift();
+				audio = new Audio(song.url);
+			}
+
+			playSong(song, audio, playingFrom, currentTime, volume, audio.duration);
+			return;
+		}
+
+		let songs = playlistSongs;
+		let playSongFirst = songs.shift();
+		let newAudio = new Audio(playSongFirst.url);
+		receiveSongQueue(songs);
+		playSong(
+			playSongFirst,
+			newAudio,
+			playlist.name,
+			currentTime,
+			volume,
+			newAudio.duration
+		);
 	}
 
 	createNewPlaylist() {
@@ -78,21 +130,6 @@ class PlaylistShow extends Component {
 		});
 	}
 
-	handleSubmit(e) {
-		e.preventDefault();
-
-		this.props
-			.updatePlaylist({
-				name: this.state.playlist.name,
-				user_id: this.state.playlist.user_id,
-			})
-			.then((playlist) => {
-				this.props.history.push(
-					`/users/${playlist.user_id}/playlist/${playlist.id}`
-				);
-			});
-	}
-
 	deletePlaylist() {
 		const homeButton = document.getElementsByClassName('home')[0];
 		homeButton.classList.add('checked');
@@ -111,6 +148,8 @@ class PlaylistShow extends Component {
 			addSongToPlaylist,
 			playlist,
 			location,
+			fetchAllPlaylistIds,
+			history,
 		} = this.props;
 
 		if (!parseInt(location)) return null;
@@ -138,36 +177,43 @@ class PlaylistShow extends Component {
 					</div>
 					<div className='title'>
 						<h3>PLAYLIST</h3>
-						<h1>{playlist.name}</h1>
+						<h1>{playlist ? formatName(playlist.name, 100) : ''}</h1>
 						<h3 className='users-name'>{currentUser.username}</h3>
 					</div>
 				</section>
 
-				<section className='more-info'>
-					<i className='fas fa-ellipsis-h' id='more-info-btn'></i>
-					<div className='more-info-popout'>
-						<button
-							id='edit-playlist-btn'
-							onClick={() =>
-								openModal('edit-playlist-modal', {
-									...this.props,
-									playlist,
-								})
-							}>
-							Edit Details
-						</button>
-						<button
-							id='delete-playlist-btn'
-							onClick={() => this.deletePlaylist()}>
-							Delete Playlist
-						</button>
-					</div>
+				<section className='play-more-info-container'>
+					<PlaylistPlayButton
+						togglePlay={this.togglePlay}
+						fromWhere={playlist ? playlist.name : ''}
+					/>
+					<section className='more-info'>
+						<i className='fas fa-ellipsis-h' id='more-info-btn'></i>
+						<div className='more-info-popout'>
+							<button
+								id='edit-playlist-btn'
+								onClick={() =>
+									openModal('edit-playlist-modal', {
+										...this.props,
+										playlist,
+									})
+								}>
+								Edit Details
+							</button>
+							<button
+								id='delete-playlist-btn'
+								onClick={() => this.deletePlaylist()}>
+								Delete Playlist
+							</button>
+						</div>
+					</section>
 				</section>
-
 				<SongListHeader />
+
 				<PlaylistSongsList
-					playlistName={playlist.name}
-					playlistId={playlist.id}
+					key={playlist ? playlist.id : null}
+					playlistName={playlist ? playlist.name : ''}
+					playlistId={playlist ? playlist.id : ''}
 				/>
 
 				<section className='search'>
@@ -178,12 +224,15 @@ class PlaylistShow extends Component {
 					{searchedSongs.length > 0 ? (
 						<section className='songs-container'>
 							<ListWithPicture
-								songs={searchedSongs}
-								shouldSlice={false}
-								likedSongs={likedSongs}
+								history={history}
 								inPlaylist={true}
-								playlistId={playlist.id}
+								shouldSlice={false}
+								songs={searchedSongs}
+								userId={currentUser.id}
+								likedSongs={likedSongs}
 								addSongToPlaylist={addSongToPlaylist}
+								fetchAllPlaylistIds={fetchAllPlaylistIds}
+								playlistId={playlist ? playlist.id : null}
 							/>
 						</section>
 					) : (

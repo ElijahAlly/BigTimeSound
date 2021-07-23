@@ -76,67 +76,208 @@
 
 	.edit-playlist-modal {
 		position: absolute;
-		width: 300px;
-		height: 200px;
+		width: 500px;
+		height: 350px;
 		border-radius: 5px;
 		background-color: $big-darkgray;
 		z-index: 5;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
 
 		.edit-playlist-modal-header {
+			font-weight: 500;
+			font-size: 23px;
+			height: 90px;
 			display: flex;
-			padding: 20px;
+			padding-top: 20px;
+			padding-left: 20px;
+			padding-right: 20px;
 			justify-content: space-between;
 			align-items: center;
 			color: whitesmoke;
+
 			svg {
 				border-radius: 50px;
-				padding: 5px;
+				padding: 8px;
 
 				&:hover {
-					background-color: gray;
+					background-color: $big-lightgray;
 				}
 			}
 		}
 
-		div {
-			height: 100%;
-			width: 100%;
-		}
-
-		form {
+		.playlist-modal-info-section {
+			padding-top: 10px;
 			display: flex;
-			flex-direction: column;
-			margin-bottom: 36px;
-			justify-content: space-between;
-			align-items: center;
-			height: 86px;
-			width: 100%;
+			padding-right: 15px;
+			padding-left: 15px;
+			height: 220px;
 
-			button {
-				align-self: center;
-				border-radius: 50px;
-				width: 72%;
-				background-color: $big-black;
+			.svg-pencil {
+				height: 159px;
+				width: 150px;
 				color: whitesmoke;
-				height: 30px;
-				font-size: large;
-
-				&:hover {
-					background-color: $big-blue;
-					color: $big-black;
-				}
+				background-color: $big-lightblack;
+				margin-right: 12px;
 			}
 
-			input {
-				width: 72%;
-				height: 21px;
+			div {
+				height: 100%;
+				width: 100%;
+			}
+
+			form {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				align-items: flex-end;
+				height: 100%;
+				width: 62%;
+
+				button {
+					border-radius: 50px;
+					width: 100px;
+					height: 33px;
+					color: $big-black;
+					background-color: whitesmoke;
+					font-size: 15px;
+					font-weight: 500;
+
+					&:hover {
+						width: 102px;
+						height: 35px;
+						margin: -1px;
+					}
+				}
+
+				#save-disabled-true {
+					background-color: $big-lightgray;
+
+					&:hover {
+						background-color: $big-lightgray;
+						color: whitesmoke;
+						cursor: default;
+					}
+				}
+
+				#large-emoji-container {
+					position: absolute;
+					top: 0%;
+					top: 0%;
+					left: 105%;
+					height: 500px;
+					width: 90%;
+					border-radius: 10px;
+					background-color: $big-lightgray;
+
+					li {
+						padding: 10px;
+						height: 60px;
+						width: 60px;
+						font-size: 30px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						border-radius: 3px;
+
+						&:active {
+							background-color: $blue-heart-solid;
+						}
+
+						&:hover {
+							background-color: $blue-heart-hover;
+							cursor: default;
+						}
+					}
+				}
+
+				.emoji-container {
+					height: 100px;
+					width: 100%;
+					border-radius: 5px;
+					background-color: $big-lightgray;
+
+					.emoji-list {
+						padding: 7px;
+						height: 100%;
+						width: 100%;
+						display: flex;
+						flex-wrap: wrap;
+						overflow-y: scroll;
+
+						&::-webkit-scrollbar {
+							width: 12px;
+						}
+
+						&::-webkit-scrollbar-thumb {
+							border-radius: 5px;
+							background-color: rgba(54, 54, 54, 0.8);
+						}
+
+						&::-webkit-scrollbar-track-piece {
+							background-color: $big-lightgray;
+							border-radius: 5px;
+						}
+
+						li {
+							padding: 10px;
+							height: 30px;
+							width: 30px;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							border-radius: 3px;
+
+							&:hover {
+								background-color: $big-transparent-gray;
+								cursor: default;
+							}
+						}
+					}
+				}
+
+				div {
+					background-color: $big-lightgray;
+					height: 40px;
+					width: 100%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					border-radius: 5px;
+
+					input {
+						background-color: transparent;
+						padding: 5px 5px 5px 10px;
+						width: 100%;
+						color: whitesmoke;
+						outline: none;
+						border: none;
+					}
+				}
+
+				#expand-emojis {
+					align-self: flex-start;
+					width: 80px;
+					height: 25px;
+					transition: 0.3s;
+					padding: 5px;
+					background-color: $big-lightgray;
+					font-weight: 500;
+					font-size: 15px;
+
+					&:hover {
+						cursor: pointer;
+						background-color: rgba(122, 122, 122, 0.541);
+					}
+				}
 			}
 		}
 	}
+}
+
+#darken-background {
+	background-color: rgba(0, 0, 0, 0.7);
 }

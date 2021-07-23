@@ -62,8 +62,16 @@
 		}
 	}
 
+	.play-more-info-container {
+		height: 80px;
+		display: flex;
+		align-items: center;
+		width: 340px;
+	}
+
 	.more-info {
 		display: flex;
+		align-items: center;
 		color: $big-lightgray;
 
 		svg {

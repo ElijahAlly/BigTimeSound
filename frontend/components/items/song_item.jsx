@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createElement } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { pauseSong, playSong } from '../../actions/currently_playing';
@@ -10,9 +10,12 @@ class SongItem extends Component {
 	constructor(props) {
 		super(props);
 		const song = this.props.song;
+		
 		const audio = new Audio(song.url);
 		audio.preload = 'metadata';
 		audio.controls = true;
+		console.log(song);
+		console.log(audio);
 		audio.currentTime = this.props.currentTime || 0;
 		this.state = {
 			song,
@@ -84,11 +87,25 @@ class SongItem extends Component {
 
 	render() {
 		let highlighted = '';
-		const { audio, song } = this.state;
-		let { currentlyPlayingSong, album, likedSongs, songList, shuffleIsOn } =
-			this.props;
+		const { song } = this.state;
+		let {
+			album,
+			number,
+			artist,
+			songList,
+			isPlaying,
+			fromWhere,
+			likedSongs,
+			shuffleIsOn,
+			playingFrom,
+			currentlyPlayingSong,
+		} = this.props;
 
-		if (currentlyPlayingSong && currentlyPlayingSong.id === song.id) {
+		if (
+			currentlyPlayingSong &&
+			currentlyPlayingSong.id === song.id &&
+			playingFrom === fromWhere
+		) {
 			highlighted = 'now-playing';
 		}
 
@@ -112,14 +129,15 @@ class SongItem extends Component {
 				onClick={() => this.togglePlay(songList)}
 				className={`${highlighted}`}>
 				<h4 className='song-number'>
-					{!this.props.isPlaying ||
-					this.props.currentlyPlayingSong.id !== song.id ? (
-						<div>{this.props.number}</div>
-					) : (
+					{isPlaying &&
+					currentlyPlayingSong.id === song.id &&
+					playingFrom === fromWhere ? (
 						<img
 							width='14px'
 							height='14px'
 							src='https://active-storage-big-time-sound-seeds.s3.amazonaws.com/ezgif.com-gif-maker+(2).gif'></img>
+					) : (
+						<div>{number}</div>
 					)}
 				</h4>
 				<h4>
@@ -127,9 +145,7 @@ class SongItem extends Component {
 				</h4>
 				<h4>
 					<div id='song-item-title'>{song.title}</div>
-					<div id='song-item-artist'>
-						{this.props.artist ? this.props.artist.name : ''}
-					</div>
+					<div id='song-item-artist'>{artist ? artist.name : ''}</div>
 				</h4>
 				<h4 className='album-name'>{albumName}</h4>
 				<div className='like-btn-container'>
@@ -170,18 +186,19 @@ class SongItem extends Component {
 
 const mSTP = ({ entities, ui, session }, ownProps) => {
 	return {
-		currentUser: entities.user[session.currentUser],
 		number: ownProps.number,
+		fromWhere: ownProps.fromWhere,
+		volume: ui.currentlyPlaying.volume,
 		isPlaying: ui.currentlyPlaying.isPlaying,
+		shuffleIsOn: ui.currentlyPlaying.shuffleIsOn,
+		playingFrom: ui.currentlyPlaying.playingFrom,
+		currentTime: ui.currentlyPlaying.currentTime,
 		currentlyPlayingSong: ui.currentlyPlaying.song,
-		currentlyPlayingAudio: ui.currentlyPlaying.audio,
 		album: entities.albums[ownProps.song.album_id],
 		likedSongs: Object.values(entities.likedSongs),
+		currentUser: entities.user[session.currentUser],
+		currentlyPlayingAudio: ui.currentlyPlaying.audio,
 		artist: entities.artists[ownProps.song.artist_id],
-		currentTime: ui.currentlyPlaying.currentTime,
-		volume: ui.currentlyPlaying.volume,
-		shuffleIsOn: ui.currentlyPlaying.shuffleIsOn,
-		fromWhere: ownProps.fromWhere,
 	};
 };
 

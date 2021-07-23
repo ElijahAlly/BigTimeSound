@@ -1,12 +1,12 @@
 import * as PlaylistApiUtil from '../util/playlist_api_util';
 
-export const RECEIVE_PLAYLIST = 'RECEIVE_PLAYLIST';
-export const RECEIVE_ALL_PLAYLIST = 'RECEIVE_ALL_PLAYLIST';
 export const DELETE_PLAYLIST = 'DELETE_PLAYLIST';
-export const LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER';
-export const RECEIVE_PLAYLIST_ERRORS = 'RECEIVE_PLAYLIST_ERRORS';
-export const CLEAR_PLAYLIST_ERRORS = 'CLEAR_PLAYLIST_ERRORS';
+export const RECEIVE_PLAYLIST = 'RECEIVE_PLAYLIST';
 export const PLAYLIST_SONG_IDS = 'PLAYLIST_SONG_IDS';
+export const LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER';
+export const RECEIVE_ALL_PLAYLIST = 'RECEIVE_ALL_PLAYLIST';
+export const CLEAR_PLAYLIST_ERRORS = 'CLEAR_PLAYLIST_ERRORS';
+export const RECEIVE_PLAYLIST_ERRORS = 'RECEIVE_PLAYLIST_ERRORS';
 
 const receivePlaylistErrors = (errors) => {
 	errors = errors || null;
@@ -74,7 +74,7 @@ export const fetchAllPlaylistIds = (userId) => (dispatch) =>
 		dispatch(receiveAllPlaylistsSongIds(playlistIds))
 	);
 
-export const addSongToPlaylist = (songId, playlistId) => (dispatch) =>
-	PlaylistApiUtil.addSongToPlaylist(songId, playlistId).then((playlists) =>
+export const addSongToPlaylist = (userId, songId, playlistId) => (dispatch) =>
+	PlaylistApiUtil.addSongToPlaylist(userId, songId, playlistId).then((playlists) =>
 		dispatch(receiveAllPlaylists(playlists))
 	);

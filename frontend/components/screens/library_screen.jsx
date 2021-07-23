@@ -7,9 +7,9 @@ import {handleColorShift} from '../../util/header_color_switch'
 class LibraryScreen extends Component {
 	componentDidMount() {
 		window.scrollTo(0, 0);
-		handleColorShift('#796f72')
+		handleColorShift('#4d4c4c')
 		const main = document.getElementById('main')
-		main.style.background = '#796f72';
+		main.style.background = '#4d4c4c';
 	}
 
 	render() {

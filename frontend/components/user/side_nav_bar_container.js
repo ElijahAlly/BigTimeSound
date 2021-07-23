@@ -17,6 +17,7 @@ const mSTP = ({session, ui, entities}, ownProps) => {
 		goBackCount: ui.path.goBackCount,
 		goForwardCount: ui.path.goForwardCount,
 		isPlaying: ui.currentlyPlaying.isPlaying,
+		playingFrom: ui.currentlyPlaying.playingFrom,
 		audio: ui.currentlyPlaying.audio,
 		path: ownProps.match.path
 	})
