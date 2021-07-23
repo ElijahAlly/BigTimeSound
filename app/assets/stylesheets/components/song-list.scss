@@ -96,6 +96,10 @@
 			color: whitesmoke;
 		}
 
+		.like-btn-container {
+			z-index: 1;
+		}
+
 		.like-song-btn {
 			font-size: 12px;
 			right: 170px;
@@ -103,10 +107,84 @@
 			fill: $blue-heart;
 		}
 
+		#not-liked {
+			fill: none;
+			stroke: whitesmoke;
+			display: none;
+		}
+
 		.duration {
 			color: whitesmoke;
 			position: absolute;
 			right: 100px;
 		}
+
+		.more-song-actions-container {
+			position: absolute;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 20px;
+			height: inherit;
+			right: 60px;
+
+			.more-song-actions-btn {
+				color: whitesmoke;
+				font-size: 20px;
+
+				&:hover {
+					color: $blue-heart;
+				}
+			}
+
+			.song-actions {
+				z-index: 2;
+				display: none;
+				flex-direction: column;
+				justify-content: space-between;
+				align-items: center;
+				position: fixed;
+				width: 200px;
+				height: fit-content;
+				background-color: rgb(70, 70, 70);
+				border-radius: 2px;
+
+				&:first-child {
+					border-top-left-radius: 2px;
+					border-top-right-radius: 2px;
+				}
+		
+				&:last-child {
+					border-bottom-left-radius: 2px;
+					border-bottom-right-radius: 2px;
+				}
+		
+				button {
+					width: 95%;
+					background-color: rgb(70, 70, 70);
+					color: whitesmoke;
+					padding: 7px;
+					height: 35px;
+					border-radius: 0;
+					margin-top: 2;
+					margin-bottom: 2;
+		
+					&:hover {
+						color: whitesmoke;
+						cursor: pointer;
+						background-color: rgba(43, 43, 43, 0.568);
+					}
+				}
+
+			}
+		}
+		
+		&:hover #not-liked {
+			display: block;
+		}
 	}
+}
+
+.song-actions:hover li {
+	background-color: transparent;
 }

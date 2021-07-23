@@ -63,6 +63,12 @@
 				font-size: 12px;
 				color: rgb(187, 183, 183);
 			}
+
+		}
+		
+		#toggle-album-popout-btn {
+			align-self: flex-end;
+			margin-left: -252px;
 		}
 
 		&:hover .expand-album-cover {
@@ -83,7 +89,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			width: 120px;
+			width: 140px;
 			height: 40px;
 			position: fixed;
 			bottom: 45px;
@@ -94,6 +100,11 @@
 				&:hover {
 					color: white;
 				}
+			}
+
+			.shuffle-container {
+				height: 16px;
+				width: 16px;
 			}
 
 			.shuffle-on {
@@ -132,6 +143,28 @@
 
 			.prev-track {
 				transform: rotate(180deg);
+			}
+
+			.repeat-container {
+				height: 16px;
+				width: 16px;
+			}
+
+			.repeat-song {
+				color: rgba(228, 228, 228, 0.822);
+				
+
+				&:hover {
+					color: white;
+				}
+			}
+
+			#repeat-song-on {
+				color: $blue-heart;
+
+				&:hover {
+					color: $blue-heart-hover;
+				}
 			}
 		}
 
@@ -200,13 +233,35 @@
 		}
 	}
 
+	.album-popout-container {
+		position: absolute;
+		z-index: 10;
+		height: 300px;
+		width: 300px;
+		transition: 0.1s;
+		border-radius: 0px;
+
+		#album-popout {
+			z-index: 10;
+			height: 100%;
+			width: 100%;
+			border-radius: inherit;
+		}
+
+		&:hover {
+			border-radius: 50px;
+			height: 280px;
+			width: 280px;
+		}
+	}
+
 	.volume-and-queue {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		background-color: $big-lightblack;
 		border-top: 0.5px solid gray;
-		z-index: 2;
+		z-index: 1;
 		padding-right: 40px;
 
 		#volume-icon {

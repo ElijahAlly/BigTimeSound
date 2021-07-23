@@ -12,9 +12,15 @@ import ListWithPicture from '../items/song_items/list_with_picture';
 import TopSearchResult from '../items/search_items/top_search_result';
 import { clearSearchResults } from '../../actions/search_actions';
 import { findBestMatch } from 'string-similarity';
-import { fetchLikedSongs } from '../../actions/song/song_actions';
+import { fetchLikedSongs, likeSong, unlikeSong } from '../../actions/song/song_actions';
 
 class SearchScreen extends Component {
+
+	constructor(props) {
+		super(props)
+		this.toggleLike = this.toggleLike.bind(this)
+	}
+
 	componentDidMount() {
 		this.props.clearSearchResults();
 		window.scrollTo(0, 0);
@@ -27,6 +33,7 @@ class SearchScreen extends Component {
 	shouldComponentUpdate(nextProps) {
 		if (
 			this.props.searchInput !== nextProps.searchInput ||
+			this.props.likes !== nextProps.likes ||
 			this.props.searchedAlbums !== nextProps.searchedAlbums ||
 			this.props.searchedArtists !== nextProps.searchedArtists ||
 			this.props.searchedPlaylists !== nextProps.searchedPlaylists ||
@@ -38,6 +45,18 @@ class SearchScreen extends Component {
 
 	componentWillUnmount() {
 		this.props.clearSearchResults();
+	}
+
+	toggleLike(song) {
+		const {likedSongsObj, userId, unlikeSong, likeSong, likes} = this.props;
+
+		if (likedSongsObj[song.id]) {
+			const likeId = likes[song.id].id
+			unlikeSong(userId, likeId);
+			return;
+		}
+
+		likeSong(userId, song.id)
 	}
 
 	getStringsFromObjects(arr) {
@@ -135,6 +154,7 @@ class SearchScreen extends Component {
 												songs={searchedSongs}
 												shouldSlice={false}
 												likedSongs={likedSongs}
+												toggleLike={this.toggleLike}
 											/>
 										</section>
 									) : (
@@ -184,12 +204,16 @@ const mSTP = ({ entities, ui, session }) => ({
 	searchedSongs: assignImagesToSongs(ui.search.results.songs, entities.albums),
 	searchedPlaylists: ui.search.results.playlists,
 	userId: session.currentUser,
-	likedSongs: Object.values(entities.likedSongs),
+	likedSongs: Object.values(entities.likedSongs.songs),
+	likedSongsObj: entities.likedSongs.songs,
+	likes: entities.likedSongs.likes,
 });
 
 const mDTP = (dispatch) => ({
 	clearSearchResults: () => dispatch(clearSearchResults()),
 	fetchLikedSongs: (userId) => dispatch(fetchLikedSongs(userId)),
+	likeSong: (userId, songId) => dispatch(likeSong(userId, songId)),
+	unlikeSong: (userId, likeId) => dispatch(unlikeSong(userId, likeId)),
 });
 
 export default withRouter(connect(mSTP, mDTP)(SearchScreen));

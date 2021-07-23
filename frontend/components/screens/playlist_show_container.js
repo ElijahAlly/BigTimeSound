@@ -16,6 +16,7 @@ import { assignImagesToSongs } from '../../util/general_functions/assign_functio
 import { pauseSong, playSong } from '../../actions/song/currently_playing';
 import { receiveSongQueue } from '../../actions/song/song_queue_actions';
 import { selectSongsForPlaylist } from '../../util/general_functions/select_songs_for_playlist';
+import { unlikeSong, likeSong } from '../../actions/song/song_actions';
 
 const mSTP = (
 	{
@@ -38,11 +39,19 @@ const mSTP = (
 		song: ui.currentlyPlaying.song,
 		searchInput: ui.search.input,
 		location: playlistId,
-		likedSongs: Object.values(likedSongs),
+		likedSongs: Object.values(likedSongs.songs),
+		likedSongsObj: likedSongs.songs,
+		likes: likedSongs.likes,
 		currentUser: user[session.currentUser],
 		playlist: playlists[playlistId],
 		searchedSongs: assignImagesToSongs(ui.search.results.songs, albums),
 		playlistSongs: selectSongsForPlaylist(
+			songs,
+			playlistIds,
+			playlistId
+		),
+		playlistIds,
+		songs: selectSongsForPlaylist(
 			songs,
 			playlistIds,
 			playlistId
@@ -63,6 +72,8 @@ const mDTP = (dispatch) => ({
 	clearSearchResults: () => dispatch(clearSearchResults()),
 	receiveSongQueue: (queue) => dispatch(receiveSongQueue(queue)),
 	pauseSong: () => dispatch(pauseSong()),
+	likeSong: (userId, songId) => dispatch(likeSong(userId, songId)),
+	unlikeSong: (userId, likeId) => dispatch(unlikeSong(userId, likeId)),
 	playSong: (song, audio, playingFrom, currentTime, volume, duration) => dispatch(playSong(song, audio, playingFrom, currentTime, volume, duration)),
 	fetchAllPlaylistIds: (userId) => dispatch(fetchAllPlaylistIds(userId)),
 	addSongToPlaylist: (userId, songId, playlistId) =>

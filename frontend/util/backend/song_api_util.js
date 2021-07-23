@@ -19,16 +19,17 @@ export const fetchLikedSongs = (userId) => {
 	});
 };
 
-export const likeSong = (userId, songId) => {
+export const likeSong = (user_id, song_id) => {
 	return $.ajax({
-		url: `/api/users/${userId}/likes/${songId}`,
+		url: `/api/users/${user_id}/likes`,
 		method: 'POST',
+		data: {song_id}
 	});
 };
 
-export const unlikeSong = (userId, songId) => {
+export const unlikeSong = (user_id, id) => {
 	return $.ajax({
-		url: `/api/users/${userId}/likes/${songId}`,
+		url: `/api/users/${user_id}/likes/${id}`,
 		method: 'DELETE',
 	});
 };

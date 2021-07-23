@@ -5,12 +5,14 @@ import { pauseSong, playSong } from '../../../actions/song/currently_playing';
 import { setDuration } from '../../../util/general_functions/format_time';
 import { receiveSongQueue } from '../../../actions/song/song_queue_actions';
 import { shuffleArray } from '../../../util/general_functions/shuffle_array';
+import { likeSong, unlikeSong } from '../../../actions/song/song_actions';
+import MoreSongActions from './more_song_actions';
 
 class SongItem extends Component {
 	constructor(props) {
 		super(props);
 		const song = this.props.song;
-		
+
 		const audio = new Audio(song.url);
 		audio.preload = 'metadata';
 		audio.controls = true;
@@ -21,6 +23,7 @@ class SongItem extends Component {
 		};
 
 		this.togglePlay = this.togglePlay.bind(this);
+		this.toggleLike = this.toggleLike.bind(this);
 	}
 
 	componentDidMount() {
@@ -30,6 +33,7 @@ class SongItem extends Component {
 	shouldComponentUpdate(nextProps, nextState) {
 		if (
 			this.props.isPlaying !== nextProps.isPlaying ||
+			this.props.likedSongs !== nextProps.likedSongs ||
 			this.state.song !== nextState.song ||
 			this.props.songList !== nextProps.songList ||
 			this.props.volume !== nextProps.volume ||
@@ -41,11 +45,35 @@ class SongItem extends Component {
 	}
 
 	toggleLike() {
-		this.togglePlay();
-		console.log('liked song');
+		const {likedSongsObj, currentUser, unlikeSong, likeSong, likes} = this.props;
+		const {song} = this.state;
+
+		if (likedSongsObj[song.id]) {
+			const likeId = likes[song.id].id
+			unlikeSong(currentUser.id, likeId);
+			return;
+		}
+
+		likeSong(currentUser.id, song.id)
 	}
 
-	togglePlay(songList) {
+	togglePlay(e, songList) {
+		const likeBtns = Array.from(document.getElementsByClassName('like-song-btn'));
+		let clickedLike = likeBtns.some((likeBtn) => {
+			return (e.nativeEvent.path[0] === likeBtn || e.nativeEvent.path[1] === likeBtn)
+		})
+		if (clickedLike) return;
+
+		const moreSongActions = Array.from(document.getElementsByClassName('more-song-actions-btn'));
+		const songActions = Array.from(document.getElementsByClassName('song-actions'));
+		let clickedSongActionBtn = moreSongActions.some((songAction) => {
+			return (e.nativeEvent.path[0] === songAction || e.nativeEvent.path[1] === songAction)
+		})
+		let clickSongAction = songActions.some((songAction) => {
+			return (e.nativeEvent.path[0] === songAction || e.nativeEvent.path[1] === songAction)
+		})
+		if (clickedSongActionBtn || clickSongAction) return;
+
 		const {
 			isPlaying,
 			pauseSong,
@@ -124,7 +152,7 @@ class SongItem extends Component {
 
 		return (
 			<li
-				onClick={() => this.togglePlay(songList)}
+				onClick={(e) => this.togglePlay(e, songList)}
 				className={`${highlighted}`}>
 				<h4 className='song-number'>
 					{isPlaying &&
@@ -155,7 +183,8 @@ class SongItem extends Component {
 							viewBox='0 0 16 16'
 							className='like-song-btn'
 							fill='currentColor'
-							id='liked'>
+							id='liked'
+							onClick={this.toggleLike}>
 							<path fill='none' d='M0 0h16v16H0z'></path>
 							<path d='M13.797 2.727a4.057 4.057 0 00-5.488-.253.558.558 0 01-.31.112.531.531 0 01-.311-.112 4.054 4.054 0 00-5.487.253c-.77.77-1.194 1.794-1.194 2.883s.424 2.113 1.168 2.855l4.462 5.223a1.791 1.791 0 002.726 0l4.435-5.195a4.052 4.052 0 001.195-2.883 4.057 4.057 0 00-1.196-2.883z'></path>
 						</svg>
@@ -166,7 +195,8 @@ class SongItem extends Component {
 							width='16'
 							viewBox='0 0 16 16'
 							className='like-song-btn'
-							fill='none'>
+							fill='none'
+							onClick={this.toggleLike}>
 							<path fill='none' d='M0 0h16v16H0z'></path>
 							<path
 								id='not-liked'
@@ -177,6 +207,7 @@ class SongItem extends Component {
 				<h4 className='duration' id={`${song.id}`}>
 					00:00
 				</h4>
+				<MoreSongActions key={Math.random()} songId={song.id} fromWhere={fromWhere}/>
 			</li>
 		);
 	}
@@ -186,6 +217,7 @@ const mSTP = ({ entities, ui, session }, ownProps) => {
 	return {
 		number: ownProps.number,
 		fromWhere: ownProps.fromWhere,
+		likes: entities.likedSongs.likes,
 		volume: ui.currentlyPlaying.volume,
 		isPlaying: ui.currentlyPlaying.isPlaying,
 		shuffleIsOn: ui.currentlyPlaying.shuffleIsOn,
@@ -193,7 +225,8 @@ const mSTP = ({ entities, ui, session }, ownProps) => {
 		currentTime: ui.currentlyPlaying.currentTime,
 		currentlyPlayingSong: ui.currentlyPlaying.song,
 		album: entities.albums[ownProps.song.album_id],
-		likedSongs: Object.values(entities.likedSongs),
+		likedSongs: Object.values(entities.likedSongs.songs),
+		likedSongsObj: entities.likedSongs.songs,
 		currentUser: entities.user[session.currentUser],
 		currentlyPlayingAudio: ui.currentlyPlaying.audio,
 		artist: entities.artists[ownProps.song.artist_id],
@@ -202,6 +235,8 @@ const mSTP = ({ entities, ui, session }, ownProps) => {
 
 const mDTP = (dispatch) => ({
 	receiveSongQueue: (queue) => dispatch(receiveSongQueue(queue)),
+	unlikeSong: (userId, Id) => dispatch(unlikeSong(userId, Id)),
+	likeSong: (userId, songId) => dispatch(likeSong(userId, songId)),
 	playSong: (song, audio, fromWhere, currentTime, volume, duration) =>
 		dispatch(playSong(song, audio, fromWhere, currentTime, volume, duration)),
 	pauseSong: () => dispatch(pauseSong()),

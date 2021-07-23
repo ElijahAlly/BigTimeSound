@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { formatName } from '../../../util/general_functions/format_name';
+import MoreSongActions from './more_song_actions';
 
 const ListWithPicture = (props) => {
 	let {
@@ -12,25 +13,22 @@ const ListWithPicture = (props) => {
 		inPlaylist,
 		playlistId,
 		addSongToPlaylist,
-		likeSong,
 		inLikedSongs,
 		fetchAllPlaylistIds,
 		userId,
 		history,
+		toggleLike,
+		songsInThisPlaylist,
 	} = props;
 
 	const addSong = (songId) => {
-		addSongToPlaylist(userId, songId, playlistId).then(
-			() => {
-				fetchAllPlaylistIds(userId).then(() => {
-					history.push(`/users/${userId}`);
-					history.push(
-						`/users/${userId}/playlist/${playlistId}`
-					);
-				});
-			}
-		)
-	}
+		addSongToPlaylist(userId, songId, playlistId).then(() => {
+			fetchAllPlaylistIds(userId).then(() => {
+				history.push(`/users/${userId}`);
+				history.push(`/users/${userId}/playlist/${playlistId}`);
+			});
+		});
+	};
 
 	if (!list) list = albums;
 	if (!list) list = artists;
@@ -38,7 +36,9 @@ const ListWithPicture = (props) => {
 	let likedSongsIds = [];
 	likedSongs ? likedSongs.map((song) => likedSongsIds.push(song.id)) : null;
 
+	// could shorten but would be more confusing
 	if (inLikedSongs) {
+		// if searching on liked songs page will remove songs already liked
 		let removeAlreadyLikedSongs = [];
 		for (let i = 0; i < songs.length; i++) {
 			let songInLiked = false;
@@ -53,6 +53,23 @@ const ListWithPicture = (props) => {
 		}
 
 		songs = removeAlreadyLikedSongs;
+	} else if (inPlaylist) {
+		// if searching on a playlist page, will remove songs already added to playlist
+		let removedAlreadyAddedSongs = [];
+
+		for (let i = 0; i < songs.length; i++) {
+			let songInPlaylist = false;
+
+			for (let j = 0; j < songsInThisPlaylist.length; j++) {
+				if (songsInThisPlaylist[j].id === songs[i].id) {
+					songInPlaylist = true;
+				}
+			}
+
+			if (!songInPlaylist) removedAlreadyAddedSongs.push(songs[i]);
+		}
+
+		songs = removedAlreadyAddedSongs;
 	}
 
 	return (
@@ -82,7 +99,8 @@ const ListWithPicture = (props) => {
 										viewBox='0 0 16 16'
 										className='like-song-btn'
 										fill='currentColor'
-										id='liked'>
+										id='liked'
+										onClick={() => toggleLike(song)}>
 										<path fill='none' d='M0 0h16v16H0z'></path>
 										<path d='M13.797 2.727a4.057 4.057 0 00-5.488-.253.558.558 0 01-.31.112.531.531 0 01-.311-.112 4.054 4.054 0 00-5.487.253c-.77.77-1.194 1.794-1.194 2.883s.424 2.113 1.168 2.855l4.462 5.223a1.791 1.791 0 002.726 0l4.435-5.195a4.052 4.052 0 001.195-2.883 4.057 4.057 0 00-1.196-2.883z'></path>
 									</svg>
@@ -93,7 +111,8 @@ const ListWithPicture = (props) => {
 										width='16'
 										viewBox='0 0 16 16'
 										className='like-song-btn'
-										fill='none'>
+										fill='none'
+										onClick={() => toggleLike(song)}>
 										<path fill='none' d='M0 0h16v16H0z'></path>
 										<path
 											id='not-liked'
@@ -101,15 +120,13 @@ const ListWithPicture = (props) => {
 									</svg>
 								)}
 								{inPlaylist ? (
-									<div className='add-song'
-									onClick={() => addSong(song.id)}>
-										<h2>
-											ADD
-										</h2>
+									<div className='add-song' onClick={() => addSong(song.id)}>
+										<h2>ADD</h2>
 									</div>
 								) : (
 									<></>
 								)}
+								{!inPlaylist && !inLikedSongs ? <MoreSongActions key={Math.random()} songId={song.id} fromWhere={'search'}/> : <></>}
 								{/* if on search page add three menu dots to add to playlist or add to queue or go to artist/album page */}
 							</div>
 						</li>

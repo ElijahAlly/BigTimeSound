@@ -18,27 +18,26 @@ export const clearSongErrors = () => ({
 	type: CLEAR_SONG_ERRORS,
 });
 
-const recieveLikedSongs = (songs) => ({
+const recieveLikedSongs = ({ data }) => ({
 	type: RECEIVE_LIKED_SONGS,
-	songs
+	likes: data.likes,
+	songs: data.songs,
 });
 
 export const fetchAllSongs = () => (dispatch) =>
-	SongApiUtil.fetchAllSongs().then(
-		(songs) => dispatch(receiveAllSongs(songs)),
-	);
+	SongApiUtil.fetchAllSongs().then((songs) => dispatch(receiveAllSongs(songs)));
 
 export const fetchLikedSongs = (userId) => (dispatch) =>
-	SongApiUtil.fetchLikedSongs(userId).then(
-		(songs) => dispatch(recieveLikedSongs(songs)),
+	SongApiUtil.fetchLikedSongs(userId).then((data) =>
+		dispatch(recieveLikedSongs(data))
 	);
 
 export const likeSong = (userId, songId) => (dispatch) =>
-	SongApiUtil.likeSong(userId, songId).then(
-		(songs) => dispatch(recieveLikedSongs(songs)),
+	SongApiUtil.likeSong(userId, songId).then((data) =>
+		dispatch(recieveLikedSongs(data))
 	);
 
-export const unlikeSong = (userId, songId) => (dispatch) =>
-	SongApiUtil.unlikeSong(userId, songId).then(
-		(songs) => dispatch(recieveLikedSongs(songs)),
+export const unlikeSong = (userId, Id) => (dispatch) =>
+	SongApiUtil.unlikeSong(userId, Id).then((data) =>
+		dispatch(recieveLikedSongs(data))
 	);

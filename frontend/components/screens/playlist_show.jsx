@@ -25,12 +25,15 @@ class PlaylistShow extends Component {
 
 		this.createNewPlaylist = this.createNewPlaylist.bind(this);
 		this.togglePlay = this.togglePlay.bind(this);
+		this.toggleLike = this.toggleLike.bind(this);
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
 		if (
 			this.state !== nextState ||
 			this.props.searchInput !== nextProps.searchInput ||
+			this.props.playlistIds !== nextProps.playlistIds ||
+			this.props.likes !== nextProps.likes ||
 			this.props.location !== nextProps.location ||
 			this.props.searchedSongs !== nextProps.searchedSongs
 		)
@@ -53,6 +56,18 @@ class PlaylistShow extends Component {
 		handleColorShift('#833b3f');
 		const main = document.getElementById('main');
 		main.style.background = '#833b3f';
+	}
+
+	toggleLike(song) {
+		const {likedSongsObj, currentUser, unlikeSong, likeSong, likes} = this.props;
+
+		if (likedSongsObj[song.id]) {
+			const likeId = likes[song.id].id
+			unlikeSong(currentUser.id, likeId);
+			return;
+		}
+
+		likeSong(currentUser.id, song.id)
 	}
 
 	togglePlay() {
@@ -150,6 +165,7 @@ class PlaylistShow extends Component {
 			location,
 			fetchAllPlaylistIds,
 			history,
+			songs
 		} = this.props;
 
 		if (!parseInt(location)) return null;
@@ -224,6 +240,7 @@ class PlaylistShow extends Component {
 					{searchedSongs.length > 0 ? (
 						<section className='songs-container'>
 							<ListWithPicture
+								toggleLike={this.toggleLike}
 								history={history}
 								inPlaylist={true}
 								shouldSlice={false}
@@ -233,6 +250,7 @@ class PlaylistShow extends Component {
 								addSongToPlaylist={addSongToPlaylist}
 								fetchAllPlaylistIds={fetchAllPlaylistIds}
 								playlistId={playlist ? playlist.id : null}
+								songsInThisPlaylist={songs}
 							/>
 						</section>
 					) : (

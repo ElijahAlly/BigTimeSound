@@ -8,17 +8,18 @@ import { assignImagesToSongs } from '../../util/general_functions/assign_functio
 import { receiveSongQueue } from '../../actions/song/song_queue_actions';
 import { clearSearchResults } from '../../actions/search_actions';
 import { pauseSong, playSong } from '../../actions/song/currently_playing';
-import { fetchLikedSongs } from '../../actions/song/song_actions';
+import { fetchLikedSongs, unlikeSong, likeSong } from '../../actions/song/song_actions';
 import SearchBar from '../items/search_items/search_bar';
 import ListWithPicture from '../items/song_items/list_with_picture';
 import PlaylistPlayButton from '../items/playlist_play_button';
 
 class LikedSongsScreen extends Component {
 	constructor(props) {
-		super(props)
-		this.togglePlay = this.togglePlay.bind(this)
+		super(props);
+		this.togglePlay = this.togglePlay.bind(this);
+		this.toggleLike = this.toggleLike.bind(this);
 	}
-	
+
 	componentDidMount() {
 		this.props.fetchLikedSongs(this.props.currentUser.id);
 		window.scrollTo(0, 0);
@@ -41,6 +42,18 @@ class LikedSongsScreen extends Component {
 
 	componentWillUnmount() {
 		this.props.clearSearchResults(); // clear from playlist show and liked songs **not search screen
+	}
+
+	toggleLike(song) {
+		const {likedSongsObj, currentUser, unlikeSong, likeSong, likes} = this.props;
+
+		if (likedSongsObj[song.id]) {
+			const likeId = likes[song.id].id
+			unlikeSong(currentUser.id, likeId);
+			return;
+		}
+
+		likeSong(currentUser.id, song.id)
 	}
 
 	togglePlay() {
@@ -88,8 +101,7 @@ class LikedSongsScreen extends Component {
 	}
 
 	render() {
-		const { isPlaying, currentUser, likedSongs, searchedSongs, likeSong } =
-			this.props;
+		const { currentUser, likedSongs, searchedSongs } = this.props;
 
 		return (
 			<div className='screen liked-songs-screen'>
@@ -105,8 +117,11 @@ class LikedSongsScreen extends Component {
 						<h3 className='liked-songs-users-name'>{currentUser.username}</h3>
 					</div>
 				</section>
-				
-				<PlaylistPlayButton togglePlay={this.togglePlay} fromWhere={'liked-songs'}/>
+
+				<PlaylistPlayButton
+					togglePlay={this.togglePlay}
+					fromWhere={'liked-songs'}
+				/>
 				<SongListHeader />
 				<section>
 					<ul className='song-list'>
@@ -114,7 +129,7 @@ class LikedSongsScreen extends Component {
 							likedSongs.map((song, i) => (
 								<SongItem
 									number={i + 1}
-									key={i}
+									key={Math.random()}
 									song={song}
 									songList={likedSongs}
 									fromWhere='liked-songs'
@@ -137,8 +152,8 @@ class LikedSongsScreen extends Component {
 								songs={searchedSongs}
 								shouldSlice={false}
 								likedSongs={likedSongs}
-								likeSong={likeSong}
 								inLikedSongs={true}
+								toggleLike={this.toggleLike}
 							/>
 						</section>
 					) : (
@@ -154,7 +169,9 @@ const mSTP = ({ entities, session, ui }, ownProps) => {
 	return {
 		currentUser: entities.user[session.currentUser],
 		playlists: entities.playlists,
-		likedSongs: Object.values(entities.likedSongs),
+		likedSongs: Object.values(entities.likedSongs.songs),
+		likedSongsObj: entities.likedSongs.songs,
+		likes: entities.likedSongs.likes,
 		playingFrom: ui.currentlyPlaying.playingFrom,
 		song: ui.currentlyPlaying.song,
 		isPlaying: ui.currentlyPlaying.isPlaying,
@@ -171,8 +188,9 @@ const mSTP = ({ entities, session, ui }, ownProps) => {
 const mDTP = (dispatch) => ({
 	fetchLikedSongs: (userId) => dispatch(fetchLikedSongs(userId)),
 	receiveSongQueue: (songs) => dispatch(receiveSongQueue(songs)),
-	likeSong: (userId, songId) => dispatch(likeSong(userId, songId)),
 	pauseSong: () => dispatch(pauseSong()),
+	unlikeSong: (userId, likeId) => dispatch(unlikeSong(userId, likeId)),
+	likeSong: (userId, songId) => dispatch(likeSong(userId, songId)),
 	clearSearchResults: () => dispatch(clearSearchResults()),
 	playSong: (song, audio, playingFrom, currentTime, volume, duration) =>
 		dispatch(playSong(song, audio, playingFrom, currentTime, volume, duration)),
