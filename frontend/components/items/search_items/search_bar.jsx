@@ -15,6 +15,11 @@ class SearchBar extends Component {
 		this.handleInput = this.handleInput.bind(this);
 	}
 
+	componentDidMount() {
+		const input = document.getElementsByClassName('search-input')[0];
+		input.focus();
+	}
+
 	handleInput(e) {
 		let value = e.currentTarget.value;
 		this.props

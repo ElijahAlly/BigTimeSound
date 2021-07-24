@@ -2375,6 +2375,12 @@ var SearchBar = /*#__PURE__*/function (_Component) {
   }
 
   _createClass(SearchBar, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var input = document.getElementsByClassName('search-input')[0];
+      input.focus();
+    }
+  }, {
     key: "handleInput",
     value: function handleInput(e) {
       var _this2 = this;
@@ -3627,6 +3633,12 @@ var PlaylistModal = /*#__PURE__*/function (_Component) {
   }
 
   _createClass(PlaylistModal, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var input = document.getElementById('playlist-modal-input');
+      input.focus();
+    }
+  }, {
     key: "toggleEmoji",
     value: function toggleEmoji() {
       var emojiExpanded = !this.state.emojiExpanded;
@@ -3705,6 +3717,7 @@ var PlaylistModal = /*#__PURE__*/function (_Component) {
         onSubmit: this.handleSubmit,
         className: "edit-playlist-modal-input"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        id: "playlist-modal-input",
         type: "text",
         value: this.state.name,
         onChange: this.handleInput

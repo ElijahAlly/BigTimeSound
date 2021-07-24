@@ -22,6 +22,11 @@ class PlaylistModal extends Component {
 		this.toggleEmoji = this.toggleEmoji.bind(this);
 	}
 
+	componentDidMount() {
+		const input = document.getElementById('playlist-modal-input');
+		input.focus();
+	}
+
 	toggleEmoji() {
 		const emojiExpanded = !this.state.emojiExpanded;
 		this.setState({emojiExpanded})
@@ -83,6 +88,7 @@ class PlaylistModal extends Component {
 						className='edit-playlist-modal-input'>
 						<div>
 							<input
+								id='playlist-modal-input'
 								type='text'
 								value={this.state.name}
 								onChange={this.handleInput}
