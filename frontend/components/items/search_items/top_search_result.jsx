@@ -8,7 +8,7 @@ const TopSearchResult = ({ item }) => {
     if (artist) type = 'ALBUM';
     if (user_id) type = 'PLAYLIST';
 
-    if (!imgUrl && !url) imgUrl = 'http://tny.im/no-cover-art'
+    if (!imgUrl && !url) imgUrl = 'https://active-storage-big-time-sound-seeds.s3.amazonaws.com/d3kxnbe-f16dabfb-0cf1-436c-9315-915fbe462f23.png'
 	return (
 		<section className='top-result-background'>
 			<img

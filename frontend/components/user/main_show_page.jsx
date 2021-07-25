@@ -5,6 +5,8 @@ import SideNavBarContainer from './side_nav_bar_container'
 import SongPlaybackBar from './song_playback_bar'
 
 import HomeScreen from '../screens/home_screen';
+import AlbumScreen from '../screens/album_screen';
+import ArtistScreen from '../screens/artist_screen';
 import SearchScreen from '../screens/search_screen';
 import LibraryScreen from '../screens/library_screen';
 import LikedSongsScreen from '../screens/liked_songs_screen';
@@ -42,6 +44,14 @@ const MainShowPage = (props) => {
 
 	} else if (props.path === '/users/:id/queue') {
 		component = <QueueScreen props={props} />
+		selected = 'none'
+
+	} else if (props.path === '/users/:id/album/:id') {
+		component = <AlbumScreen props={props} />
+		selected = 'none'
+
+	} else if (props.path === '/users/:id/artist/:id') {
+		component = <ArtistScreen props={props} />
 		selected = 'none'
 
 	} else {

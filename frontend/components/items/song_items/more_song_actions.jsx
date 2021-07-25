@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { addSongToPlaylist } from '../../../actions/playlist_actions';
 import { formatName } from '../../../util/general_functions/format_name';
 
@@ -145,14 +146,14 @@ class MoreSongActions extends Component {
 					<button
 						className='artist-btn'
 						onClick={() =>
-							history.push(`/users/${userId}/artist${song.artist_id}`)
+							history.push(`/users/${userId}/artist/${song.artist_id}`)
 						}>
 						Go to artist
 					</button>
 					<button
 						className='album-btn'
 						onClick={() =>
-							history.push(`/users/${userId}/album${song.album_id}`)
+							history.push(`/users/${userId}/album/${song.album_id}`)
 						}>
 						Go to album
 					</button>
@@ -179,12 +180,13 @@ class MoreSongActions extends Component {
 	}
 }
 
-const mSTP = ({entities}) => ({
+const mSTP = ({entities, session}) => ({
 	playlists: Object.values(entities.playlists),
+	userId: session.currentUser
 })
 
 const mDTP = (dispatch) => ({
 	addSongToPlaylist: (userId, songId, playlistId) => dispatch(addSongToPlaylist(userId, songId, playlistId))
 })
 
-export default connect(mSTP, mDTP)(MoreSongActions);
+export default withRouter(connect(mSTP, mDTP)(MoreSongActions));

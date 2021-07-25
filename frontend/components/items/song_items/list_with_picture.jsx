@@ -29,9 +29,18 @@ const ListWithPicture = (props) => {
 			});
 		});
 	};
+	
+	let goToPage = () => null;
+	if (!list) {
+		goToPage = (id) => history.push(`/users/${userId}/album/${id}`);
+		list = albums;
+	}
 
-	if (!list) list = albums;
-	if (!list) list = artists;
+	if (!list) {
+		list = artists;
+		goToPage = (id) => history.push(`/users/${userId}/artist/${id}`);
+	}
+
 	if (shouldSlice && list.length > 5) list = list.slice(0, 5);
 	let likedSongsIds = [];
 	likedSongs ? likedSongs.map((song) => likedSongsIds.push(song.id)) : null;
@@ -135,7 +144,7 @@ const ListWithPicture = (props) => {
 			) : (
 				<ul className='list-ul'>
 					{list.map((el, i) => (
-						<li key={i} className='li-background'>
+						<li key={i} className='li-background' onClick={() => goToPage(el.id)}>
 							<img
 								src={el.url}
 								className={`list-img ${!el.artist_id ? 'artist-img' : ''}`}
@@ -157,3 +166,4 @@ const ListWithPicture = (props) => {
 };
 
 export default ListWithPicture;
+ 

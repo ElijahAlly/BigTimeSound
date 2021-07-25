@@ -11,6 +11,8 @@ const App = () => (
 	<>
 		<Modal />
 		<Switch>
+			<ProtectedRoute path='/users/:id/artist/:id' component={SwitchScreen} />
+			<ProtectedRoute path='/users/:id/album/:id' component={SwitchScreen} />
 			<ProtectedRoute path='/users/:id/playlist/:id' component={SwitchScreen} />
 			<ProtectedRoute path='/users/:id/profile' component={SwitchScreen} />
 			<ProtectedRoute path='/users/:id/liked-songs' component={SwitchScreen} />

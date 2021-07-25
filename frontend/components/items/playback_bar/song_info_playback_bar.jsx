@@ -21,7 +21,7 @@ class SongInfoPlaybackBar extends Component {
 	render() {
 		let { album, isPlaying, albumIsCollapsed, song, artist, expandAlbumCover } =
 			this.props;
-		let albumCover = 'http://tny.im/no-cover-art';
+		let albumCover = 'https://active-storage-big-time-sound-seeds.s3.amazonaws.com/d3kxnbe-f16dabfb-0cf1-436c-9315-915fbe462f23.png';
 		if (album) albumCover = album.url;
 
 		let artistName = 'no artist name';

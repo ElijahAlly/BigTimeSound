@@ -23,7 +23,7 @@ class LikedSongsScreen extends Component {
 	componentDidMount() {
 		this.props.fetchLikedSongs(this.props.currentUser.id);
 		window.scrollTo(0, 0);
-		handleColorShift('#5038a0');
+		handleColorShift('#533ca1');
 		const main = document.getElementById('main');
 		main.style.background =
 			'linear-gradient(360deg, #121213 65%, rgb(80, 56, 160) 77%)';

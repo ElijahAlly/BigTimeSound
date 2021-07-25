@@ -93,11 +93,12 @@ class SongItem extends Component {
 		});
 		if (clickedSongActionBtn || clickSongAction) return;
 
-
-		const playlistNames = Array.from(document.getElementsByClassName('playlist-name'));
-		let clickedPlaylistName = playlistNames.some(name => {
-			return e.nativeEvent.path[0] === name
-		})
+		const playlistNames = Array.from(
+			document.getElementsByClassName('playlist-name')
+		);
+		let clickedPlaylistName = playlistNames.some((name) => {
+			return e.nativeEvent.path[0] === name;
+		});
 
 		if (clickedPlaylistName) return;
 
@@ -153,6 +154,7 @@ class SongItem extends Component {
 			fromWhere,
 			likedSongs,
 			playlistId,
+			onAlbumPage,
 			shuffleIsOn,
 			playingFrom,
 			playlistInclusions,
@@ -204,13 +206,21 @@ class SongItem extends Component {
 					)}
 				</h4>
 				<h4>
-					<img className='album-cover' src={albumCover} alt='album' />
+					{onAlbumPage ? (
+						<></>
+					) : (
+						<img className='album-cover' src={albumCover} alt='album' />
+					)}
 				</h4>
 				<h4>
 					<div id='song-item-title'>{song.title}</div>
 					<div id='song-item-artist'>{artist ? artist.name : ''}</div>
 				</h4>
-				<h4 className='album-name'>{albumName}</h4>
+				{onAlbumPage ? (
+					<></>
+				) : (
+					<h4 className='album-name'>{albumName}</h4>
+				)}
 				<div className='like-btn-container'>
 					{isLikedSong ? (
 						<svg
@@ -253,7 +263,12 @@ class SongItem extends Component {
 					fromWhere={fromWhere}
 					userId={userId}
 					isLikedSong={isLikedSong}
-					removeFromPlaylist={() => removeFromPlaylist(userId, playlistInclusions[playlistId][song.id].id)}
+					removeFromPlaylist={() =>
+						removeFromPlaylist(
+							userId,
+							playlistInclusions[playlistId][song.id].id
+						)
+					}
 					queueScreen={queueScreen}
 				/>
 			</li>
@@ -276,10 +291,10 @@ const mSTP = ({ entities, ui, session }, ownProps) => {
 		likedSongs: Object.values(entities.likedSongs.songs),
 		likedSongsObj: entities.likedSongs.songs,
 		currentUser: entities.user[session.currentUser],
-		userId:session.currentUser,
+		userId: session.currentUser,
 		currentlyPlayingAudio: ui.currentlyPlaying.audio,
 		artist: entities.artists[ownProps.song.artist_id],
-		playlistInclusions: entities.playlistIds.playlist_inclusions
+		playlistInclusions: entities.playlistIds.playlist_inclusions,
 	};
 };
 

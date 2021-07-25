@@ -12,13 +12,16 @@ import ListWithPicture from '../items/song_items/list_with_picture';
 import TopSearchResult from '../items/search_items/top_search_result';
 import { clearSearchResults } from '../../actions/search_actions';
 import { findBestMatch } from 'string-similarity';
-import { fetchLikedSongs, likeSong, unlikeSong } from '../../actions/song/song_actions';
+import {
+	fetchLikedSongs,
+	likeSong,
+	unlikeSong,
+} from '../../actions/song/song_actions';
 
 class SearchScreen extends Component {
-
 	constructor(props) {
-		super(props)
-		this.toggleLike = this.toggleLike.bind(this)
+		super(props);
+		this.toggleLike = this.toggleLike.bind(this);
 	}
 
 	componentDidMount() {
@@ -48,15 +51,15 @@ class SearchScreen extends Component {
 	}
 
 	toggleLike(song) {
-		const {likedSongsObj, userId, unlikeSong, likeSong, likes} = this.props;
+		const { likedSongsObj, userId, unlikeSong, likeSong, likes } = this.props;
 
 		if (likedSongsObj[song.id]) {
-			const likeId = likes[song.id].id
+			const likeId = likes[song.id].id;
 			unlikeSong(userId, likeId);
 			return;
 		}
 
-		likeSong(userId, song.id)
+		likeSong(userId, song.id);
 	}
 
 	getStringsFromObjects(arr) {
@@ -91,7 +94,9 @@ class SearchScreen extends Component {
 	render() {
 		let {
 			albums,
+			userId,
 			artists,
+			history,
 			likedSongs,
 			searchInput,
 			searchedSongs,
@@ -123,9 +128,19 @@ class SearchScreen extends Component {
 				{searchInput === '' ? (
 					<>
 						<h1 className='suggested-header'>Suggested Artists</h1>
-						<ListWithPicture list={artists} shouldSlice={false} />
+						<ListWithPicture
+							userId={userId}
+							history={history}
+							artists={artists}
+							shouldSlice={false}
+						/>
 						<h1 className='suggested-header'>Suggested Albums</h1>
-						<ListWithPicture list={albums} shouldSlice={false} />
+						<ListWithPicture
+							userId={userId}
+							history={history}
+							albums={albums}
+							shouldSlice={false}
+						/>
 					</>
 				) : (
 					<>
@@ -155,6 +170,7 @@ class SearchScreen extends Component {
 												shouldSlice={false}
 												likedSongs={likedSongs}
 												toggleLike={this.toggleLike}
+												history={history}
 											/>
 										</section>
 									) : (
@@ -167,6 +183,8 @@ class SearchScreen extends Component {
 										<ListWithPicture
 											artists={searchedArtists}
 											shouldSlice={false}
+											history={history}
+											userId={userId}
 										/>
 									</>
 								) : (
@@ -178,6 +196,8 @@ class SearchScreen extends Component {
 										<ListWithPicture
 											albums={searchedAlbums}
 											shouldSlice={false}
+											history={history}
+											userId={userId}
 										/>
 									</>
 								) : (

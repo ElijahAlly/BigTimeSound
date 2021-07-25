@@ -12,7 +12,7 @@ class CurrentlyPlayingAlbum extends Component {
  
 	render() {
 		const { album, albumIsCollapsed, collapseAlbumCover } = this.props;
-		let albumCover = 'http://tny.im/no-cover-art';
+		let albumCover = 'https://active-storage-big-time-sound-seeds.s3.amazonaws.com/d3kxnbe-f16dabfb-0cf1-436c-9315-915fbe462f23.png';
 		if (album) albumCover = album.url;
 
 		return (

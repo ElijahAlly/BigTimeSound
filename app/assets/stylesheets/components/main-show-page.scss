@@ -221,7 +221,7 @@
 	// liked-songs screen
 	.liked-songs-screen {
 		--background-noise: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=);
-		background: linear-gradient(transparent 0, rgba(0, 0, 0, 0.5) 63%),
+		background: linear-gradient(transparent 350px, rgba(0, 0, 0, 0.5) 3%),
 			var(--background-noise);
 		padding: 150px 40px 400px 40px;
 		height: fit-content;
@@ -347,6 +347,7 @@
 				}
 
 				.like-song-btn {
+					margin-right: 0px;
 					font-size: 12px;
 					right: 270px;
 					position: absolute;
@@ -369,6 +370,119 @@
 					cursor: default;
 				}
 			}
+		}
+	}
+
+	.album-screen {
+		--background-noise: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=);
+		background: linear-gradient(transparent 350px, rgba(0, 0, 0, 0.5) 33%),
+			var(--background-noise);
+		padding: 150px 40px 400px 40px;
+		height: fit-content;
+
+		.header {
+			display: flex;
+			padding-bottom: 30px;
+			justify-content: start;
+			align-items: flex-end;
+
+			.title {
+				display: flex;
+				flex-direction: column;
+				height: fit-content;
+				margin-left: 40px;
+
+				h3 {
+					font-size: 12px;
+					font-weight: bold;
+				}
+
+				h1 {
+					margin-top: 10px;
+					margin-bottom: 10px;
+					font-size: 70px;
+					font-weight: bold;
+				}
+
+				.artist-name {
+					margin-bottom: 5px;
+				}
+			}
+
+			img {
+				height: 180px;
+				box-shadow: 2px 2px 20px 2px $big-darkgray;
+			}
+		}
+	}
+
+	.artist-screen {
+		--background-noise: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=);
+		background: linear-gradient(transparent 275px, rgb(28, 28, 28) 13%),
+			var(--background-noise);
+		padding: 150px 40px 400px 40px;
+		height: fit-content;
+
+		.header {
+			display: flex;
+			padding-bottom: 30px;
+			justify-content: start;
+			align-items: flex-end;
+
+			.title {
+				display: flex;
+				flex-direction: column;
+				height: fit-content;
+				margin-left: 40px;
+
+				h3 {
+					display: flex;
+					align-items: center;
+					font-size: 12px;
+					font-weight: bold;
+
+					.verified {
+						margin-right: 10px;
+					}
+				}
+				
+
+				h1 {
+					margin-top: 10px;
+					margin-bottom: 10px;
+					font-size: 70px;
+					font-weight: bold;
+				}
+
+				.artist-name {
+					margin-bottom: 5px;
+				}
+			}
+
+			.img-container {
+				display: flex;
+				z-index: -1;
+				position: absolute;
+				flex-wrap: wrap;
+				top: 0px;
+				left: 195px;
+				height: 200px;
+				width: 88%;
+
+				img {
+					height: 100%;
+					width: 20%;
+					box-shadow: 4px -3px 16px 14px #0000004d;
+
+				}
+			}
+		}
+
+		.section-header, .popular-songs  {
+			margin-top: 40px;
+			padding-bottom: 25px;
+			font-weight: 600;
+			font-size: 25px;
 		}
 	}
 }
