@@ -123,10 +123,12 @@
 		height: 195px;
 		width: 195px;
 		animation: slideUp .4s;
+		border-radius: 0px;
 
 		img {
 			height: inherit;
 			width: inherit;
+			border-radius: inherit;
 		}
 
 		&:hover .collapse-album-cover {
@@ -137,14 +139,14 @@
 	@keyframes slideUp {
 		from {
 			position: fixed;
-			opacity: 0;
 			bottom: -100px;
+			border-radius: 300px;
 		}
 
 		to {
 			position: fixed;
-			opacity: 1;
 			bottom: 100px;
+			border-radius: 0px;
 		}
 	}
 

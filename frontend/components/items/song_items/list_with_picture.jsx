@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React from 'react';
 import { formatName } from '../../../util/general_functions/format_name';
 import MoreSongActions from './more_song_actions';
 
@@ -126,7 +126,7 @@ const ListWithPicture = (props) => {
 								) : (
 									<></>
 								)}
-								{!inPlaylist && !inLikedSongs ? <MoreSongActions key={Math.random()} songId={song.id} fromWhere={'search'}/> : <></>}
+								{!inPlaylist && !inLikedSongs ? <MoreSongActions isLikedSong={likedSongsIds.includes(song.id)} toggleLike={() => toggleLike(song)} key={Math.random()} song={song} fromWhere={'search'}/> : <></>}
 								{/* if on search page add three menu dots to add to playlist or add to queue or go to artist/album page */}
 							</div>
 						</li>

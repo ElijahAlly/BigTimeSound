@@ -47,13 +47,13 @@ const mSTP = (
 		searchedSongs: assignImagesToSongs(ui.search.results.songs, albums),
 		playlistSongs: selectSongsForPlaylist(
 			songs,
-			playlistIds,
+			playlistIds.playlistIds,
 			playlistId
 		),
-		playlistIds,
+		playlistIds: playlistIds.playlistIds,
 		songs: selectSongsForPlaylist(
 			songs,
-			playlistIds,
+			playlistIds.playlistIds,
 			playlistId
 		),
 	};

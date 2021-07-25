@@ -96,10 +96,6 @@
 			color: whitesmoke;
 		}
 
-		.like-btn-container {
-			z-index: 1;
-		}
-
 		.like-song-btn {
 			font-size: 12px;
 			right: 170px;
@@ -150,9 +146,9 @@
 		justify-content: space-between;
 		align-items: center;
 		position: fixed;
-		width: 200px;
+		width: 220px;
 		height: fit-content;
-		background-color: rgb(70, 70, 70);
+		background-color: rgb(49, 49, 49);
 		border-radius: 2px;
 
 		&:first-child {
@@ -167,7 +163,7 @@
 
 		button {
 			width: 95%;
-			background-color: rgb(70, 70, 70);
+			background-color: rgb(49, 49, 49);
 			color: whitesmoke;
 			padding: 7px;
 			height: 35px;
@@ -178,7 +174,94 @@
 			&:hover {
 				color: whitesmoke;
 				cursor: pointer;
-				background-color: rgba(43, 43, 43, 0.568);
+				background-color: rgb(70, 70, 70);
+			}
+		}
+
+		.song-actions-line-break {
+			height: 0px;
+			width: 94%;
+			border-bottom: 1.5px solid rgb(70, 70, 70);
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+
+		.play-next-btn {
+			margin-top: 5px;
+		}
+
+		// .artist-btn {
+		// }
+
+		// .album-btn {
+		// }
+
+		.liked-songs-btn {
+			height: 40px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.playlist-btn {
+			position: relative;
+			margin-bottom: 5px;
+			display: flex;
+			align-items: center;
+
+			div {
+				margin-top: 0px;
+			}
+
+			.fa-caret-left {
+				margin-right: 30px;
+    			margin-left: 17px;
+			}
+		}
+
+		.playlists-list-container {
+			background-color: rgb(49, 49, 49);
+			position: absolute;
+			top: 79%;
+    		right: 222px;
+			display: none;
+			flex-direction: column;
+			height: fit-content;
+			max-height: 160px;
+			width: 180px;
+			overflow-y: scroll;
+
+			&::-webkit-scrollbar {
+				width: 5px;
+			}
+		
+			&::-webkit-scrollbar-thumb {
+				background-color: rgba(196, 196, 196, 0.829);
+			}
+		
+			&::-webkit-scrollbar-track-piece {
+				background-color: rgb(49, 49, 49);
+			}
+
+			.playlists-list {
+				padding: 5px;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+
+				.playlist-name {
+					padding: 5px;
+					height: 30px;
+					display: flex;
+					align-items: center;
+					color: rgba(196, 196, 196, 0.829);
+
+					&:hover {
+						color: whitesmoke;
+						cursor: default;
+						background-color: rgb(70, 70, 70);
+					}
+				}
 			}
 		}
 	}

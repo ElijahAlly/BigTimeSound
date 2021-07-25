@@ -3,10 +3,14 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { pauseSong, playSong } from '../../../actions/song/currently_playing';
 import { setDuration } from '../../../util/general_functions/format_time';
-import { receiveSongQueue } from '../../../actions/song/song_queue_actions';
+import {
+	receiveSongQueue,
+	addSongToFrontQueue,
+} from '../../../actions/song/song_queue_actions';
 import { shuffleArray } from '../../../util/general_functions/shuffle_array';
 import { likeSong, unlikeSong } from '../../../actions/song/song_actions';
 import MoreSongActions from './more_song_actions';
+import { removeFromPlaylist } from '../../../actions/playlist_actions';
 
 class SongItem extends Component {
 	constructor(props) {
@@ -45,34 +49,57 @@ class SongItem extends Component {
 	}
 
 	toggleLike() {
-		const {likedSongsObj, currentUser, unlikeSong, likeSong, likes} = this.props;
-		const {song} = this.state;
+		const { likedSongsObj, currentUser, unlikeSong, likeSong, likes } =
+			this.props;
+		const { song } = this.state;
 
 		if (likedSongsObj[song.id]) {
-			const likeId = likes[song.id].id
+			const likeId = likes[song.id].id;
 			unlikeSong(currentUser.id, likeId);
 			return;
 		}
 
-		likeSong(currentUser.id, song.id)
+		likeSong(currentUser.id, song.id);
 	}
 
 	togglePlay(e, songList) {
-		const likeBtns = Array.from(document.getElementsByClassName('like-song-btn'));
+		const likeBtns = Array.from(
+			document.getElementsByClassName('like-song-btn')
+		);
 		let clickedLike = likeBtns.some((likeBtn) => {
-			return (e.nativeEvent.path[0] === likeBtn || e.nativeEvent.path[1] === likeBtn)
-		})
+			return (
+				e.nativeEvent.path[0] === likeBtn || e.nativeEvent.path[1] === likeBtn
+			);
+		});
 		if (clickedLike) return;
 
-		const moreSongActions = Array.from(document.getElementsByClassName('more-song-actions-btn'));
-		const songActions = Array.from(document.getElementsByClassName('song-actions'));
+		const moreSongActions = Array.from(
+			document.getElementsByClassName('more-song-actions-btn')
+		);
+		const songActions = Array.from(
+			document.getElementsByClassName('song-actions')
+		);
 		let clickedSongActionBtn = moreSongActions.some((songAction) => {
-			return (e.nativeEvent.path[0] === songAction || e.nativeEvent.path[1] === songAction)
-		})
+			return (
+				e.nativeEvent.path[0] === songAction ||
+				e.nativeEvent.path[1] === songAction
+			);
+		});
 		let clickSongAction = songActions.some((songAction) => {
-			return (e.nativeEvent.path[0] === songAction || e.nativeEvent.path[1] === songAction)
-		})
+			return (
+				e.nativeEvent.path[0] === songAction ||
+				e.nativeEvent.path[1] === songAction
+			);
+		});
 		if (clickedSongActionBtn || clickSongAction) return;
+
+
+		const playlistNames = Array.from(document.getElementsByClassName('playlist-name'));
+		let clickedPlaylistName = playlistNames.some(name => {
+			return e.nativeEvent.path[0] === name
+		})
+
+		if (clickedPlaylistName) return;
 
 		const {
 			isPlaying,
@@ -114,17 +141,25 @@ class SongItem extends Component {
 	render() {
 		let highlighted = '';
 		const { song } = this.state;
+
 		let {
 			album,
 			number,
 			artist,
+			userId,
+			history,
 			songList,
 			isPlaying,
 			fromWhere,
 			likedSongs,
+			playlistId,
 			shuffleIsOn,
 			playingFrom,
+			playlistInclusions,
+			removeFromPlaylist,
+			addSongToFrontQueue,
 			currentlyPlayingSong,
+			queueScreen,
 		} = this.props;
 
 		if (
@@ -149,6 +184,8 @@ class SongItem extends Component {
 		likedSongs && likedSongs.length > 0
 			? likedSongs.map((likedSong) => likedSongsIds.push(likedSong.id))
 			: null;
+
+		let isLikedSong = likedSongsIds.includes(song.id);
 
 		return (
 			<li
@@ -175,7 +212,7 @@ class SongItem extends Component {
 				</h4>
 				<h4 className='album-name'>{albumName}</h4>
 				<div className='like-btn-container'>
-					{likedSongsIds.includes(song.id) ? (
+					{isLikedSong ? (
 						<svg
 							role='img'
 							height='16'
@@ -207,7 +244,18 @@ class SongItem extends Component {
 				<h4 className='duration' id={`${song.id}`}>
 					00:00
 				</h4>
-				<MoreSongActions key={Math.random()} songId={song.id} fromWhere={fromWhere}/>
+				<MoreSongActions
+					addSongToFrontQueue={() => addSongToFrontQueue(song)}
+					key={Math.random()}
+					song={song}
+					toggleLike={this.toggleLike}
+					history={history}
+					fromWhere={fromWhere}
+					userId={userId}
+					isLikedSong={isLikedSong}
+					removeFromPlaylist={() => removeFromPlaylist(userId, playlistInclusions[playlistId][song.id].id)}
+					queueScreen={queueScreen}
+				/>
 			</li>
 		);
 	}
@@ -228,8 +276,10 @@ const mSTP = ({ entities, ui, session }, ownProps) => {
 		likedSongs: Object.values(entities.likedSongs.songs),
 		likedSongsObj: entities.likedSongs.songs,
 		currentUser: entities.user[session.currentUser],
+		userId:session.currentUser,
 		currentlyPlayingAudio: ui.currentlyPlaying.audio,
 		artist: entities.artists[ownProps.song.artist_id],
+		playlistInclusions: entities.playlistIds.playlist_inclusions
 	};
 };
 
@@ -237,6 +287,8 @@ const mDTP = (dispatch) => ({
 	receiveSongQueue: (queue) => dispatch(receiveSongQueue(queue)),
 	unlikeSong: (userId, Id) => dispatch(unlikeSong(userId, Id)),
 	likeSong: (userId, songId) => dispatch(likeSong(userId, songId)),
+	addSongToFrontQueue: (song) => dispatch(addSongToFrontQueue(song)),
+	removeFromPlaylist: (userId, Id) => dispatch(removeFromPlaylist(userId, Id)),
 	playSong: (song, audio, fromWhere, currentTime, volume, duration) =>
 		dispatch(playSong(song, audio, fromWhere, currentTime, volume, duration)),
 	pauseSong: () => dispatch(pauseSong()),

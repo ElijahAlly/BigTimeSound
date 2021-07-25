@@ -3,14 +3,25 @@ import {
 	LOGOUT_CURRENT_USER,
 } from '../../actions/playlist_actions';
 
-const playlistIdsReducer = (state = {}, action) => {
-	Object.freeze(state);
+const initialState = {
+	playlist_inclusions: [],
+	playlistIds: [],
+}
 
+const playlistIdsReducer = (state = initialState, action) => {
+	Object.freeze(state);
+	const newState = Object.assign({}, state);
 	switch (action.type) {
 		case PLAYLIST_SONG_IDS:
-			return action.playlistIds;
+			console.log(newState);
+			newState.playlistIds = action.playlistIds
+			newState.playlist_inclusions = action.playlist_inclusions
+			console.log(newState);
+			return newState;
+
 		case LOGOUT_CURRENT_USER:
-			return {};
+			return initialState;
+
 		default:
 			return state;
 	}

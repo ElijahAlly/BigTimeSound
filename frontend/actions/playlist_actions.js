@@ -35,10 +35,11 @@ const removePlaylist = (playlistId) => ({
 	playlistId,
 });
 
-const receiveAllPlaylistsSongIds = (playlistIds) => {
+const receiveAllPlaylistsSongIds = ({playlistIds, playlist_inclusions}) => {
 	return {
 	type: PLAYLIST_SONG_IDS,
 	playlistIds,
+	playlist_inclusions
 }};
 
 export const createPlaylist = (playlist) => (dispatch) =>
@@ -75,6 +76,11 @@ export const fetchAllPlaylistIds = (userId) => (dispatch) =>
 	);
 
 export const addSongToPlaylist = (userId, songId, playlistId) => (dispatch) =>
-	PlaylistApiUtil.addSongToPlaylist(userId, songId, playlistId).then((playlists) =>
-		dispatch(receiveAllPlaylists(playlists))
+	PlaylistApiUtil.addSongToPlaylist(userId, songId, playlistId).then((playlistIds) =>
+		dispatch(receiveAllPlaylistsSongIds(playlistIds))
+	);
+
+export const removeFromPlaylist = (userId, Id) => (dispatch) =>
+	PlaylistApiUtil.removeFromPlaylist(userId, Id).then((playlistIds) =>
+		dispatch(receiveAllPlaylistsSongIds(playlistIds))
 	);

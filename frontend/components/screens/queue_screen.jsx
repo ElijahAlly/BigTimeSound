@@ -40,6 +40,7 @@ class QueueScreen extends Component {
 										song={song}
 										songList={queue}
 										fromWhere={playingFrom}
+										queueScreen={true}
 									/>
 								))
 							) : (

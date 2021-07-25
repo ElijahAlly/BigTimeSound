@@ -49,3 +49,10 @@ export const addSongToPlaylist = (userId, songId, playlistId) => {
 		data: { songId, playlistId },
 	});
 };
+
+export const removeFromPlaylist = (userId, Id) => {
+	return $.ajax({
+		url: `/api/users/${userId}/playlist_inclusions/${Id}`,
+		method: 'DELETE',
+	});
+};

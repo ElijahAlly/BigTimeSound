@@ -5,7 +5,7 @@ import { selectSongsForPlaylist } from '../../../util/general_functions/select_s
 
 class PlaylistSongsList extends Component {
 	render() {
-		const { songs, playlistName } = this.props;
+		const { songs, playlistName, playlistId } = this.props;
 		return (
 			<section className='song-list-container'>
 				<ul className='song-list'>
@@ -16,6 +16,7 @@ class PlaylistSongsList extends Component {
 							song={song}
 							songList={songs}
 							fromWhere={playlistName}
+							playlistId={playlistId}
 						/>
 					))}
 				</ul>
@@ -25,10 +26,10 @@ class PlaylistSongsList extends Component {
 }
 
 const mSTP = ({ entities }, ownProps) => ({
-	playlistIds: entities.playlistIds,
+	playlistIds: entities.playlistIds.playlistIds,
 	songs: selectSongsForPlaylist(
 		entities.songs,
-		entities.playlistIds,
+		entities.playlistIds.playlistIds,
 		ownProps.playlistId
 	),
 });
