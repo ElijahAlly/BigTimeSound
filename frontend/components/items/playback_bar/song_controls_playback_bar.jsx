@@ -14,7 +14,6 @@ import {
 	addSongToFrontQueue,
 } from '../../../actions/song/song_queue_actions';
 import ProgressBar from './progress_bar.jsx';
-import AlbumPopout from './album_popout.jsx';
 
 class SongControlsPlaybackBar extends Component {
 	constructor(props) {
@@ -188,7 +187,6 @@ class SongControlsPlaybackBar extends Component {
 					</div>
 				</div>
 				<ProgressBar key={Math.random()} />
-				{popoutShowing ? <AlbumPopout /> : <></>}
 			</>
 		);
 	}

@@ -9,9 +9,16 @@ export const SEND_POPOUT_POS = 'SEND_POPOUT_POS';
 export const TOGGLE_REPEAT_SONG = 'TOGGLE_REPEAT_SONG';
 export const SEND_CURRENT_PROGRESS = 'SEND_CURRENT_PROGRESS';
 
-export const playSong = (song, audio, playingFrom, currentTime, volume, duration) => ({
+export const playSong = (
+	song,
+	audio,
+	playingFrom,
+	currentTime,
+	volume,
+	duration
+) => ({
 	type: PLAY_SONG,
-    song,
+	song,
 	audio,
 	playingFrom,
 	currentTime,
@@ -21,27 +28,27 @@ export const playSong = (song, audio, playingFrom, currentTime, volume, duration
 
 export const pauseSong = (noAudio = false) => ({
 	type: PAUSE_SONG,
-	noAudio
+	noAudio,
 });
 
 export const sendCurrentTime = (currentTime) => ({
 	type: CURRENT_TIME,
-	currentTime
-})
+	currentTime,
+});
 
 export const sendVolume = (volume) => ({
 	type: SEND_VOLUME,
-	volume
+	volume,
 });
 
 export const toggleRepeatSong = (repeatSongOn) => ({
 	type: TOGGLE_REPEAT_SONG,
-	repeatSongOn
+	repeatSongOn,
 });
 
 export const sendCurrentProgress = (currentProgress) => ({
 	type: SEND_CURRENT_PROGRESS,
-	currentProgress
+	currentProgress,
 });
 
 export const turnShuffleOn = () => ({
@@ -54,10 +61,10 @@ export const turnShuffleOff = () => ({
 
 export const togglePopoutShowing = (popoutShowing) => ({
 	type: TOGGLE_POPOUT,
-	popoutShowing
+	popoutShowing,
 });
 
 export const sendPopoutPosition = (popoutPosition) => ({
 	type: SEND_POPOUT_POS,
-	popoutPosition
+	popoutPosition,
 });

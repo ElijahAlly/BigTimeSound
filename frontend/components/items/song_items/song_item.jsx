@@ -6,11 +6,13 @@ import { setDuration } from '../../../util/general_functions/format_time';
 import {
 	receiveSongQueue,
 	addSongToFrontQueue,
+	addSongToQueueHistory,
 } from '../../../actions/song/song_queue_actions';
 import { shuffleArray } from '../../../util/general_functions/shuffle_array';
 import { likeSong, unlikeSong } from '../../../actions/song/song_actions';
 import MoreSongActions from './more_song_actions';
 import { removeFromPlaylist } from '../../../actions/playlist_actions';
+import { addToLikedSongs, displayMessage, removedFromLikedSongs } from '../../../util/general_functions/action_messages';
 
 class SongItem extends Component {
 	constructor(props) {
@@ -52,13 +54,16 @@ class SongItem extends Component {
 		const { likedSongsObj, currentUser, unlikeSong, likeSong, likes } =
 			this.props;
 		const { song } = this.state;
+		let message;
 
 		if (likedSongsObj[song.id]) {
 			const likeId = likes[song.id].id;
+			displayMessage(removedFromLikedSongs)
 			unlikeSong(currentUser.id, likeId);
 			return;
 		}
 
+		displayMessage(addToLikedSongs)
 		likeSong(currentUser.id, song.id);
 	}
 
@@ -191,7 +196,10 @@ class SongItem extends Component {
 
 		return (
 			<li
-				onClick={(e) => this.togglePlay(e, songList)}
+				onClick={(e) => {
+					addSongToQueueHistory(song)
+					this.togglePlay(e, songList)
+				}}
 				className={`${highlighted}`}>
 				<h4 className='song-number'>
 					{isPlaying &&

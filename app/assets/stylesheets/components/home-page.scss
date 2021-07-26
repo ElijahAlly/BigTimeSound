@@ -41,3 +41,50 @@
 		font-size: large;
 	}
 }
+
+.message {
+	display: none;
+	position: fixed;
+    bottom: 105px;
+    margin-left: 0;
+    align-items: center;
+    justify-content: center;
+    padding-right: 6px;
+    height: 78px;
+    width: 100%;
+    z-index: 21;
+
+	.add-song-confirmation {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		font-size: 14px;
+		width: fit-content;
+		height: 50px;
+		padding: 0px 18px;
+		color: whitesmoke;
+		letter-spacing: 0.25px;
+		background: rgb(38, 83, 180);
+		border-radius: 10px;
+		-webkit-box-shadow: 0px 3px 21px 5px #000000;
+		box-shadow: 0px 3px 21px 5px #000000;
+		z-index: 10000;
+		animation: showMessage 3s forwards;
+	}
+}
+
+@keyframes showMessage {
+	0% {
+		opacity: 0;
+	}
+	25% {
+		opacity: 1;
+	}
+	75% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}

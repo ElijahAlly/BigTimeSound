@@ -4,12 +4,15 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 import SignupContainer from './session/signup_container';
 import LoginContainer from './session/login_container';
 import Home from './home/home';
-import SwitchScreen from './user/switch_screen_container'
+import SwitchScreen from './user/switch_screen_container';
 import Modal from './modals/modal';
 
 const App = () => (
 	<>
 		<Modal />
+		<section className='message'>
+			<div className='add-song-confirmation'></div>
+		</section>
 		<Switch>
 			<ProtectedRoute path='/users/:id/artist/:id' component={SwitchScreen} />
 			<ProtectedRoute path='/users/:id/album/:id' component={SwitchScreen} />

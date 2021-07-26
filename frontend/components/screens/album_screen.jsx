@@ -75,7 +75,7 @@ class AlbumScreen extends Component {
 		const { album, songs } = this.props;
 		const { id, url, artist, name } = album
 			? album
-			: { id: null, url: '', artist: '', url: '' };
+			: { id: null, url: '', artist: '', url: '', name: '' };
 
 		return (
 			<section className='screen album-screen'>

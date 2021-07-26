@@ -1,16 +1,33 @@
 import React, { Component } from 'react';
 import { formatName } from '../../../util/general_functions/format_name';
+import {addBackPath} from '../../../actions/path_actions'
+import { connect } from 'react-redux';
 
-const TopSearchResult = ({ item }) => {
-    let {url, imgUrl, name, title, artist, user_id, artistName} = item;
+const TopSearchResult = ({ item, history, addBackPath, userId }) => {
+    let {url, imgUrl, name, title, artist, user_id, artistName } = item;
     let type = 'ARTIST';
-    if (imgUrl) type = 'SONG';
-    if (artist) type = 'ALBUM';
-    if (user_id) type = 'PLAYLIST';
+    let whereTo = 'artist'
+    let pathId = item.id;
+    if (imgUrl) {
+        type = 'SONG';
+        whereTo = 'album'
+        pathId = item.album_id;
+    }
+    if (artist) {
+        type = 'ALBUM';
+        whereTo = 'album'
+    }
+
+    if (user_id) {
+        type = 'PLAYLIST';
+        whereTo = 'playlist'
+    }
 
     if (!imgUrl && !url) imgUrl = 'https://active-storage-big-time-sound-seeds.s3.amazonaws.com/d3kxnbe-f16dabfb-0cf1-436c-9315-915fbe462f23.png'
 	return (
-		<section className='top-result-background'>
+		<section className='top-result-background' onClick={() => {
+            addBackPath()
+            history.push(`/users/${userId}/${whereTo}/${pathId}`)}}>
 			<img
 				src={imgUrl ? imgUrl : url}
                 className={`${type === 'ARTIST' ? 'artist': ''}`}
@@ -25,4 +42,12 @@ const TopSearchResult = ({ item }) => {
 	);
 };
 
-export default TopSearchResult;
+const mSTP = ({session}) => ({
+    userId: session.currentUser,
+})
+
+const mDTP = (dispatch) => ({
+    addBackPath: () => dispatch(addBackPath()),
+})
+
+export default connect(mSTP, mDTP)(TopSearchResult);

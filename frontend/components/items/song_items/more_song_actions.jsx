@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { addSongToPlaylist } from '../../../actions/playlist_actions';
+import { addedToPlaylist, playingNext, removedFromPlaylist, displayMessage } from '../../../util/general_functions/action_messages';
 import { formatName } from '../../../util/general_functions/format_name';
 
 class MoreSongActions extends Component {
@@ -116,7 +117,9 @@ class MoreSongActions extends Component {
 			<>
 				<button
 					className='playlist'
-					onClick={() => removeFromPlaylist()}
+					onClick={() => {
+						displayMessage(removedFromPlaylist)
+						removeFromPlaylist()}}
 					key={song.id}>
 					Remove from this playlist
 				</button>
@@ -139,7 +142,9 @@ class MoreSongActions extends Component {
 				<section className={`song-actions actions-${song.id}`}>
 					<button
 						className='play-next-btn'
-						onClick={() => addSongToFrontQueue()}>
+						onClick={() => {
+							displayMessage(playingNext)
+							addSongToFrontQueue()}}>
 						Play next
 					</button>
 					<div className='song-actions-line-break'></div>
@@ -170,7 +175,9 @@ class MoreSongActions extends Component {
 					<section className='playlists-list-container' id={`playlist-list-${song.id}`}>
 						<ul className='playlists-list'>
 							{playlists.map(playlist => (
-								<li className='playlist-name' onClick={() => addSongToPlaylist(userId, song.id, playlist.id)} key={Math.random()}>{formatName(playlist.name, 14)}</li>
+								<li className='playlist-name' onClick={() => { 
+									displayMessage(addedToPlaylist)
+									addSongToPlaylist(userId, song.id, playlist.id)}} key={Math.random()}>{formatName(playlist.name, 14)}</li>
 							))}
 						</ul>
 					</section>

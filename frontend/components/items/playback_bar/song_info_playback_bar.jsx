@@ -13,15 +13,16 @@ class SongInfoPlaybackBar extends Component {
 	}
 
 	popoutAlbum() {
-		let {popoutShowing, togglePopoutShowing} = this.props;
-		
-		togglePopoutShowing(!popoutShowing)
+		let { popoutShowing, togglePopoutShowing } = this.props;
+
+		togglePopoutShowing(!popoutShowing);
 	}
 
 	render() {
 		let { album, isPlaying, albumIsCollapsed, song, artist, expandAlbumCover } =
 			this.props;
-		let albumCover = 'https://active-storage-big-time-sound-seeds.s3.amazonaws.com/d3kxnbe-f16dabfb-0cf1-436c-9315-915fbe462f23.png';
+		let albumCover =
+			'https://active-storage-big-time-sound-seeds.s3.amazonaws.com/d3kxnbe-f16dabfb-0cf1-436c-9315-915fbe462f23.png';
 		if (album) albumCover = album.url;
 
 		let artistName = 'no artist name';
@@ -54,14 +55,19 @@ class SongInfoPlaybackBar extends Component {
 							: formatName(artistName, 28)}
 					</h5>
 				</div>
-				<svg width='16' height='16' xmlns='http://www.w3.org/2000/svg' id='toggle-album-popout-btn' onClick={() => this.popoutAlbum()}>
+				{/* <svg
+					width='16'
+					height='16'
+					xmlns='http://www.w3.org/2000/svg'
+					id='toggle-album-popout-btn'
+					onClick={() => this.popoutAlbum()}>
 					<g fill='currentColor' fillRule='evenodd'>
 						<path
 							d='M1 3v9h14V3H1zm0-1h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z'
 							fillRule='nonzero'></path>
 						<path d='M10 8h4v3h-4z'></path>
 					</g>
-				</svg>
+				</svg> */}
 			</>
 		);
 	}
@@ -89,7 +95,8 @@ const mSTP = (state, ownProps) => {
 const mDTP = (dispatch) => ({
 	fetchAlbums: () => dispatch(fetchAlbums()),
 	expandAlbumCover: () => dispatch(expandAlbumCover()),
-	togglePopoutShowing: (popoutShowing) => dispatch(togglePopoutShowing(popoutShowing)),
+	togglePopoutShowing: (popoutShowing) =>
+		dispatch(togglePopoutShowing(popoutShowing)),
 });
 
 export default connect(mSTP, mDTP)(SongInfoPlaybackBar);

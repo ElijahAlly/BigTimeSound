@@ -8,6 +8,7 @@ import PlaylistPlayButton from '../items/playlist_play_button';
 import SongListHeader from '../items/song_list_header';
 import { shuffleArray } from '../../util/general_functions/shuffle_array';
 import { formatName } from '../../util/general_functions/format_name';
+import { deletedPlaylist, displayMessage } from '../../util/general_functions/action_messages';
 
 class PlaylistShow extends Component {
 	constructor(props) {
@@ -148,6 +149,7 @@ class PlaylistShow extends Component {
 	deletePlaylist() {
 		const homeButton = document.getElementsByClassName('home')[0];
 		homeButton.classList.add('checked');
+		displayMessage(deletedPlaylist)
 		this.props
 			.deletePlaylist(this.props.currentUser.id, this.props.playlist.id)
 			.then(() => {

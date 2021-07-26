@@ -1,6 +1,5 @@
 import {
 	RECEIVE_SONG_QUEUE,
-	ADD_SONG_TO_QUEUE,
 	ADD_SONG_TO_QUEUE_HISTORY,
 	REMOVE_NEXT_FROM_QUEUE,
 	REMOVE_LAST_FROM_QUEUE,
@@ -22,15 +21,9 @@ const songQueueReducer = (state = _InitialState, action) => {
 			newState.songQueue = action.songs;
 			return newState;
 
-		case ADD_SONG_TO_QUEUE:
-			newState.songQueue.unshift(action.song);
-			return newState;
-
 		case ADD_SONG_TO_QUEUE_HISTORY:
-			if (
-				newState.songQueueHistory.length === 0 ||
-				newState.songQueueHistory[newState.songQueueHistory.length - 1].id !==
-					action.song.id
+			if (newState.songQueueHistory.length === 0 ||
+				newState.songQueueHistory[newState.songQueueHistory.length - 1].id !== action.song.id
 			) {
 				newState.songQueueHistory.push(action.song);
 			}
@@ -50,7 +43,7 @@ const songQueueReducer = (state = _InitialState, action) => {
 			return newState;
 
 		case ADD_TO_FRONT_QUEUE:
-			newState.songQueue.unshift(action.song)
+			newState.songQueue.unshift(action.song);
 			return newState;
 
 		default:

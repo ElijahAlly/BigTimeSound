@@ -1,5 +1,4 @@
 export const RECEIVE_SONG_QUEUE = 'RECEIVE_SONG_QUEUE';
-export const ADD_SONG_TO_QUEUE = 'ADD_SONG_TO_QUEUE';
 export const ADD_SONG_TO_QUEUE_HISTORY = 'ADD_SONG_TO_QUEUE_HISTORY';
 export const REMOVE_NEXT_FROM_QUEUE = 'REMOVE_NEXT_FROM_QUEUE';
 export const REMOVE_LAST_FROM_QUEUE = 'REMOVE_LAST_FROM_QUEUE';
@@ -9,11 +8,6 @@ export const ADD_TO_FRONT_QUEUE = 'ADD_TO_FRONT_QUEUE';
 export const receiveSongQueue = (songs) => ({
 	type: RECEIVE_SONG_QUEUE,
 	songs,
-});
-
-export const addSongToQueue = (song) => ({
-	type: ADD_SONG_TO_QUEUE,
-	song,
 });
 
 export const clearQueueHistory = () => ({

@@ -160,7 +160,7 @@ class SearchScreen extends Component {
 								<section className='search-top-results-songs'>
 									<section className='top-result-container'>
 										<h1 className='suggested-header'>Top Result</h1>
-										<TopSearchResult item={bestMatchResult} />
+										<TopSearchResult item={bestMatchResult} history={history} />
 									</section>
 									{searchedSongs.length > 0 ? (
 										<section className='songs-container'>
