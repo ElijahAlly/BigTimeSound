@@ -132,6 +132,7 @@
 	right: 60px;
 
 	.more-song-actions-btn {
+		display: none;
 		color: whitesmoke;
 		font-size: 20px;
 
@@ -216,7 +217,7 @@
 
 			.fa-caret-left {
 				margin-right: 30px;
-    			margin-left: 17px;
+				margin-left: 17px;
 			}
 		}
 
@@ -224,7 +225,7 @@
 			background-color: rgb(49, 49, 49);
 			position: absolute;
 			top: 79%;
-    		right: 222px;
+			right: 222px;
 			display: none;
 			flex-direction: column;
 			height: fit-content;
@@ -235,11 +236,11 @@
 			&::-webkit-scrollbar {
 				width: 5px;
 			}
-		
+
 			&::-webkit-scrollbar-thumb {
 				background-color: rgba(196, 196, 196, 0.829);
 			}
-		
+
 			&::-webkit-scrollbar-track-piece {
 				background-color: rgb(49, 49, 49);
 			}
@@ -266,4 +267,8 @@
 			}
 		}
 	}
+}
+
+li:hover .more-song-actions-btn {
+	display: block;
 }

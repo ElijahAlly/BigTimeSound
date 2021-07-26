@@ -25,15 +25,25 @@ class HomeScreen extends Component {
 	}
 
 	componentDidMount() {
+		const {
+			currentUser,
+			fetchLikedSongs,
+			fetchAllPlaylistIds,
+			fetchAllSongs,
+			fetchArtists,
+			fetchAlbums,
+		} = this.props;
+
 		window.scrollTo(0, 0);
 		handleColorShift('#402758');
 		const main = document.getElementById('main');
 		main.style.background = '#3f2657';
-		this.props.fetchAlbums();
-		this.props.fetchArtists();
-		this.props.fetchAllSongs();
-		this.props.fetchLikedSongs(this.props.currentUser.id);
-		this.props.fetchAllPlaylistIds(this.props.currentUser.id);
+		
+		fetchAlbums();
+		fetchArtists();
+		fetchAllSongs();
+		fetchLikedSongs(currentUser.id);
+		fetchAllPlaylistIds(currentUser.id);
 	}
 
 	greeting() {

@@ -2731,9 +2731,13 @@ var MoreSongActions = /*#__PURE__*/function (_Component) {
   var _super = _createSuper(MoreSongActions);
 
   function MoreSongActions(props) {
+    var _this;
+
     _classCallCheck(this, MoreSongActions);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.addToPlaylist = _this.addToPlaylist.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(MoreSongActions, [{
@@ -2793,8 +2797,29 @@ var MoreSongActions = /*#__PURE__*/function (_Component) {
       };
     }
   }, {
+    key: "addToPlaylist",
+    value: function addToPlaylist(userId, songId, playlistId) {
+      var songIds = this.props.playlistIds[playlistId];
+      var inPlaylist = false;
+      songIds.forEach(function (id) {
+        if (songId === id) inPlaylist = true;
+      });
+
+      if (!inPlaylist) {
+        (0,_util_general_functions_action_messages__WEBPACK_IMPORTED_MODULE_3__.displayMessage)(_util_general_functions_action_messages__WEBPACK_IMPORTED_MODULE_3__.addedToPlaylist);
+
+        (0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_2__.addSongToPlaylist)(userId, songId, playlistId);
+
+        return;
+      }
+
+      (0,_util_general_functions_action_messages__WEBPACK_IMPORTED_MODULE_3__.displayMessage)('Already in playlist');
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var _this$props = this.props,
           song = _this$props.song,
           history = _this$props.history,
@@ -2883,8 +2908,7 @@ var MoreSongActions = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
           className: "playlist-name",
           onClick: function onClick() {
-            (0,_util_general_functions_action_messages__WEBPACK_IMPORTED_MODULE_3__.displayMessage)(_util_general_functions_action_messages__WEBPACK_IMPORTED_MODULE_3__.addedToPlaylist);
-            addSongToPlaylist(userId, song.id, playlist.id);
+            _this2.addToPlaylist(userId, song.id, playlist.id);
           },
           key: Math.random()
         }, (0,_util_general_functions_format_name__WEBPACK_IMPORTED_MODULE_4__.formatName)(playlist.name, 14));
@@ -2900,7 +2924,8 @@ var mSTP = function mSTP(_ref) {
       session = _ref.session;
   return {
     playlists: Object.values(entities.playlists),
-    userId: session.currentUser
+    userId: session.currentUser,
+    playlistIds: entities.playlistIds.playlistIds
   };
 };
 
@@ -3100,7 +3125,7 @@ var SongItem = /*#__PURE__*/function (_Component) {
   }, {
     key: "shouldComponentUpdate",
     value: function shouldComponentUpdate(nextProps, nextState) {
-      if (this.props.isPlaying !== nextProps.isPlaying || this.props.likedSongs !== nextProps.likedSongs || this.state.song !== nextState.song || this.props.songList !== nextProps.songList || this.props.volume !== nextProps.volume || this.props.currentlyPlayingSong !== nextProps.currentlyPlayingSong || this.props.shuffleIsOn !== nextProps.shuffleIsOn) return true;
+      if (this.state.song !== nextState.song || this.props.volume !== nextProps.volume || this.props.songList !== nextProps.songList || this.props.isPlaying !== nextProps.isPlaying || this.props.likedSongs !== nextProps.likedSongs || this.props.shuffleIsOn !== nextProps.shuffleIsOn || this.props.currentlyPlayingSong !== nextProps.currentlyPlayingSong) return true;
       return false;
     }
   }, {
@@ -4449,15 +4474,22 @@ var HomeScreen = /*#__PURE__*/function (_Component) {
   _createClass(HomeScreen, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this$props = this.props,
+          currentUser = _this$props.currentUser,
+          fetchLikedSongs = _this$props.fetchLikedSongs,
+          fetchAllPlaylistIds = _this$props.fetchAllPlaylistIds,
+          fetchAllSongs = _this$props.fetchAllSongs,
+          fetchArtists = _this$props.fetchArtists,
+          fetchAlbums = _this$props.fetchAlbums;
       window.scrollTo(0, 0);
       (0,_util_general_functions_header_color_switch__WEBPACK_IMPORTED_MODULE_7__.handleColorShift)('#402758');
       var main = document.getElementById('main');
       main.style.background = '#3f2657';
-      this.props.fetchAlbums();
-      this.props.fetchArtists();
-      this.props.fetchAllSongs();
-      this.props.fetchLikedSongs(this.props.currentUser.id);
-      this.props.fetchAllPlaylistIds(this.props.currentUser.id);
+      fetchAlbums();
+      fetchArtists();
+      fetchAllSongs();
+      fetchLikedSongs(currentUser.id);
+      fetchAllPlaylistIds(currentUser.id);
     }
   }, {
     key: "greeting",
@@ -4485,12 +4517,12 @@ var HomeScreen = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          currentUser = _this$props.currentUser,
-          addBackPath = _this$props.addBackPath,
-          albums = _this$props.albums,
-          artists = _this$props.artists,
-          history = _this$props.history;
+      var _this$props2 = this.props,
+          currentUser = _this$props2.currentUser,
+          addBackPath = _this$props2.addBackPath,
+          albums = _this$props2.albums,
+          artists = _this$props2.artists,
+          history = _this$props2.history;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "screen home-screen"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
@@ -8458,9 +8490,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "selectSongsForPlaylist": () => (/* binding */ selectSongsForPlaylist),
 /* harmony export */   "selectSongsForAlbumOrArtist": () => (/* binding */ selectSongsForAlbumOrArtist)
 /* harmony export */ });
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
-
 var selectSongsForPlaylist = function selectSongsForPlaylist(songsObj, playlistSongsIds, playlistId) {
   var songsInPlaylist = [];
   var songIds = playlistSongsIds[playlistId];

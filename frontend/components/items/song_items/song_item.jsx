@@ -12,7 +12,11 @@ import { shuffleArray } from '../../../util/general_functions/shuffle_array';
 import { likeSong, unlikeSong } from '../../../actions/song/song_actions';
 import MoreSongActions from './more_song_actions';
 import { removeFromPlaylist } from '../../../actions/playlist_actions';
-import { addToLikedSongs, displayMessage, removedFromLikedSongs } from '../../../util/general_functions/action_messages';
+import {
+	addToLikedSongs,
+	displayMessage,
+	removedFromLikedSongs,
+} from '../../../util/general_functions/action_messages';
 
 class SongItem extends Component {
 	constructor(props) {
@@ -38,13 +42,13 @@ class SongItem extends Component {
 
 	shouldComponentUpdate(nextProps, nextState) {
 		if (
+			this.state.song !== nextState.song ||
+			this.props.volume !== nextProps.volume ||
+			this.props.songList !== nextProps.songList ||
 			this.props.isPlaying !== nextProps.isPlaying ||
 			this.props.likedSongs !== nextProps.likedSongs ||
-			this.state.song !== nextState.song ||
-			this.props.songList !== nextProps.songList ||
-			this.props.volume !== nextProps.volume ||
-			this.props.currentlyPlayingSong !== nextProps.currentlyPlayingSong ||
-			this.props.shuffleIsOn !== nextProps.shuffleIsOn
+			this.props.shuffleIsOn !== nextProps.shuffleIsOn ||
+			this.props.currentlyPlayingSong !== nextProps.currentlyPlayingSong
 		)
 			return true;
 		return false;
@@ -58,12 +62,12 @@ class SongItem extends Component {
 
 		if (likedSongsObj[song.id]) {
 			const likeId = likes[song.id].id;
-			displayMessage(removedFromLikedSongs)
+			displayMessage(removedFromLikedSongs);
 			unlikeSong(currentUser.id, likeId);
 			return;
 		}
 
-		displayMessage(addToLikedSongs)
+		displayMessage(addToLikedSongs);
 		likeSong(currentUser.id, song.id);
 	}
 
@@ -197,8 +201,8 @@ class SongItem extends Component {
 		return (
 			<li
 				onClick={(e) => {
-					addSongToQueueHistory(song)
-					this.togglePlay(e, songList)
+					addSongToQueueHistory(song);
+					this.togglePlay(e, songList);
 				}}
 				className={`${highlighted}`}>
 				<h4 className='song-number'>
@@ -224,11 +228,7 @@ class SongItem extends Component {
 					<div id='song-item-title'>{song.title}</div>
 					<div id='song-item-artist'>{artist ? artist.name : ''}</div>
 				</h4>
-				{onAlbumPage ? (
-					<></>
-				) : (
-					<h4 className='album-name'>{albumName}</h4>
-				)}
+				{onAlbumPage ? <></> : <h4 className='album-name'>{albumName}</h4>}
 				<div className='like-btn-container'>
 					{isLikedSong ? (
 						<svg

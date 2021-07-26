@@ -2,12 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { addSongToPlaylist } from '../../../actions/playlist_actions';
-import { addedToPlaylist, playingNext, removedFromPlaylist, displayMessage } from '../../../util/general_functions/action_messages';
+import {
+	addedToPlaylist,
+	playingNext,
+	removedFromPlaylist,
+	displayMessage,
+} from '../../../util/general_functions/action_messages';
 import { formatName } from '../../../util/general_functions/format_name';
 
 class MoreSongActions extends Component {
 	constructor(props) {
 		super(props);
+		this.addToPlaylist = this.addToPlaylist.bind(this);
 	}
 
 	shouldComponentUpdate(nextProps) {
@@ -16,10 +22,8 @@ class MoreSongActions extends Component {
 	}
 
 	componentWillUnmount() {
-		const {song} = this.props;
-		const songActionsBtn = document.getElementById(
-			`actions-btn-${song.id}`
-		);
+		const { song } = this.props;
+		const songActionsBtn = document.getElementById(`actions-btn-${song.id}`);
 		const songActions = document.getElementsByClassName(
 			`actions-${song.id}`
 		)[0];
@@ -48,10 +52,8 @@ class MoreSongActions extends Component {
 	}
 
 	componentDidMount() {
-		const {song} = this.props;
-		const songActionsBtn = document.getElementById(
-			`actions-btn-${song.id}`
-		);
+		const { song } = this.props;
+		const songActionsBtn = document.getElementById(`actions-btn-${song.id}`);
 		const songActions = document.getElementsByClassName(
 			`actions-${song.id}`
 		)[0];
@@ -78,8 +80,8 @@ class MoreSongActions extends Component {
 			}
 		});
 
-		const playlistBtn = document.getElementById(`playlist-btn-${song.id}`)
-		const playlistList = document.getElementById(`playlist-list-${song.id}`)
+		const playlistBtn = document.getElementById(`playlist-btn-${song.id}`);
+		const playlistList = document.getElementById(`playlist-list-${song.id}`);
 
 		playlistBtn.onmouseenter = () => {
 			playlistList.style.display = 'flex';
@@ -88,6 +90,22 @@ class MoreSongActions extends Component {
 		playlistList.onmouseleave = () => {
 			playlistList.style.display = 'none';
 		};
+	}
+
+	addToPlaylist(userId, songId, playlistId) {
+		let songIds = this.props.playlistIds[playlistId];
+		let inPlaylist = false;
+		songIds.forEach((id) => {
+			if (songId === id) inPlaylist = true
+		})
+
+		if (!inPlaylist) {
+			displayMessage(addedToPlaylist);
+			addSongToPlaylist(userId, songId, playlistId);
+			return;
+		} 
+
+		displayMessage('Already in playlist')
 	}
 
 	render() {
@@ -118,8 +136,9 @@ class MoreSongActions extends Component {
 				<button
 					className='playlist'
 					onClick={() => {
-						displayMessage(removedFromPlaylist)
-						removeFromPlaylist()}}
+						displayMessage(removedFromPlaylist);
+						removeFromPlaylist();
+					}}
 					key={song.id}>
 					Remove from this playlist
 				</button>
@@ -143,8 +162,9 @@ class MoreSongActions extends Component {
 					<button
 						className='play-next-btn'
 						onClick={() => {
-							displayMessage(playingNext)
-							addSongToFrontQueue()}}>
+							displayMessage(playingNext);
+							addSongToFrontQueue();
+						}}>
 						Play next
 					</button>
 					<div className='song-actions-line-break'></div>
@@ -172,12 +192,19 @@ class MoreSongActions extends Component {
 						<i className='fas fa-caret-left'></i>
 						<div>Add to playlist</div>
 					</button>
-					<section className='playlists-list-container' id={`playlist-list-${song.id}`}>
+					<section
+						className='playlists-list-container'
+						id={`playlist-list-${song.id}`}>
 						<ul className='playlists-list'>
-							{playlists.map(playlist => (
-								<li className='playlist-name' onClick={() => { 
-									displayMessage(addedToPlaylist)
-									addSongToPlaylist(userId, song.id, playlist.id)}} key={Math.random()}>{formatName(playlist.name, 14)}</li>
+							{playlists.map((playlist) => (
+								<li
+									className='playlist-name'
+									onClick={() => {
+										this.addToPlaylist(userId, song.id, playlist.id);
+									}}
+									key={Math.random()}>
+									{formatName(playlist.name, 14)}
+								</li>
 							))}
 						</ul>
 					</section>
@@ -187,13 +214,15 @@ class MoreSongActions extends Component {
 	}
 }
 
-const mSTP = ({entities, session}) => ({
+const mSTP = ({ entities, session }) => ({
 	playlists: Object.values(entities.playlists),
-	userId: session.currentUser
-})
+	userId: session.currentUser,
+	playlistIds: entities.playlistIds.playlistIds,
+});
 
 const mDTP = (dispatch) => ({
-	addSongToPlaylist: (userId, songId, playlistId) => dispatch(addSongToPlaylist(userId, songId, playlistId))
-})
+	addSongToPlaylist: (userId, songId, playlistId) =>
+		dispatch(addSongToPlaylist(userId, songId, playlistId)),
+});
 
 export default withRouter(connect(mSTP, mDTP)(MoreSongActions));
