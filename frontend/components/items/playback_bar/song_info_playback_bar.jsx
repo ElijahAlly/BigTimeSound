@@ -46,7 +46,7 @@ class SongInfoPlaybackBar extends Component {
 				<div>
 					<h3 id='playback-bar-song-title'>
 						{albumIsCollapsed
-							? formatName(songTitle, 22)
+							? formatName(songTitle, 19)
 							: formatName(songTitle, 28)}
 					</h3>
 					<h5 id='playback-bar-artist-name'>
