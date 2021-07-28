@@ -10,3 +10,9 @@ export const playlistPics = [
     'https://active-storage-big-time-sound-seeds.s3.amazonaws.com/9.png',
     'https://active-storage-big-time-sound-seeds.s3.amazonaws.com/10.jpg',
 ];
+
+export const findPlaylistIndx = (playlistId, playlistsArr) => {
+    let indx = null;
+    playlistsArr.forEach(({id}, i) => id === playlistId ? indx = i : null)
+    return indx;
+}

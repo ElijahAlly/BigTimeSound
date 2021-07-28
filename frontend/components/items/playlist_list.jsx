@@ -10,7 +10,7 @@ const PlaylistList = ({ playlists, history, userId }) => {
 				<>
 					{playlists.map((playlist, i) => (
 						<div
-							className='li-background playlists'
+							className='li-background-playlists'
 							key={i}
 							onClick={() =>
 								history.push(`/users/${userId}/playlist/${playlist.id}`)

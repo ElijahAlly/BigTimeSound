@@ -8,6 +8,7 @@ import {
 	assignImages,
 	assignImagesToSongs,
 } from '../../util/general_functions/assign_functions';
+import {getStringsFromObjects, getObjectFromStr} from '../../util/general_functions/object_strings';
 import ListWithPicture from '../items/song_items/list_with_picture';
 import TopSearchResult from '../items/search_items/top_search_result';
 import { clearSearchResults } from '../../actions/search_actions';
@@ -62,35 +63,6 @@ class SearchScreen extends Component {
 		likeSong(userId, song.id);
 	}
 
-	getStringsFromObjects(arr) {
-		let strs = [];
-		arr.forEach((obj) => {
-			if (obj.name) {
-				strs.push(obj.name);
-			} else {
-				strs.push(obj.title);
-			}
-		});
-
-		return strs;
-	}
-
-	getObjectFromStr(str, arrOfObjects) {
-		let matchObj = null;
-
-		arrOfObjects.forEach((obj) => {
-			if (obj.name && obj.name === str) {
-				matchObj = obj;
-				return;
-			} else if (obj.title && obj.title === str) {
-				matchObj = obj;
-				return;
-			}
-		});
-
-		return matchObj;
-	}
-
 	render() {
 		let {
 			albums,
@@ -116,12 +88,14 @@ class SearchScreen extends Component {
 			...searchedPlaylists,
 			...searchedSongs,
 		];
-		const arrOfStrings = this.getStringsFromObjects(arrOfObjects);
+
+		// Made use of library: 'string-similarity'
+		const arrOfStrings = getStringsFromObjects(arrOfObjects);
 		const bestMatchStr =
 			searchInput && searchInput.length > 0 && arrOfObjects.length > 0
 				? findBestMatch(searchInput, arrOfStrings).bestMatch.target
 				: null;
-		const bestMatchResult = this.getObjectFromStr(bestMatchStr, arrOfObjects);
+		const bestMatchResult = getObjectFromStr(bestMatchStr, arrOfObjects);
 
 		return (
 			<div className='screen search-screen'>
@@ -134,6 +108,7 @@ class SearchScreen extends Component {
 							artists={artists}
 							shouldSlice={false}
 						/>
+						<h1 className='suggested-header'>Your Playlists</h1>
 						<h1 className='suggested-header'>Suggested Albums</h1>
 						<ListWithPicture
 							userId={userId}
