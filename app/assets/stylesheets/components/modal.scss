@@ -44,19 +44,23 @@
 		flex-direction: column;
 		justify-content: space-between;
 		width: 200px;
-		height: 80px;
+		height: 160px;
 		background-color: $big-lightblack;
 		border-radius: 4px;
 		border: 0.5px solid $big-black;
 
+
 		#logout-link,
-		#profile-link {
+		#github-link, 
+		#linkedin-link, 
+		#portfolio-link {
 			background-color: $big-lightblack;
 			color: whitesmoke;
 			padding: 7px;
 			height: 35px;
 			border-radius: 4px;
 			margin: 5px 5px 5px 5px;
+			font-size: 15px;
 
 			&:hover {
 				color: whitesmoke;
@@ -65,8 +69,31 @@
 			}
 		}
 
-		#profile-link {
+		#github-link {
+			display: flex;
+    		justify-content: center;
+    		align-items: center;
 			margin-bottom: 0px;
+
+			.fa-github {
+				margin-left: -29px;
+				margin-right: 10px;
+				font-size: 21px;
+			}
+		}
+
+		#linkedin-link, #portfolio-link {
+			margin-top: 0;
+			margin-bottom: 0;
+			display: flex;
+    		justify-content: center;
+    		align-items: center;
+
+			.fa-linkedin {
+				margin-left: -18px;
+				margin-right: 10px;
+				font-size: 21px;
+			}
 		}
 
 		#logout-link {

@@ -17,7 +17,6 @@ const App = () => (
 			<ProtectedRoute path='/users/:id/artist/:id' component={SwitchScreen} />
 			<ProtectedRoute path='/users/:id/album/:id' component={SwitchScreen} />
 			<ProtectedRoute path='/users/:id/playlist/:id' component={SwitchScreen} />
-			<ProtectedRoute path='/users/:id/profile' component={SwitchScreen} />
 			<ProtectedRoute path='/users/:id/liked-songs' component={SwitchScreen} />
 			<ProtectedRoute path='/users/:id/library' component={SwitchScreen} />
 			<ProtectedRoute path='/users/:id/search' component={SwitchScreen} />
@@ -26,6 +25,10 @@ const App = () => (
 			<AuthRoute path='/login' component={LoginContainer} />
 			<AuthRoute path='/signup' component={SignupContainer} />
 			<AuthRoute path='/' component={Home} />
+			{/*  */}
+			{/* add profile page in the future */}
+			<ProtectedRoute path='/users/:id/profile' component={SwitchScreen} />
+			{/*  */}
 		</Switch>
 	</>
 );

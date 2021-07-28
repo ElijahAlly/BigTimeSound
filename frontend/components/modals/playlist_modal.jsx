@@ -13,7 +13,7 @@ class PlaylistModal extends Component {
 			user_id: playlist.user_id,
 			name: `${playlist.name}`,
 			id: playlist.id,
-			nameIsEmpty: false,	
+			nameIsEmpty: false,
 			emojiExpanded: false,
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,7 +29,7 @@ class PlaylistModal extends Component {
 
 	toggleEmoji() {
 		const emojiExpanded = !this.state.emojiExpanded;
-		this.setState({emojiExpanded})
+		this.setState({ emojiExpanded });
 	}
 
 	addEmojiToValue(emoji) {
@@ -75,7 +75,7 @@ class PlaylistModal extends Component {
 					</svg>
 				</div>
 				<section className='playlist-modal-info-section'>
-					<img src={this.props.imgSrc} className='modal-picture'/>
+					<img src={this.props.imgSrc} className='modal-picture' />
 					<form
 						onSubmit={this.handleSubmit}
 						className='edit-playlist-modal-input'>
@@ -88,10 +88,14 @@ class PlaylistModal extends Component {
 							/>
 						</div>
 						<EmojiList large={false} addEmojiToValue={this.addEmojiToValue} />
-						<div id='expand-emojis' onClick={this.toggleEmoji}>{this.state.emojiExpanded ? 'CLOSE' : 'EXPAND'}</div>
+						<div id='expand-emojis' onClick={this.toggleEmoji}>
+							{this.state.emojiExpanded ? 'CLOSE' : 'EXPAND'}
+						</div>
 						{this.state.emojiExpanded ? (
 							<EmojiList large={true} addEmojiToValue={this.addEmojiToValue} />
-						) : <></>}
+						) : (
+							<></>
+						)}
 						<button
 							disabled={this.state.nameIsEmpty}
 							id={`save-disabled-${this.state.nameIsEmpty}`}>

@@ -74,7 +74,7 @@ class UserHeader extends Component {
 						disabled={nextDisabled}
 					/>
 					{showSearchBar ? (
-						<SearchBar placeholder={'Artists, songs, or playlists'} />
+						<SearchBar onHeader={true} placeholder={'Artists, songs, or playlists'} />
 					) : (
 						<></>
 					)}

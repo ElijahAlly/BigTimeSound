@@ -50,13 +50,13 @@ class PlaylistShow extends Component {
 	}
 
 	componentDidMount() {
+		window.scrollTo(0, 0);
 		if (!parseInt(this.props.location)) {
 			this.createNewPlaylist();
 			return;
 		}
 		this.props.clearSearchResults();
 		handleMoreInfoToggle();
-		window.scrollTo(0, 0);
 		handleColorShift('#763437');
 		const main = document.getElementById('main');
 		main.style.background = '#763437';
@@ -223,7 +223,7 @@ class PlaylistShow extends Component {
 									openModal('edit-playlist-modal', {
 										...this.props,
 										playlist,
-									})
+									}, imgSrc)
 								}>
 								Edit Details
 							</button>

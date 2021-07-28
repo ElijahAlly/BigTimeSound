@@ -4,6 +4,7 @@ import { togglePopoutShowing } from '../../../actions/song/currently_playing';
 import { connect } from 'react-redux';
 import ArrowButton from '../arrow_button';
 import { formatName } from '../../../util/general_functions/format_name';
+import { withRouter } from 'react-router-dom';
 
 class SongInfoPlaybackBar extends Component {
 	constructor(props) {
@@ -19,7 +20,7 @@ class SongInfoPlaybackBar extends Component {
 	}
 
 	render() {
-		let { album, isPlaying, albumIsCollapsed, song, artist, expandAlbumCover } =
+		let { album, isPlaying, albumIsCollapsed, song, artist, expandAlbumCover, history, userId } =
 			this.props;
 		let albumCover =
 			'https://active-storage-big-time-sound-seeds.s3.amazonaws.com/d3kxnbe-f16dabfb-0cf1-436c-9315-915fbe462f23.png';
@@ -30,6 +31,7 @@ class SongInfoPlaybackBar extends Component {
 
 		let songTitle = 'no song playing';
 		if (isPlaying || song) songTitle = song.title;
+
 		return (
 			<>
 				{albumIsCollapsed ? (
@@ -44,12 +46,12 @@ class SongInfoPlaybackBar extends Component {
 					<></>
 				)}
 				<div>
-					<h3 id='playback-bar-song-title'>
+					<h3 id='playback-bar-song-title' onClick={() => history.push(`/users/${userId}/album/${album.id}`)}>
 						{albumIsCollapsed
 							? formatName(songTitle, 19)
 							: formatName(songTitle, 28)}
 					</h3>
-					<h5 id='playback-bar-artist-name'>
+					<h5 id='playback-bar-artist-name' onClick={() => history.push(`/users/${userId}/artist/${artist.id}`)}>
 						{albumIsCollapsed
 							? formatName(artistName, 22)
 							: formatName(artistName, 28)}
@@ -89,6 +91,7 @@ const mSTP = (state, ownProps) => {
 		album: state.entities.albums[album_id],
 		albumIsCollapsed: state.ui.currentlyPlaying.albumIsCollapsed,
 		popoutShowing: state.ui.currentlyPlaying.popoutShowing,
+		userId: state.session.currentUser
 	};
 };
 
@@ -99,4 +102,4 @@ const mDTP = (dispatch) => ({
 		dispatch(togglePopoutShowing(popoutShowing)),
 });
 
-export default connect(mSTP, mDTP)(SongInfoPlaybackBar);
+export default withRouter(connect(mSTP, mDTP)(SongInfoPlaybackBar));

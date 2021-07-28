@@ -22,7 +22,7 @@ class QueueScreen extends Component {
 
 	render() {
 		const { queue, currentlyPlaying, playingFrom } = this.props;
-		
+
 		return (
 			<div className='screen queue-screen'>
 				<section id='queue-container'>
@@ -33,16 +33,18 @@ class QueueScreen extends Component {
 					<section>
 						<ul className='song-list queue-list'>
 							{queue.length > 0 ? (
-								queue.map((song, i) => (
-									<SongItem
-										number={i + 1}
-										key={i}
-										song={song}
-										songList={queue}
-										fromWhere={playingFrom}
-										queueScreen={true}
-									/>
-								))
+								queue.map((song, i) => {
+									song.id === currentlyPlaying.id ? null : (
+										<SongItem
+											number={i + 1}
+											key={i}
+											song={song}
+											songList={queue}
+											fromWhere={playingFrom}
+											queueScreen={true}
+										/>
+									);
+								})
 							) : (
 								<li>No Songs</li>
 							)}

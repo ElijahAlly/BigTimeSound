@@ -52,16 +52,29 @@
 			flex-direction: column;
 			justify-content: center;
 			padding-left: 15px;
-			padding-bottom: 15px;
 			width: 100%;
 
 			#playback-bar-song-title {
+				width: fit-content;
 				padding-bottom: 3px;
+
+				&:hover {
+					cursor: pointer;
+					text-decoration: 1px solid underline;
+					text-underline-offset: 2px;
+				}
 			}
 
 			#playback-bar-artist-name {
+				width: fit-content;
 				font-size: 12px;
 				color: rgb(187, 183, 183);
+
+				&:hover {
+					cursor: pointer;
+					text-decoration: underline;
+					text-underline-offset: 2px;
+				}
 			}
 
 		}

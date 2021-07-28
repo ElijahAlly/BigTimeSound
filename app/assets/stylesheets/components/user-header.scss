@@ -1,3 +1,10 @@
+
+.search-bar-container {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
 .user-header {
 	display: flex;
 	justify-content: space-between;
@@ -62,26 +69,95 @@
 	}
 
 	// Search Bar
-	.search-input {
-		border: 0;
-		border-radius: 500px;
-		outline: none;
-		color: #000;
-		height: 25px;
-		padding: 6px 48px;
-		text-overflow: ellipsis;
-		width: 35%;
-	}
+	.search-bar-container {
+		display: flex;
+		align-items: center;
+		width: 50%;
 
-	
-	#search-icon {
-		z-index: 4;
-		position: absolute;
-		top: 12px;
-    	left: 136px;
-		background-color: transparent;
-		color: $big-darkgray;
-		border: none;
+		.search-input {
+			border: 0;
+			border-radius: 50px;
+			outline: none;
+			color: #000;
+			height: 27px;
+			padding: 6px 48px;
+			text-overflow: ellipsis;
+			width: 80%;
+		}
+
+		#search-icon {
+			z-index: 4;
+			position: absolute;
+			top: 12px;
+			left: 136px;
+			background-color: transparent;
+			color: $big-darkgray;
+			border: none;
+		}
+
+		.search-emoji-btn {
+			display: flex;
+			align-items: center;
+			font-size: 31px;
+			height: 40px;
+			border-radius: 5px;
+			margin-left: 10px;
+			transition: 0.3s;
+
+			&:hover {
+				cursor: pointer;
+				background-color: gray;
+			}
+		}
+
+		#large-emoji-container {
+			overflow-y: scroll;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			height: 50%;
+			width: 50%;
+			border-radius: 10px;
+			background-color: $big-lightgray;
+
+			.emoji-list {
+				display: flex;
+				flex-wrap: wrap;
+			}
+
+			li {
+				padding: 10px;
+				height: 60px;
+				width: 60px;
+				font-size: 30px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: 3px;
+
+				&:active {
+					background-color: $blue-heart-solid;
+				}
+
+				&:hover {
+					background-color: $blue-heart-hover;
+					cursor: default;
+				}
+			}
+
+			&::-webkit-scrollbar {
+				width: 10px;
+			}
+		
+			&::-webkit-scrollbar-thumb {
+				background-color: #202020;
+			}
+			
+			&::-webkit-scrollbar-track-piece {
+				background-color: $big-lightgray;
+			}
+		}
 	}
 
 	// Profile button/dropdown

@@ -96,16 +96,16 @@ class MoreSongActions extends Component {
 		let songIds = this.props.playlistIds[playlistId];
 		let inPlaylist = false;
 		songIds.forEach((id) => {
-			if (songId === id) inPlaylist = true
-		})
+			if (songId === id) inPlaylist = true;
+		});
 
 		if (!inPlaylist) {
 			displayMessage(addedToPlaylist);
 			addSongToPlaylist(userId, songId, playlistId);
 			return;
-		} 
+		}
 
-		displayMessage('Already in playlist')
+		displayMessage('Already in playlist');
 	}
 
 	render() {
@@ -118,7 +118,7 @@ class MoreSongActions extends Component {
 			toggleLike,
 			isLikedSong,
 			queueScreen,
-			addSongToPlaylist,
+			onAlbumPage,
 			removeFromPlaylist,
 			addSongToFrontQueue,
 		} = this.props;
@@ -187,7 +187,7 @@ class MoreSongActions extends Component {
 						{likedSongMessage}
 					</button>
 					<div className='song-actions-line-break'></div>
-					{removeFromPlaylistBtn}
+					{onAlbumPage ? <></> : removeFromPlaylistBtn}
 					<button className='playlist-btn' id={`playlist-btn-${song.id}`}>
 						<i className='fas fa-caret-left'></i>
 						<div>Add to playlist</div>
@@ -221,8 +221,7 @@ const mSTP = ({ entities, session }) => ({
 });
 
 const mDTP = (dispatch) => ({
-	addSongToPlaylist: (userId, songId, playlistId) =>
-		dispatch(addSongToPlaylist(userId, songId, playlistId)),
-});
+	addSongToPlaylist: (userId, songId, playlistId) => dispatch(addSongToPlaylist(userId, songId, playlistId))
+})
 
 export default withRouter(connect(mSTP, mDTP)(MoreSongActions));

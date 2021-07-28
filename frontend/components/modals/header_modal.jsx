@@ -25,15 +25,26 @@ const HeaderModal = ({
 
 	return (
 		<>
-			<button
-				id='profile-link'
-				onClick={() =>
-					(<Link to={`/users/${currentUser.id}/profile`} />).then(() =>
-						closeModal()
-					)
-				}>
-				Profile
-			</button>
+			<a
+				href='https://github.com/ElijahAlly/BigTimeSound'
+				id='github-link'
+				target='_blank'>
+				<i className="fab fa-github"></i>
+				GitHub
+			</a>
+			<a
+				href='https://www.linkedin.com/in/elijah-ally-123ea/'
+				id='linkedin-link'
+				target='_blank'>
+				<i className="fab fa-linkedin"></i>
+				LinkedIn
+			</a>
+			<a
+				href='https://elijahally.github.io/ElijahAllyPortfolio/'
+				id='portfolio-link'
+				target='_blank'>
+				My Portfolio
+			</a>
 			<button id='logout-link' onClick={() => logoutUser()}>
 				Logout
 			</button>

@@ -19,7 +19,14 @@ class ProgressBar extends Component {
 	}
 	
 	shouldComponentUpdate(nextProps) {
-		if (this.props !== nextProps) return true;
+		if (
+			this.props.song !== nextProps.song ||
+			this.props.audio !== nextProps.audio ||
+			this.props.duration !== nextProps.duration ||
+			this.props.isPlaying !== nextProps.isPlaying ||
+			this.props.currentTime !== nextProps.currentTime ||
+			this.props.currentProgress !== nextProps.currentProgress
+			) return true;
 		return false;
 	}
 

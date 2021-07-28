@@ -58,7 +58,6 @@ class SongItem extends Component {
 		const { likedSongsObj, currentUser, unlikeSong, likeSong, likes } =
 			this.props;
 		const { song } = this.state;
-		let message;
 
 		if (likedSongsObj[song.id]) {
 			const likeId = likes[song.id].id;
@@ -269,6 +268,7 @@ class SongItem extends Component {
 					toggleLike={this.toggleLike}
 					history={history}
 					fromWhere={fromWhere}
+					onAlbumPage={onAlbumPage}
 					userId={userId}
 					isLikedSong={isLikedSong}
 					removeFromPlaylist={() =>

@@ -5,14 +5,35 @@ import {
 	fetchSearchResults,
 	clearSearchResults,
 } from '../../../actions/search_actions';
+import EmojiList from '../emoji_list';
 
 class SearchBar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			value: '',
+			emojiExpanded: false,
 		};
+
 		this.handleInput = this.handleInput.bind(this);
+		this.toggleEmoji = this.toggleEmoji.bind(this);
+		this.addEmojiToValue = this.addEmojiToValue.bind(this);
+	}
+
+	toggleEmoji() {
+		const emojiExpanded = !this.state.emojiExpanded;
+		this.setState({ emojiExpanded });
+	}
+
+	addEmojiToValue(emoji) {
+		const input = document.getElementsByClassName('search-input')[0];
+		input.focus();
+		const prevValue = this.state.value;
+		const value = `${prevValue}${emoji}`;
+		this.setState({ value, emojiExpanded: false });
+		this.props
+			.fetchSearchResults(value)
+			.then(() => this.props.sendSearch(value));
 	}
 
 	componentDidMount() {
@@ -29,13 +50,13 @@ class SearchBar extends Component {
 	}
 
 	componentWillUnmount() {
-		this.props.clearSearchResults()
+		this.props.clearSearchResults();
 	}
 
 	render() {
-		const {placeholder} = this.props;
+		const { placeholder, onHeader } = this.props;
 		return (
-			<>
+			<div className='search-bar-container'>
 				<svg
 					height='24'
 					role='img'
@@ -57,7 +78,19 @@ class SearchBar extends Component {
 					placeholder={placeholder}
 					value={this.state.value}
 					onChange={this.handleInput}></input>
-			</>
+				{onHeader ? (
+					<div className='search-emoji-btn' onClick={this.toggleEmoji}>
+						🙂
+					</div>
+				) : (
+					<></>
+				)}
+				{this.state.emojiExpanded ? (
+					<EmojiList large={true} addEmojiToValue={this.addEmojiToValue} />
+				) : (
+					<></>
+				)}
+			</div>
 		);
 	}
 }

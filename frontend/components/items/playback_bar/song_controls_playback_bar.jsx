@@ -27,12 +27,13 @@ class SongControlsPlaybackBar extends Component {
 
 	shouldComponentUpdate(nextProps) {
 		if (
-			this.props.isPlaying !== nextProps.isPlaying ||
-			this.props.currentTime !== nextProps.currentTime ||
+			this.props.audio !== nextProps.audio ||
 			this.props.volume !== nextProps.volume ||
-			this.props.popoutShowing !== nextProps.popoutShowing ||
+			this.props.isPlaying !== nextProps.isPlaying ||
+			this.props.shuffleIsOn !== nextProps.shuffleIsOn ||
+			this.props.currentTime !== nextProps.currentTime ||
 			this.props.repeatSongOn !== nextProps.repeatSongOn ||
-			this.props.shuffleIsOn !== nextProps.shuffleIsOn
+			this.props.popoutShowing !== nextProps.popoutShowing
 		)
 			return true;
 		return false;
@@ -104,12 +105,12 @@ class SongControlsPlaybackBar extends Component {
 
 	render() {
 		const {
-			songQueueHistory,
+			audio,
 			songQueue,
 			isPlaying,
 			shuffleIsOn,
-			popoutShowing,
 			repeatSongOn,
+			songQueueHistory,
 			toggleRepeatSong,
 		} = this.props;
 
@@ -134,10 +135,15 @@ class SongControlsPlaybackBar extends Component {
 		let shuffle = '';
 		if (shuffleIsOn) shuffle = 'shuffle-on';
 
+		audio.controls
+			? audio.addEventListener('ended', () => this.skipTrack(nextSong))
+			: null;
 		return (
 			<>
 				<div className='controls-btns'>
-					<div className='shuffle-container' title={`Shuffle: ${shuffleIsOn ? 'On' : 'Off'}`}>
+					<div
+						className='shuffle-container'
+						title={`Shuffle: ${shuffleIsOn ? 'On' : 'Off'}`}>
 						<svg
 							role='img'
 							height='16'
@@ -172,10 +178,12 @@ class SongControlsPlaybackBar extends Component {
 						onClick={() => this.skipTrack(nextSong)}>
 						<path d='M11 3v4.119L3 2.5v11l8-4.619V13h2V3z'></path>
 					</svg>
-					<div className='repeat-container' title={`Repeat Track: ${repeatSongOn ? 'On' : 'Off'}`}>
+					<div
+						className='repeat-container'
+						title={`Repeat Track: ${repeatSongOn ? 'On' : 'Off'}`}>
 						<svg
 							role='img'
-							height='16' 
+							height='16'
 							width='16'
 							viewBox='0 0 16 16'
 							fill='currentColor'
@@ -203,7 +211,6 @@ const mSTP = ({ ui }, ownProps) => {
 		currentTime: ui.currentlyPlaying.currentTime,
 		shuffleIsOn: ui.currentlyPlaying.shuffleIsOn,
 		volume: ui.currentlyPlaying.volume,
-		popoutShowing: ui.currentlyPlaying.popoutShowing,
 		repeatSongOn: ui.currentlyPlaying.repeatSongOn,
 	};
 };
