@@ -46,7 +46,7 @@ const ListWithPicture = (props) => {
 		goToPage = (id) => history.push(`/users/${userId}/artist/${id}`);
 	}
 
-	if (shouldSlice && list.length > 5) list = list.slice(0, 5);
+	if (shouldSlice && list.length > 5) list = list.slice(0, 6);
 	let likedSongsIds = [];
 	likedSongs ? likedSongs.map((song) => likedSongsIds.push(song.id)) : null;
 

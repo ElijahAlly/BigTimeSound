@@ -12,6 +12,7 @@ const mSTP = (state, ownProps) => {
 		currenUser: state.entities.user[state.session.currentUser],
 		playlists: state.entities.playlists,
 		playlist: state.entities.playlists[parseInt(ownProps.props.match.params.id)],
+		imgSrc: ownProps.imgSrc
 	};
 };
 

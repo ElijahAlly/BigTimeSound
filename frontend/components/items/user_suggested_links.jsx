@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {playlistPics} from '../../util/general_functions/playlist_pictures'
 
 const UserSuggestedLinks = ({
 	currentUser,
@@ -71,7 +72,7 @@ const UserSuggestedLinks = ({
 							src={
 								ele.url
 									? ele.url
-									: `https://active-storage-big-time-sound-seeds.s3.amazonaws.com/d3kxnbe-f16dabfb-0cf1-436c-9315-915fbe462f23.png`
+									: playlistPics[i]
 							}
 						/>
 						<h2>{ele.name}</h2>

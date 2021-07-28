@@ -25,7 +25,7 @@ class SongInfoPlaybackBar extends Component {
 			'https://active-storage-big-time-sound-seeds.s3.amazonaws.com/d3kxnbe-f16dabfb-0cf1-436c-9315-915fbe462f23.png';
 		if (album) albumCover = album.url;
 
-		let artistName = 'no artist name';
+		let artistName = '';
 		if (artist) artistName = artist.name;
 
 		let songTitle = 'no song playing';

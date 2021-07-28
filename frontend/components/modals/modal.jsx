@@ -4,7 +4,7 @@ import { closeModal } from '../../actions/modal_actions';
 import PlaylistModalContainer from './playlist_modal_container';
 import HeaderModal from './header_modal';
 
-const Modal = ({ modal, closeModal, props }) => {
+const Modal = ({ modal, closeModal, props, imgSrc }) => {
 	if (!modal) return null;
 
 	let classnamesToDarken = ['edit-playlist-modal'] // add classname to darken modal background
@@ -12,7 +12,7 @@ const Modal = ({ modal, closeModal, props }) => {
 	let classname;
 	switch (modal) {
 		case 'edit-playlist-modal':
-			component = <PlaylistModalContainer props={props}/>;
+			component = <PlaylistModalContainer props={props} imgSrc={imgSrc} />;
 			classname = 'edit-playlist-modal';
 			break;
 		case 'header-modal':
@@ -35,7 +35,8 @@ const Modal = ({ modal, closeModal, props }) => {
 
 const mSTP = ({ ui }, ownProps) => ({
 	modal: ui.modal.modal,
-	props: ui.modal.props
+	props: ui.modal.props,
+	imgSrc: ui.modal.imgSrc
 });
 
 const mDTP = (dispatch) => ({

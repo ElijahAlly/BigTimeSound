@@ -51,11 +51,7 @@ const mSTP = (
 			playlistId
 		),
 		playlistIds: playlistIds.playlistIds,
-		songs: selectSongsForPlaylist(
-			songs,
-			playlistIds.playlistIds,
-			playlistId
-		),
+		songs: selectSongsForPlaylist(songs, playlistIds.playlistIds, playlistId),
 	};
 };
 
@@ -68,13 +64,14 @@ const mDTP = (dispatch) => ({
 	deletePlaylist: (userId, playlistId) =>
 		dispatch(deletePlaylist(userId, playlistId)),
 	createPlaylist: (playlist) => dispatch(createPlaylist(playlist)),
-	openModal: (modal, props) => dispatch(openModal(modal, props)),
+	openModal: (modal, props, imgSrc) => dispatch(openModal(modal, props, imgSrc)),
 	clearSearchResults: () => dispatch(clearSearchResults()),
 	receiveSongQueue: (queue) => dispatch(receiveSongQueue(queue)),
 	pauseSong: () => dispatch(pauseSong()),
 	likeSong: (userId, songId) => dispatch(likeSong(userId, songId)),
 	unlikeSong: (userId, likeId) => dispatch(unlikeSong(userId, likeId)),
-	playSong: (song, audio, playingFrom, currentTime, volume, duration) => dispatch(playSong(song, audio, playingFrom, currentTime, volume, duration)),
+	playSong: (song, audio, playingFrom, currentTime, volume, duration) =>
+		dispatch(playSong(song, audio, playingFrom, currentTime, volume, duration)),
 	fetchAllPlaylistIds: (userId) => dispatch(fetchAllPlaylistIds(userId)),
 	addSongToPlaylist: (userId, songId, playlistId) =>
 		dispatch(addSongToPlaylist(userId, songId, playlistId)),

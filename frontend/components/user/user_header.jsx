@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ArrowButton from '../items/arrow_button';
 import SearchBar from '../items/search_items/search_bar';
+import LibraryNavBtns from '../items/library_nav_btns';
 
 class UserHeader extends Component {
 	constructor(props) {
@@ -13,6 +14,11 @@ class UserHeader extends Component {
 		this.goBack = this.goBack.bind(this);
 		this.goForward = this.goForward.bind(this);
 		this.handleQueue = this.handleQueue.bind(this);
+	}
+
+	shouldComponentUpdate(nextProps) {
+		if (this.props.path !== nextProps.path) return true;
+		return false;
 	}
 
 	goBack() {
@@ -44,16 +50,15 @@ class UserHeader extends Component {
 	}
 
 	render() {
+		const { path } = this.props;
 		let prevDisabled = false;
 		let nextDisabled = false;
 		if (this.props.goBackCount === 0) prevDisabled = true;
 		if (this.props.goForwardCount === 0) nextDisabled = true;
 		let showSearchBar = false;
-		if (
-			this.props.history.location.pathname ===
-			`/users/${this.props.currentUser.id}/search`
-		)
-			showSearchBar = true;
+		let showLibraryNavBtns = false;
+		if (path === `/users/:id/search`) showSearchBar = true;
+		if (path.includes(`/users/:id/library`)) showLibraryNavBtns = true;
 
 		return (
 			<div className='user-header'>
@@ -68,7 +73,16 @@ class UserHeader extends Component {
 						action={this.goForward}
 						disabled={nextDisabled}
 					/>
-					{showSearchBar ? <SearchBar placeholder={'Artists, songs, or playlists'} /> : <></>}
+					{showSearchBar ? (
+						<SearchBar placeholder={'Artists, songs, or playlists'} />
+					) : (
+						<></>
+					)}
+					{showLibraryNavBtns ? (
+						<LibraryNavBtns userId={this.props.currentUser.id} />
+					) : (
+						<></>
+					)}
 				</div>
 				<svg
 					width='16'

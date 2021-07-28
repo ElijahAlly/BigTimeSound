@@ -8,7 +8,11 @@ import PlaylistPlayButton from '../items/playlist_play_button';
 import SongListHeader from '../items/song_list_header';
 import { shuffleArray } from '../../util/general_functions/shuffle_array';
 import { formatName } from '../../util/general_functions/format_name';
-import { deletedPlaylist, displayMessage } from '../../util/general_functions/action_messages';
+import {
+	deletedPlaylist,
+	displayMessage,
+} from '../../util/general_functions/action_messages';
+import { playlistPics } from '../../util/general_functions/playlist_pictures';
 
 class PlaylistShow extends Component {
 	constructor(props) {
@@ -21,7 +25,6 @@ class PlaylistShow extends Component {
 				currentUser,
 				playlist,
 			};
-
 		}
 
 		this.createNewPlaylist = this.createNewPlaylist.bind(this);
@@ -54,21 +57,22 @@ class PlaylistShow extends Component {
 		this.props.clearSearchResults();
 		handleMoreInfoToggle();
 		window.scrollTo(0, 0);
-		handleColorShift('#833b3f');
+		handleColorShift('#763437');
 		const main = document.getElementById('main');
-		main.style.background = '#833b3f';
+		main.style.background = '#763437';
 	}
 
 	toggleLike(song) {
-		const {likedSongsObj, currentUser, unlikeSong, likeSong, likes} = this.props;
+		const { likedSongsObj, currentUser, unlikeSong, likeSong, likes } =
+			this.props;
 
 		if (likedSongsObj[song.id]) {
-			const likeId = likes[song.id].id
+			const likeId = likes[song.id].id;
 			unlikeSong(currentUser.id, likeId);
 			return;
 		}
 
-		likeSong(currentUser.id, song.id)
+		likeSong(currentUser.id, song.id);
 	}
 
 	togglePlay() {
@@ -84,11 +88,11 @@ class PlaylistShow extends Component {
 			receiveSongQueue,
 			volume,
 			playlist,
-			shuffleIsOn
+			shuffleIsOn,
 		} = this.props;
 
 		if (isPlaying) {
-			pauseSong()
+			pauseSong();
 
 			if (playingFrom === playlist.name) {
 				return;
@@ -149,7 +153,7 @@ class PlaylistShow extends Component {
 	deletePlaylist() {
 		const homeButton = document.getElementsByClassName('home')[0];
 		homeButton.classList.add('checked');
-		displayMessage(deletedPlaylist)
+		displayMessage(deletedPlaylist);
 		this.props
 			.deletePlaylist(this.props.currentUser.id, this.props.playlist.id)
 			.then(() => {
@@ -164,23 +168,28 @@ class PlaylistShow extends Component {
 			likedSongs,
 			addSongToPlaylist,
 			playlist,
+			playlists,
 			location,
 			fetchAllPlaylistIds,
 			history,
-			songs
+			songs,
 		} = this.props;
 
 		if (!parseInt(location)) return null;
 
 		let { currentUser } = this.state;
 
+		let imgSrc = '';
+		Object.values(playlists).forEach((currentPlaylist, i) => {
+			if (playlist.id === currentPlaylist.id) imgSrc = playlistPics[i];
+		})
+
 		return (
 			<div className='screen playlist-show-screen'>
 				<section className='header'>
-					<div>
+					<div className='playlist-pics'>
+						<img src={imgSrc} id='picture' />
 						<svg
-							height='48'
-							width='48'
 							fill='currentColor'
 							viewBox='0 0 48 48'
 							className='svg-pencil'
@@ -188,7 +197,7 @@ class PlaylistShow extends Component {
 								openModal('edit-playlist-modal', {
 									...this.props,
 									playlist,
-								})
+								}, imgSrc)
 							}>
 							<path d='M33.402 3.006L8.852 31.751l-2.337 12.61 12.09-4.281 24.552-28.746-9.755-8.328zM9.112 41.32l1.543-8.327 6.44 5.5-7.983 2.827zm9.418-4.231l-6.712-5.732L33.625 5.825l6.711 5.731L18.53 37.089z'></path>
 						</svg>

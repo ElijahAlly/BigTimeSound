@@ -4,7 +4,7 @@
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	background: linear-gradient(360deg, #1a1818 62%, $big-darkred 94%);
+	background: linear-gradient(#823a3e 0px, #391414 385px, #1a1818 1px);
 
 	.header {
 		display: flex;
@@ -34,28 +34,42 @@
 			}
 		}
 
-		svg {
-			background-color: #282828;
-			padding: 75px;
-			transition: background-color 0.3s ease;
-			box-shadow: 2px 2px 15px 2px #242222;
+		.playlist-pics {
+			.svg-pencil {
+				height: 50px;
+				width: 50px;
+				background-color: #282828;
+				padding: 75px;
+				transition: opacity 0.3s ease;
+				box-shadow: 2px 2px 15px 2px #242222;
+				opacity: 0;
 
-			&:hover {
-				background-color: $big-lightgray;
+				&:hover {
+					cursor: pointer;
+					opacity: .6;
+				}
 			}
+
+			#picture {
+				height: 200px;
+				width: 200px;
+				position: absolute;
+
+			}
+
 		}
 	}
 
 	.song-list-container {
 		height: 100%;
 		width: 100%;
-		
+
 		.song-list {
 			display: flex;
 			flex-direction: column;
 			padding-top: 20px;
 			width: 100%;
-			
+
 			&:hover {
 				cursor: default;
 			}

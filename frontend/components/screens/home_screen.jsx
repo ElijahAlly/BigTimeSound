@@ -82,14 +82,12 @@ class HomeScreen extends Component {
 				<ListWithPicture
 					history={history}
 					albums={albums}
-					shouldSlice={true}
 					userId={currentUser.id}
 				/>
 				<h1 className='section-header'>Popular Artists</h1>
 				<ListWithPicture
 					history={history}
-					artists={artists}
-					shouldSlice={true}
+					artists={artists.reverse()}
 					userId={currentUser.id}
 				/>
 			</div>

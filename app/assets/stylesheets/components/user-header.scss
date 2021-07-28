@@ -131,3 +131,30 @@
 		}
 	}
 }
+
+.library-nav-btns {
+	margin-left: 20px;
+	display: flex;
+
+	.library-btn {
+		height: 35px;
+		display: flex;
+		align-items: center;
+		width: fit-content;
+		border-radius: 4px;
+		padding: 12px;
+		background-color: transparent;
+		margin-right: 15px;
+		color: whitesmoke;
+		font-size: 15px;
+		font-weight: 500;
+
+		&:hover {
+			background-color: rgb(58, 58, 58);
+		}
+	}
+
+	.selected-library-btn {
+		background-color: #333;
+	}
+}
