@@ -12,12 +12,14 @@
 
 * Ruby on Rails
 * React/Redux
+* Redux-Persist
 * PostgreSQL
 * AWS S3
 * JBuilder
 * OpenURI
 * Heroku
 * jQuery
+* String-Similarity
 
 # Features
 
