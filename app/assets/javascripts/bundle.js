@@ -1556,7 +1556,7 @@ var ProgressBar = /*#__PURE__*/function (_Component) {
           currentProgress = _this$props.currentProgress;
       var progressTrack = document.getElementById('progress-control');
 
-      if (isPlaying && audio.controls) {
+      if (isPlaying && audio && audio.controls) {
         var currentSongTime = document.getElementsByClassName('progress-time')[0];
         audio.addEventListener('timeupdate', _.throttle(function () {
           currentSongTime.innerHTML = (0,_util_general_functions_format_time__WEBPACK_IMPORTED_MODULE_3__.formatTime)(audio.currentTime);
@@ -1823,7 +1823,7 @@ var SongControlsPlaybackBar = /*#__PURE__*/function (_Component) {
       var prevSong = songQueueHistory[songQueueHistory.length - 1];
       var shuffle = '';
       if (shuffleIsOn) shuffle = 'shuffle-on';
-      audio.controls ? audio.addEventListener('ended', function () {
+      audio && audio.controls ? audio.addEventListener('ended', function () {
         return _this2.skipTrack(nextSong);
       }) : null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {

@@ -38,7 +38,7 @@ class ProgressBar extends Component {
 		const { isPlaying, audio, currentProgress } = this.props;
 		let progressTrack = document.getElementById('progress-control');
 
-		if (isPlaying && audio.controls) {
+		if (isPlaying && audio && audio.controls) {
 			let currentSongTime = document.getElementsByClassName('progress-time')[0];
 
 			audio.addEventListener(

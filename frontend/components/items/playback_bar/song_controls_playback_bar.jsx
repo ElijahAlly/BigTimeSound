@@ -135,7 +135,7 @@ class SongControlsPlaybackBar extends Component {
 		let shuffle = '';
 		if (shuffleIsOn) shuffle = 'shuffle-on';
 
-		audio.controls
+		audio && audio.controls
 			? audio.addEventListener('ended', () => this.skipTrack(nextSong))
 			: null;
 		return (
