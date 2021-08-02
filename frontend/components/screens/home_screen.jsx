@@ -83,12 +83,14 @@ class HomeScreen extends Component {
 					history={history}
 					albums={albums}
 					userId={currentUser.id}
+					addBackPath={addBackPath}
 				/>
 				<h1 className='section-header'>Popular Artists</h1>
 				<ListWithPicture
 					history={history}
 					artists={artists.reverse()}
 					userId={currentUser.id}
+					addBackPath={addBackPath}
 				/>
 			</div>
 		);

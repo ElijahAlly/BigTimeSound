@@ -9,20 +9,21 @@ import MoreSongActions from './more_song_actions';
 
 const ListWithPicture = (props) => {
 	let {
+		list,
+		songs,
+		userId,
 		albums,
 		artists,
-		list,
-		shouldSlice,
-		songs,
+		history,
 		likedSongs,
 		inPlaylist,
 		playlistId,
-		addSongToPlaylist,
-		inLikedSongs,
-		fetchAllPlaylistIds,
-		userId,
-		history,
 		toggleLike,
+		addBackPath,
+		shouldSlice,
+		inLikedSongs,
+		addSongToPlaylist,
+		fetchAllPlaylistIds,
 		songsInThisPlaylist,
 	} = props;
 
@@ -93,7 +94,8 @@ const ListWithPicture = (props) => {
 					{songs.map((song, i) => (
 						<li
 							key={i}
-							className={`searched-song ${inPlaylist ? 'playlist-song' : ''}`}>
+							className={`searched-song ${inPlaylist ? 'playlist-song' : ''}`}
+							onClick={() => addBackPath()}>
 							<img
 								src={song.imgUrl}
 								className={`song-img ${inPlaylist ? 'playlist-img' : ''}`}

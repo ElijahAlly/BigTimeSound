@@ -72,7 +72,7 @@ class AlbumScreen extends Component {
 	}
 
 	render() {
-		const { album, songs, artist, history } = this.props;
+		const { album, songs, artist, history, userId } = this.props;
 		const { url } = album ? album : { url: '' };
 		const { id, name } = artist;
 
@@ -124,7 +124,7 @@ class AlbumScreen extends Component {
 				/>
 
 				<h1 className='section-header'>Albums</h1>
-				<ListWithPicture key={Math.random()} history={history} albums={[album]} shouldSlice={true} userId={currentUser.id} />
+				<ListWithPicture key={Math.random()} history={history} albums={[album]} shouldSlice={true} userId={userId} />
 			</section>
 		);
 	}
@@ -141,6 +141,7 @@ const mSTP = ({ entities, ui }, ownProps) => {
 		audio: ui.currentlyPlaying.audio,
 		volume: ui.currentlyPlaying.volume,
 		shuffleIsOn: ui.currentlyPlaying.shuffleIsOn,
+		userId: state.session.currentUser,
 		songs: selectSongsForAlbumOrArtist(entities.songs, artistId, 'artist_id'),
 	};
 };
