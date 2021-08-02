@@ -130,7 +130,7 @@ class AlbumScreen extends Component {
 	}
 }
 
-const mSTP = ({ entities, ui }, ownProps) => {
+const mSTP = ({ entities, ui, session }, ownProps) => {
 	const artistId = ownProps.match.params.id;
 	return {
 		artist: entities.artists[artistId],
@@ -141,7 +141,7 @@ const mSTP = ({ entities, ui }, ownProps) => {
 		audio: ui.currentlyPlaying.audio,
 		volume: ui.currentlyPlaying.volume,
 		shuffleIsOn: ui.currentlyPlaying.shuffleIsOn,
-		userId: state.session.currentUser,
+		userId: session.currentUser,
 		songs: selectSongsForAlbumOrArtist(entities.songs, artistId, 'artist_id'),
 	};
 };
