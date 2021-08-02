@@ -2813,20 +2813,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ListWithPicture = function ListWithPicture(props) {
-  var albums = props.albums,
-      artists = props.artists,
-      list = props.list,
-      shouldSlice = props.shouldSlice,
+  var list = props.list,
       songs = props.songs,
+      userId = props.userId,
+      albums = props.albums,
+      artists = props.artists,
+      history = props.history,
       likedSongs = props.likedSongs,
       inPlaylist = props.inPlaylist,
       playlistId = props.playlistId,
-      addSongToPlaylist = props.addSongToPlaylist,
-      inLikedSongs = props.inLikedSongs,
-      fetchAllPlaylistIds = props.fetchAllPlaylistIds,
-      userId = props.userId,
-      history = props.history,
       _toggleLike = props.toggleLike,
+      addBackPath = props.addBackPath,
+      shouldSlice = props.shouldSlice,
+      inLikedSongs = props.inLikedSongs,
+      addSongToPlaylist = props.addSongToPlaylist,
+      fetchAllPlaylistIds = props.fetchAllPlaylistIds,
       songsInThisPlaylist = props.songsInThisPlaylist;
 
   var addSong = function addSong(songId) {
@@ -2907,7 +2908,10 @@ var ListWithPicture = function ListWithPicture(props) {
   }, songs.map(function (song, i) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
       key: i,
-      className: "searched-song ".concat(inPlaylist ? 'playlist-song' : '')
+      className: "searched-song ".concat(inPlaylist ? 'playlist-song' : ''),
+      onClick: function onClick() {
+        return addBackPath();
+      }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
       src: song.imgUrl,
       className: "song-img ".concat(inPlaylist ? 'playlist-img' : '')
@@ -4619,7 +4623,8 @@ var AlbumScreen = /*#__PURE__*/function (_Component) {
           album = _this$props2.album,
           songs = _this$props2.songs,
           artist = _this$props2.artist,
-          history = _this$props2.history;
+          history = _this$props2.history,
+          userId = _this$props2.userId;
 
       var _ref = album ? album : {
         url: ''
@@ -4672,7 +4677,7 @@ var AlbumScreen = /*#__PURE__*/function (_Component) {
         history: history,
         albums: [album],
         shouldSlice: true,
-        userId: currentUser.id
+        userId: userId
       }));
     }
   }]);
@@ -4682,7 +4687,8 @@ var AlbumScreen = /*#__PURE__*/function (_Component) {
 
 var mSTP = function mSTP(_ref2, ownProps) {
   var entities = _ref2.entities,
-      ui = _ref2.ui;
+      ui = _ref2.ui,
+      session = _ref2.session;
   var artistId = ownProps.match.params.id;
   return {
     artist: entities.artists[artistId],
@@ -4693,6 +4699,7 @@ var mSTP = function mSTP(_ref2, ownProps) {
     audio: ui.currentlyPlaying.audio,
     volume: ui.currentlyPlaying.volume,
     shuffleIsOn: ui.currentlyPlaying.shuffleIsOn,
+    userId: session.currentUser,
     songs: (0,_util_general_functions_select_songs_for_playlist__WEBPACK_IMPORTED_MODULE_6__.selectSongsForAlbumOrArtist)(entities.songs, artistId, 'artist_id')
   };
 };
@@ -4857,13 +4864,15 @@ var HomeScreen = /*#__PURE__*/function (_Component) {
       }, "Popular Albums"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_items_song_items_list_with_picture__WEBPACK_IMPORTED_MODULE_9__.default, {
         history: history,
         albums: albums,
-        userId: currentUser.id
+        userId: currentUser.id,
+        addBackPath: addBackPath
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
         className: "section-header"
       }, "Popular Artists"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_items_song_items_list_with_picture__WEBPACK_IMPORTED_MODULE_9__.default, {
         history: history,
         artists: artists.reverse(),
-        userId: currentUser.id
+        userId: currentUser.id,
+        addBackPath: addBackPath
       }));
     }
   }]);
