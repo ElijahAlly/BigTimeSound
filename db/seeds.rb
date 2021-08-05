@@ -168,7 +168,7 @@ the_Fall_Like = Like.create!(user_id: demo_user.id, song_id: the_Fall.id)
 youre_Gonna_Carry_That_Weight_Like = Like.create!(user_id: demo_user.id, song_id: youre_Gonna_Carry_That_Weight.id)
 
 ##### Playlists
-myHits = Playlist.create!(name: 'MyHits', user_id: demo_user.id)
+myHits = Playlist.create!(name: 'My Hits', user_id: demo_user.id)
 
 ##### Playlist Inclusions
 pi_1 = PlaylistInclusion.create!(playlist_id: myHits.id, song_id: cant_Feel_My_Face.id)
