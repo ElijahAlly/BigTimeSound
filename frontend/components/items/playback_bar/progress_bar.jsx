@@ -15,7 +15,8 @@ class ProgressBar extends Component {
 	}
 
 	componentDidMount() {
-		this.handleCurrentSongTime();
+		let progressTrack = document.getElementById('progress-control');
+		this.handleCurrentSongTime(progressTrack);
 	}
 	
 	shouldComponentUpdate(nextProps) {
@@ -30,13 +31,8 @@ class ProgressBar extends Component {
 		return false;
 	}
 
-	componentDidUpdate() {
-		this.handleCurrentSongTime();
-	}
-
-	handleCurrentSongTime() {
+	handleCurrentSongTime(progressTrack) {
 		const { isPlaying, audio, currentProgress } = this.props;
-		let progressTrack = document.getElementById('progress-control');
 
 		if (isPlaying && audio && audio.controls) {
 			let currentSongTime = document.getElementsByClassName('progress-time')[0];
@@ -62,11 +58,11 @@ class ProgressBar extends Component {
 		}
 	}
 
-	changeTime(e) {
-		const { duration } = this.props.audio;
+	changeTime(e, duration) {
 		let currentTime = e.currentTarget.value;
 		let currentProgress = `${currentTime / duration}`.slice(0, 5);
 		currentTime = currentTime * duration;
+		e.currentTarget.value = currentProgress;
 		this.props.audio.currentTime = currentTime;
 		this.props.sendCurrentProgress(currentProgress);
 	}
@@ -77,7 +73,7 @@ class ProgressBar extends Component {
 
 		let { currentTime, isPlaying, audio, currentProgress } = this.props;
 
-		if (currentTime === NaN || duration === 0) currentProgress = 0;
+		if (!currentTime || duration === 0) currentProgress = 0;
 
 		let currentSongTime = null;
 		if (isPlaying && audio) currentSongTime = formatTime(audio.currentTime);
@@ -90,9 +86,10 @@ class ProgressBar extends Component {
 				<input
 					id='progress-control'
 					value={currentProgress}
-					onChange={(e) => this.changeTime(e)}
 					type='range'
 					min='0'
+					onChange={() => console.log('updated')}
+					onInput={(e) => this.changeTime(e, duration)}
 					step='0.001'
 					max='1'
 					fill='currentColor'

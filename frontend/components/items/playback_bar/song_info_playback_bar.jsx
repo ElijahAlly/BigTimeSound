@@ -1,23 +1,11 @@
 import React, { Component } from 'react';
 import { expandAlbumCover, fetchAlbums } from '../../../actions/album_actions';
-import { togglePopoutShowing } from '../../../actions/song/currently_playing';
 import { connect } from 'react-redux';
 import ArrowButton from '../arrow_button';
 import { formatName } from '../../../util/general_functions/format_name';
 import { withRouter } from 'react-router-dom';
 
 class SongInfoPlaybackBar extends Component {
-	constructor(props) {
-		super(props);
-
-		this.popoutAlbum = this.popoutAlbum.bind(this);
-	}
-
-	popoutAlbum() {
-		let { popoutShowing, togglePopoutShowing } = this.props;
-
-		togglePopoutShowing(!popoutShowing);
-	}
 
 	render() {
 		let { album, isPlaying, albumIsCollapsed, song, artist, expandAlbumCover, history, userId } =
@@ -57,19 +45,6 @@ class SongInfoPlaybackBar extends Component {
 							: formatName(artistName, 28)}
 					</h5>
 				</div>
-				{/* <svg
-					width='16'
-					height='16'
-					xmlns='http://www.w3.org/2000/svg'
-					id='toggle-album-popout-btn'
-					onClick={() => this.popoutAlbum()}>
-					<g fill='currentColor' fillRule='evenodd'>
-						<path
-							d='M1 3v9h14V3H1zm0-1h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z'
-							fillRule='nonzero'></path>
-						<path d='M10 8h4v3h-4z'></path>
-					</g>
-				</svg> */}
 			</>
 		);
 	}
@@ -90,7 +65,6 @@ const mSTP = (state, ownProps) => {
 		artist: state.entities.artists[artist_id],
 		album: state.entities.albums[album_id],
 		albumIsCollapsed: state.ui.currentlyPlaying.albumIsCollapsed,
-		popoutShowing: state.ui.currentlyPlaying.popoutShowing,
 		userId: state.session.currentUser
 	};
 };
@@ -98,8 +72,6 @@ const mSTP = (state, ownProps) => {
 const mDTP = (dispatch) => ({
 	fetchAlbums: () => dispatch(fetchAlbums()),
 	expandAlbumCover: () => dispatch(expandAlbumCover()),
-	togglePopoutShowing: (popoutShowing) =>
-		dispatch(togglePopoutShowing(popoutShowing)),
 });
 
 export default withRouter(connect(mSTP, mDTP)(SongInfoPlaybackBar));

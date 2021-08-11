@@ -9,6 +9,7 @@ import {
 	displayMessage,
 } from '../../../util/general_functions/action_messages';
 import { formatName } from '../../../util/general_functions/format_name';
+import {addBackPath} from '../../../actions/path_actions'
 
 class MoreSongActions extends Component {
 	constructor(props) {
@@ -170,16 +171,18 @@ class MoreSongActions extends Component {
 					<div className='song-actions-line-break'></div>
 					<button
 						className='artist-btn'
-						onClick={() =>
+						onClick={() => {
 							history.push(`/users/${userId}/artist/${song.artist_id}`)
-						}>
+							addBackPath();
+						}}>
 						Go to artist
 					</button>
 					<button
 						className='album-btn'
-						onClick={() =>
+						onClick={() => {
 							history.push(`/users/${userId}/album/${song.album_id}`)
-						}>
+							addBackPath();
+						}}>
 						Go to album
 					</button>
 					<div className='song-actions-line-break'></div>
@@ -221,7 +224,8 @@ const mSTP = ({ entities, session }) => ({
 });
 
 const mDTP = (dispatch) => ({
-	addSongToPlaylist: (userId, songId, playlistId) => dispatch(addSongToPlaylist(userId, songId, playlistId))
+	addSongToPlaylist: (userId, songId, playlistId) => dispatch(addSongToPlaylist(userId, songId, playlistId)),
+	addBackPath: () => dispatch(addBackPath())
 })
 
 export default withRouter(connect(mSTP, mDTP)(MoreSongActions));

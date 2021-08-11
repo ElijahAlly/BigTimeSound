@@ -17,6 +17,7 @@ import { pauseSong, playSong } from '../../actions/song/currently_playing';
 import { receiveSongQueue } from '../../actions/song/song_queue_actions';
 import { selectSongsForPlaylist } from '../../util/general_functions/select_songs_for_playlist';
 import { unlikeSong, likeSong } from '../../actions/song/song_actions';
+import { addBackPath } from '../../actions/path_actions';
 
 const mSTP = (
 	{
@@ -75,6 +76,7 @@ const mDTP = (dispatch) => ({
 	fetchAllPlaylistIds: (userId) => dispatch(fetchAllPlaylistIds(userId)),
 	addSongToPlaylist: (userId, songId, playlistId) =>
 		dispatch(addSongToPlaylist(userId, songId, playlistId)),
+		addBackPath: () => dispatch(addBackPath())
 });
 
 export default withRouter(connect(mSTP, mDTP)(PlaylistShow));

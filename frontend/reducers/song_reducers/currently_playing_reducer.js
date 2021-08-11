@@ -6,8 +6,6 @@ import {
 	SEND_CURRENT_PROGRESS,
 	SHUFFLE_ON,
 	SHUFFLE_OFF,
-	TOGGLE_POPOUT,
-	SEND_POPOUT_POS,
 	TOGGLE_REPEAT_SONG
 } from '../../actions/song/currently_playing';
 
@@ -29,8 +27,6 @@ const _InitialState = {
 	duration: null,
 	currentProgress: 0,
 	shuffleIsOn: false,
-	popoutShowing: false,
-	popoutPosition: {left: 100, top: 100},
 	repeatSongOn: false
 };
 
@@ -118,14 +114,6 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 
 		case SHUFFLE_OFF:
 			newState.shuffleIsOn = false;
-			return newState;
-
-		case TOGGLE_POPOUT:
-			newState.popoutShowing = action.popoutShowing;
-			return newState;
-
-		case SEND_POPOUT_POS:
-			newState.popoutPosition = action.popoutPosition;
 			return newState;
 
 		case TOGGLE_REPEAT_SONG:

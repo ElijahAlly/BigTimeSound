@@ -32,8 +32,7 @@ class SongControlsPlaybackBar extends Component {
 			this.props.isPlaying !== nextProps.isPlaying ||
 			this.props.shuffleIsOn !== nextProps.shuffleIsOn ||
 			this.props.currentTime !== nextProps.currentTime ||
-			this.props.repeatSongOn !== nextProps.repeatSongOn ||
-			this.props.popoutShowing !== nextProps.popoutShowing
+			this.props.repeatSongOn !== nextProps.repeatSongOn
 		)
 			return true;
 		return false;

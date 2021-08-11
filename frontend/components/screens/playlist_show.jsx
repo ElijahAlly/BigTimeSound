@@ -17,28 +17,19 @@ import { playlistPics } from '../../util/general_functions/playlist_pictures';
 class PlaylistShow extends Component {
 	constructor(props) {
 		super(props);
-		const { currentUser, playlist, location } = props;
-		this.state = null;
-
-		if (parseInt(location) >= 0) {
-			this.state = {
-				currentUser,
-				playlist,
-			};
-		}
 
 		this.createNewPlaylist = this.createNewPlaylist.bind(this);
 		this.togglePlay = this.togglePlay.bind(this);
 		this.toggleLike = this.toggleLike.bind(this);
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
+	shouldComponentUpdate(nextProps) {
 		if (
-			this.state !== nextState ||
+			this.props.location !== nextProps.location ||
 			this.props.searchInput !== nextProps.searchInput ||
 			this.props.playlistIds !== nextProps.playlistIds ||
 			this.props.likes !== nextProps.likes ||
-			this.props.location !== nextProps.location ||
+			this.props.currentUser !== nextProps.currentUser ||
 			this.props.searchedSongs !== nextProps.searchedSongs
 		)
 			return true;
@@ -51,12 +42,16 @@ class PlaylistShow extends Component {
 
 	componentDidMount() {
 		window.scrollTo(0, 0);
+
 		if (!parseInt(this.props.location)) {
-			this.createNewPlaylist();
-			return;
+			this.createNewPlaylist().then(() => {
+				handleMoreInfoToggle();
+			});
+		} else {
+			handleMoreInfoToggle();
 		}
+
 		this.props.clearSearchResults();
-		handleMoreInfoToggle();
 		handleColorShift('#763437');
 		const main = document.getElementById('main');
 		main.style.background = '#763437';
@@ -123,7 +118,7 @@ class PlaylistShow extends Component {
 		);
 	}
 
-	createNewPlaylist() {
+	async createNewPlaylist() {
 		const {
 			playlists,
 			currentUser,
@@ -137,17 +132,17 @@ class PlaylistShow extends Component {
 			if (playlist.user_id === currentUser.id) usersPlaylists.push(playlist);
 		});
 
-		const newPlaylistNumber = ++usersPlaylists.length;
+		const newPlaylistNumber = usersPlaylists.length + 1;
 
-		createPlaylist({
+		const data = await createPlaylist({
 			name: `My Playlist #${newPlaylistNumber}`,
 			user_id: currentUser.id,
-		}).then(({ playlist }) => {
-			fetchAllPlaylists(playlist.user_id).then(() => {
-				history.push(`/users/${playlist.user_id}`);
-				history.push(`/users/${playlist.user_id}/playlist/${playlist.id}`);
-			});
 		});
+
+		const { playlist } = data;
+		await fetchAllPlaylists(playlist.user_id);
+		await history.push(`/users/${playlist.user_id}`);
+		history.push(`/users/${playlist.user_id}/playlist/${playlist.id}`);
 	}
 
 	deletePlaylist() {
@@ -173,16 +168,17 @@ class PlaylistShow extends Component {
 			fetchAllPlaylistIds,
 			history,
 			songs,
+			addBackPath,
+			currentUser,
 		} = this.props;
 
 		if (!parseInt(location)) return null;
 
-		let { currentUser } = this.state;
-
+		console.log('passed');
 		let imgSrc = '';
 		Object.values(playlists).forEach((currentPlaylist, i) => {
 			if (playlist.id === currentPlaylist.id) imgSrc = playlistPics[i];
-		})
+		});
 
 		return (
 			<div className='screen playlist-show-screen'>
@@ -194,10 +190,14 @@ class PlaylistShow extends Component {
 							viewBox='0 0 48 48'
 							className='svg-pencil'
 							onClick={() =>
-								openModal('edit-playlist-modal', {
-									...this.props,
-									playlist,
-								}, imgSrc)
+								openModal(
+									'edit-playlist-modal',
+									{
+										...this.props,
+										playlist,
+									},
+									imgSrc
+								)
 							}>
 							<path d='M33.402 3.006L8.852 31.751l-2.337 12.61 12.09-4.281 24.552-28.746-9.755-8.328zM9.112 41.32l1.543-8.327 6.44 5.5-7.983 2.827zm9.418-4.231l-6.712-5.732L33.625 5.825l6.711 5.731L18.53 37.089z'></path>
 						</svg>
@@ -220,10 +220,14 @@ class PlaylistShow extends Component {
 							<button
 								id='edit-playlist-btn'
 								onClick={() =>
-									openModal('edit-playlist-modal', {
-										...this.props,
-										playlist,
-									}, imgSrc)
+									openModal(
+										'edit-playlist-modal',
+										{
+											...this.props,
+											playlist,
+										},
+										imgSrc
+									)
 								}>
 								Edit Details
 							</button>
@@ -238,7 +242,7 @@ class PlaylistShow extends Component {
 				<SongListHeader />
 
 				<PlaylistSongsList
-					key={playlist ? playlist.id : null}
+					key={Math.random()}
 					playlistName={playlist ? playlist.name : ''}
 					playlistId={playlist ? playlist.id : ''}
 				/>
@@ -262,6 +266,7 @@ class PlaylistShow extends Component {
 								fetchAllPlaylistIds={fetchAllPlaylistIds}
 								playlistId={playlist ? playlist.id : null}
 								songsInThisPlaylist={songs}
+								addBackPath={() => addBackPath()}
 							/>
 						</section>
 					) : (
