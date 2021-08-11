@@ -65,7 +65,7 @@ class SignUp extends Component {
 						<div className='signup-or'>OR SIGNUP BELOW</div>
 						<div className='signup-cont'>
 							<form onSubmit={this.handleSubmit}>
-								<label>
+								<label className='form-labels'>
 									Username:
 									<input
 										type='text'
@@ -73,7 +73,7 @@ class SignUp extends Component {
 										onChange={this.handleInput('username')}
 									/>
 								</label>
-								<label>
+								<label className='form-labels'>
 									Email:
 									<input
 										type='text'
@@ -81,7 +81,7 @@ class SignUp extends Component {
 										onChange={this.handleInput('email')}
 									/>
 								</label>
-								<label>
+								<label className='form-labels'>
 									Password:
 									<input
 										type='password'
