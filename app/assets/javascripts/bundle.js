@@ -2049,7 +2049,7 @@ var SongInfoPlaybackBar = /*#__PURE__*/function (_Component) {
         onClick: function onClick() {
           return history.push("/users/".concat(userId, "/album/").concat(album.id));
         }
-      }, albumIsCollapsed ? (0,_util_general_functions_format_name__WEBPACK_IMPORTED_MODULE_5__.formatName)(songTitle, 19) : (0,_util_general_functions_format_name__WEBPACK_IMPORTED_MODULE_5__.formatName)(songTitle, 28)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h5", {
+      }, albumIsCollapsed ? (0,_util_general_functions_format_name__WEBPACK_IMPORTED_MODULE_5__.formatName)(songTitle, 19) : (0,_util_general_functions_format_name__WEBPACK_IMPORTED_MODULE_5__.formatName)(songTitle, 25)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h5", {
         id: "playback-bar-artist-name",
         onClick: function onClick() {
           return history.push("/users/".concat(userId, "/artist/").concat(artist.id));
@@ -2844,11 +2844,11 @@ var ListWithPicture = function ListWithPicture(props) {
   };
 
   if (!list) {
+    list = albums;
+
     goToPage = function goToPage(id) {
       return history.push("/users/".concat(userId, "/album/").concat(id));
     };
-
-    list = albums;
   }
 
   if (!list) {
@@ -4856,10 +4856,10 @@ var HomeScreen = /*#__PURE__*/function (_Component) {
         className: "screen home-screen"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
         className: "section-header"
-      }, "Good ", this.state.greet, ", ", currentUser.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_items_user_suggested_links__WEBPACK_IMPORTED_MODULE_8__.default, {
+      }, "Good ", this.state.greet, ", ", currentUser.username), artists.length && artists.length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_items_user_suggested_links__WEBPACK_IMPORTED_MODULE_8__.default, {
         currentUser: currentUser,
         addBackPath: addBackPath
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
+      }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
         className: "section-header"
       }, "Popular Albums"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_items_song_items_list_with_picture__WEBPACK_IMPORTED_MODULE_9__.default, {
         history: history,
@@ -8030,7 +8030,8 @@ var currentlyPlayingReducer = function currentlyPlayingReducer() {
       newState.audio.currentTime = 0;
       newState.currentTime = 0;
 
-      if (action.song && state.song && state.song.id === action.song.id) {
+      if (action.song && state.song && state.song.id === action.song.id && action.currentTime) {
+        console.log('currentTime:', newState.currentTime);
         newState.audio.currentTime = action.currentTime;
         newState.currentTime = action.currentTime;
       }
@@ -8728,6 +8729,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "formatName": () => (/* binding */ formatName)
 /* harmony export */ });
 var formatName = function formatName(str, maxLength) {
+  if (!str) return '';
+
   if (str.length > maxLength) {
     str = str.slice(0, maxLength - 2) + '...';
   }

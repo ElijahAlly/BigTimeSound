@@ -74,10 +74,12 @@ class HomeScreen extends Component {
 				<h1 className='section-header'>
 					Good {this.state.greet}, {currentUser.username}
 				</h1>
-				<UserSuggestedLinks
+				{artists.length && artists.length > 0 ? (
+					<UserSuggestedLinks
 					currentUser={currentUser}
 					addBackPath={addBackPath}
-				/>
+					/>
+				) : <></>}
 				<h1 className='section-header'>Popular Albums</h1>
 				<ListWithPicture
 					history={history}

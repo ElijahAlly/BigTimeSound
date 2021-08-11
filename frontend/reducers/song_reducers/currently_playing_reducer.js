@@ -59,7 +59,8 @@ const currentlyPlayingReducer = (state = _InitialState, action) => {
 
 			newState.audio.currentTime = 0;
 			newState.currentTime = 0;
-			if (action.song && state.song && state.song.id === action.song.id) {
+			if (action.song && state.song && state.song.id === action.song.id && action.currentTime) {
+				console.log('currentTime:', newState.currentTime);
 				newState.audio.currentTime = action.currentTime;
 				newState.currentTime = action.currentTime;
 			}

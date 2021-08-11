@@ -38,8 +38,8 @@ const ListWithPicture = (props) => {
 
 	let goToPage = () => null;
 	if (!list) {
-		goToPage = (id) => history.push(`/users/${userId}/album/${id}`);
 		list = albums;
+		goToPage = (id) => history.push(`/users/${userId}/album/${id}`);
 	}
 
 	if (!list) {

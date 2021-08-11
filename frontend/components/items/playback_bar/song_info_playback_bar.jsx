@@ -49,7 +49,7 @@ class SongInfoPlaybackBar extends Component {
 					<h3 id='playback-bar-song-title' onClick={() => history.push(`/users/${userId}/album/${album.id}`)}>
 						{albumIsCollapsed
 							? formatName(songTitle, 19)
-							: formatName(songTitle, 28)}
+							: formatName(songTitle, 25)}
 					</h3>
 					<h5 id='playback-bar-artist-name' onClick={() => history.push(`/users/${userId}/artist/${artist.id}`)}>
 						{albumIsCollapsed
