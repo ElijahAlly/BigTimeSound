@@ -3753,6 +3753,7 @@ var UserSuggestedLinks = function UserSuggestedLinks(_ref) {
     }
   }
 
+  if (!suggested[0]) return null;
   suggested.forEach(function (item) {
     if (item.artist_id) {
       item.link = "/users/".concat(currentUser.id, "/album/").concat(item.id);

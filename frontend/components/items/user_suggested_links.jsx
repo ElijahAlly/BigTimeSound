@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {playlistPics} from '../../util/general_functions/playlist_pictures'
+import { playlistPics } from '../../util/general_functions/playlist_pictures';
 
 const UserSuggestedLinks = ({
 	currentUser,
@@ -11,6 +11,7 @@ const UserSuggestedLinks = ({
 	artists,
 }) => {
 	let suggested = [];
+
 	for (let i = 0; i < 3; i++) {
 		suggested.push(albums[i]);
 	}
@@ -23,6 +24,7 @@ const UserSuggestedLinks = ({
 		}
 	}
 
+	if (!suggested[0]) return null;
 	suggested.forEach((item) => {
 		if (item.artist_id) {
 			item.link = `/users/${currentUser.id}/album/${item.id}`;
@@ -69,11 +71,7 @@ const UserSuggestedLinks = ({
 						<img
 							height='100'
 							width='100'
-							src={
-								ele.url
-									? ele.url
-									: playlistPics[i]
-							}
+							src={ele.url ? ele.url : playlistPics[i]}
 						/>
 						<h2>{ele.name}</h2>
 					</Link>
